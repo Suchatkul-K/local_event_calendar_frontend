@@ -1,10 +1,18 @@
-import React from 'react';
+import Router from "./routes";
+import { Slide, ToastContainer } from 'react-toastify';
+
 
 function App() {
-  console.log('api', import.meta.env);
+  // console.log('api', import.meta.env);
   return (
     <>
-      <div>App</div>
+      <Router />
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        // theme="light"
+        transition={Slide}
+      />
     </>
   );
 }
