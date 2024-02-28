@@ -1,32 +1,14 @@
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import React from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import HomePage from '../pages/HomePage';
 
 const router = createBrowserRouter([
-    {
-      path: "/login",
-      element: (
-        <> 
-        </>
-      ),
-    },
-    {
-      path: "/",
-      element: (
-        <>
-            <Outlet />        
-        </>
-      ),
-      children: [
-        {
-          path: "home",
-          element: (
-            <>        
-            </>
-          )
-        },
-      ],
-    },
-  ]);
-  
-  export default function Router() {
-    return <RouterProvider router={router} />;
-  }
+  {
+    path: '/',
+    element: <HomePage />,
+  },
+]);
+
+export default function Router() {
+  return <RouterProvider router={router} />;
+}

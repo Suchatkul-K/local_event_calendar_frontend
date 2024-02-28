@@ -1,6 +1,6 @@
-import Router from "./routes";
+import React from 'react';
 import { Slide, ToastContainer } from 'react-toastify';
-
+import Router from './routes';
 
 function App() {
   // console.log('api', import.meta.env);
@@ -8,7 +8,7 @@ function App() {
     <>
       <Router />
       <ToastContainer
-        position="bottom-left"
+        position='bottom-left'
         autoClose={5000}
         // theme="light"
         transition={Slide}
