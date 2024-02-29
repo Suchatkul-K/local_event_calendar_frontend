@@ -8,7 +8,9 @@ export default {
     extend: {
       colors: {
         //set custom color here
-        "primary": "#a90000"
+        "primary": "#43B97F",
+        "Line":"#00B900"
+
       }
     },
   },

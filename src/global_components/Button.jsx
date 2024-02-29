@@ -2,7 +2,7 @@ import React from 'react'
 
 function Button() {
   return (
-    <button>Button</button>
+    <button className='h-12'>Button</button>
   )
 }
 

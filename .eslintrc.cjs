@@ -27,6 +27,7 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks', 'prettier'],
   rules: {
+    "react/prop-types": 0,
     'prettier/prettier': 'error',
   },
 };
