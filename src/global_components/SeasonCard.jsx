@@ -18,11 +18,11 @@ function SeasonCard() {
           </span>
           Raining
         </div>
-        <div className='flex items-center gap-2 p-4  border-e-2'>
+        <div className='flex items-center gap-2 p-4  '>
           <span>
             <WinterIcon className='w-[1.5rem] h-[1.5rem]' />
           </span>
-          Summer
+          Winter
         </div>
       </div>
       <div className='grid grid-cols-2 gap-1 p-4'>
