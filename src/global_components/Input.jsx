@@ -1,13 +1,35 @@
 import React from 'react';
+import { EyeIcon } from '../icons';
 
-export default function Input({ name, placeholder, value, onChange }) {
+export default function Input({
+  name = 'name',
+  type = 'text',
+  title = 'title',
+  placeholder = 'type here...',
+  children,
+  errorMessage,
+  value,
+  onClick,
+}) {
   return (
-    <input
-      placeholder={placeholder}
-      name={name}
-      value={value}
-      onChange={onChange}
-      className='h-[2.5rem] px-[1rem] rounded-[0.5rem]'
-    />
+    <label htmlFor={name}>
+      <span className='pl-[0.5rem] py-2 font-medium text-[1.0rem]'>
+        {title}
+      </span>
+      <div className='border-2 w-full px-4 py-2 rounded-lg flex items-baseline gap-2'>
+        {children}
+        <input
+          onClick={onClick}
+          value={value}
+          type={type}
+          name={name}
+          id={name}
+          placeholder={placeholder}
+          className='bg-white outline-none w-full'
+        />
+        {type === 'password' && <EyeIcon />}
+      </div>
+      <small className='text-red-500 pl-[0.5rem]'>{errorMessage}</small>
+    </label>
   );
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Slide, ToastContainer } from 'react-toastify';
 import Router from './routes';
 
