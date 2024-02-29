@@ -4,7 +4,7 @@ import PictureSeason from './PictureSeason';
 function SeasonCard() {
   return (
     <div>
-      <div>Seasoning</div>
+      <div className='px-4'>Seasoning</div>
       <div className='flex'>
         <div className='flex items-center gap-2 p-4  border-e-2'>
           <span>

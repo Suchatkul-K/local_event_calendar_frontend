@@ -1,25 +1,9 @@
-import Carousel from '../global_components/Carousel';
-import EventCard from '../global_components/EventCard';
-import IncomingCard from '../features/Events/context/components/IncomingCard';
-import SeasonCard from '../global_components/SeasonCard';
+import HomeContainer from '../features/home/components/HomeContainer';
 
 function HomePage() {
   return (
-    <div className='w-full'>
-      HomePage
-      <Carousel title='highlight'>
-        <EventCard />
-        <EventCard />
-        <EventCard />
-        <EventCard />
-      </Carousel>
-      <Carousel title='Incoming'>
-        <IncomingCard />
-        <IncomingCard />
-        <IncomingCard />
-        <IncomingCard />
-      </Carousel>
-      <SeasonCard />
+    <div className='w-dvw'>
+      <HomeContainer />
     </div>
   );
 }
