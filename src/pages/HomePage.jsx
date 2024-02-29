@@ -1,10 +1,23 @@
+import Carousel from '../global_components/Carousel';
+import EventCard from '../global_components/EventCard';
+import IncomingCard from '../features/Events/context/components/IncomingCard';
+
 function HomePage() {
   return (
-    <div>
+    <div className='w-full'>
       HomePage
-      <button className='btn bg-primary' type='button'>
-        primary button
-      </button>
+      <Carousel>
+        <EventCard />
+        <EventCard />
+        <EventCard />
+        <EventCard />
+      </Carousel>
+      <Carousel>
+        <IncomingCard />
+        <IncomingCard />
+        <IncomingCard />
+        <IncomingCard />
+      </Carousel>
     </div>
   );
 }
