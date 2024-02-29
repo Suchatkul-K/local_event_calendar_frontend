@@ -207,3 +207,144 @@ export function RightArrowIcon({ className = null }) {
     </svg>
   );
 }
+
+export function SunIcon({ className }) {
+  return (
+    <svg
+      width='800px'
+      height='800px'
+      viewBox='0 0 24 24'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      className={className}
+    >
+      <g id='SVGRepo_bgCarrier' strokeWidth='0' />
+
+      <g
+        id='SVGRepo_tracerCarrier'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+
+      <g id='SVGRepo_iconCarrier'>
+        {' '}
+        <path
+          d='M8 22H16'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />{' '}
+        <path
+          d='M5 19H19'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />{' '}
+        <path
+          d='M2 16H22'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />{' '}
+        <path
+          d='M12 6C8.68629 6 6 8.68629 6 12C6 13.5217 6.56645 14.911 7.5 15.9687H16.5C17.4335 14.911 18 13.5217 18 12C18 8.68629 15.3137 6 12 6Z'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+        />{' '}
+        <path
+          d='M12 2V3'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+        />{' '}
+        <path
+          d='M22 12L21 12'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+        />{' '}
+        <path
+          d='M3 12L2 12'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+        />{' '}
+        <path
+          d='M19.0708 4.92969L18.678 5.32252'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+        />{' '}
+        <path
+          d='M5.32178 5.32227L4.92894 4.92943'
+          stroke='#1C274C'
+          strokeWidth='1.6799999999999997'
+          strokeLinecap='round'
+        />{' '}
+      </g>
+    </svg>
+  );
+}
+
+export function RainIcon({ className }) {
+  return (
+    <svg
+      width='800px'
+      height='800px'
+      viewBox='0 0 32 32'
+      version='1.1'
+      xmlns='http://www.w3.org/2000/svg'
+      fill='#000000'
+      className={className}
+    >
+      <g id='SVGRepo_bgCarrier' strokeWidth='0' />
+
+      <g
+        id='SVGRepo_tracerCarrier'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+
+      <g id='SVGRepo_iconCarrier'>
+        {' '}
+        <title>rain-2</title> <desc>Created with Sketch Beta.</desc>{' '}
+        <defs> </defs>{' '}
+        <g id='Page-1' strokeWidth='0.00032' fill='none' fillRule='evenodd'>
+          {' '}
+          <g
+            id='Icon-Set'
+            transform='translate(-153.000000, -827.000000)'
+            fill='#000000'
+          >
+            {' '}
+            <path
+              d='M175,849 L161,849 C161,849 154.962,848.381 155,843 C155.021,839.964 157.813,837.25 161,837 C161,832.858 163.651,829 168,829 C171.433,829 173.723,831.096 174.539,834.014 C179.493,833.798 182.844,837.718 183,841 C183.21,845.413 178.601,849 175,849 L175,849 Z M176.067,832.028 C174.599,829.053 171.543,827 168,827 C163.25,827 159.37,830.682 159.033,835.345 C155.542,836.34 153,839.39 153,843 C153,847.26 156.54,850.731 161,850.977 C161,850.977 174.831,851 175,851 C180.247,851 185,846.747 185,841.5 C185,836.445 181.048,832.323 176.067,832.028 L176.067,832.028 Z M178,854 C177.448,854 177,854.447 177,855 L177,858 C177,858.553 177.448,859 178,859 C178.552,859 179,858.553 179,858 L179,855 C179,854.447 178.552,854 178,854 L178,854 Z M172,854 C171.448,854 171,854.447 171,855 L171,858 C171,858.553 171.448,859 172,859 C172.552,859 173,858.553 173,858 L173,855 C173,854.447 172.552,854 172,854 L172,854 Z M160,854 C159.448,854 159,854.447 159,855 L159,858 C159,858.553 159.448,859 160,859 C160.552,859 161,858.553 161,858 L161,855 C161,854.447 160.552,854 160,854 L160,854 Z M166,854 C165.448,854 165,854.447 165,855 L165,858 C165,858.553 165.448,859 166,859 C166.552,859 167,858.553 167,858 L167,855 C167,854.447 166.552,854 166,854 L166,854 Z'
+              id='rain-2'
+            >
+              {' '}
+            </path>{' '}
+          </g>{' '}
+        </g>{' '}
+      </g>
+    </svg>
+  );
+}
+
+export function WinterIcon({ className }) {
+  return (
+    <svg
+      fill='#000000'
+      width='800px'
+      height='800px'
+      viewBox='0 0 24 24'
+      xmlns='http://www.w3.org/2000/svg'
+      id='winter'
+      className={className}
+    >
+      <path d='M20.41,12l1.3-1.29a1,1,0,0,0-1.42-1.42L18.59,11H15.87a4.05,4.05,0,0,0-.42-1l1.91-1.92h2.42a1,1,0,0,0,0-2H18V4.22a1,1,0,1,0-2,0V6.64L14,8.55a4.05,4.05,0,0,0-1-.42V5.41l1.71-1.7a1,1,0,1,0-1.42-1.42L12,3.59l-1.29-1.3A1,1,0,0,0,9.29,3.71L11,5.41V8.13a4.05,4.05,0,0,0-1,.42L8.05,6.64V4.22a1,1,0,0,0-2,0V6.05H4.22a1,1,0,0,0,0,2H6.64L8.55,10a4.05,4.05,0,0,0-.42,1H5.41L3.71,9.29a1,1,0,0,0-1.42,1.42L3.59,12l-1.3,1.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L5.41,13H8.13a4.05,4.05,0,0,0,.42,1L6.64,16H4.22a1,1,0,1,0,0,2H6.05v1.83a1,1,0,0,0,2,0V17.36L10,15.45a4.05,4.05,0,0,0,1,.42v2.72l-1.71,1.7a1,1,0,0,0,1.42,1.42L12,20.41l1.29,1.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42L13,18.59V15.87a4.05,4.05,0,0,0,1-.42L16,17.36v2.42a1,1,0,0,0,2,0V18h1.83a1,1,0,0,0,0-2H17.36L15.45,14a4.05,4.05,0,0,0,.42-1h2.72l1.7,1.71a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Zm-7,1.39,0,0,0,0a2.13,2.13,0,0,1-2.78,0l0,0,0,0a2,2,0,0,1,0-2.78l0,0,0,0a2.13,2.13,0,0,1,2.78,0l0,0,0,0a2,2,0,0,1,0,2.78Z' />
+    </svg>
+  );
+}
