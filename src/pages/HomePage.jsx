@@ -1,10 +1,9 @@
+import Navbar from '../global_components/NavBar';
+
 function HomePage() {
   return (
-    <div>
-      HomePage
-      <button className='btn bg-primary' type='button'>
-        primary button
-      </button>
+    <div className='flex flex-col '>
+      <Navbar />
     </div>
   );
 }

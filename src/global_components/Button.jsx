@@ -1,9 +1,18 @@
-import React from 'react'
+// import React from 'react'
+const primary = 'bg-[#43B97F]';
 
-function Button() {
+export default function Button({
+  children,
+
+  secendary,
+}) {
   return (
-    <button>Button</button>
-  )
+    <button
+      type='button'
+      className={`${secendary ? 'bg-gray-300' : primary} w-full  rounded-lg px-[0.5rem] py-[0.2rem] font-medium text-white
+      `}
+    >
+      {children}
+    </button>
+  );
 }
-
-export default Button
