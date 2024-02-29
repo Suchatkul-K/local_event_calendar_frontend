@@ -9,6 +9,7 @@ module.exports = {
     'airbnb',
     'prettier',
     'plugin:react-hooks/recommended',
+    'plugin:react/jsx-runtime',
   ],
   overrides: [
     {
@@ -30,5 +31,6 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/prop-types': 0,
     'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
   },
 };
