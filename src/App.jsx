@@ -1,6 +1,7 @@
 import React from 'react';
 import { Slide, ToastContainer } from 'react-toastify';
 import Router from './routes';
+import EventCard from './global_components/EventCard';
 
 function App() {
   // console.log('api', import.meta.env);
@@ -13,6 +14,7 @@ function App() {
         // theme="light"
         transition={Slide}
       />
+      <EventCard />
     </>
   );
 }
