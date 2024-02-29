@@ -3,7 +3,6 @@ const primary = 'bg-[#43B97F]';
 
 export default function Button({
   children,
-
   secendary,
 }) {
   return (
