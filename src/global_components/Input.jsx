@@ -9,7 +9,7 @@ export default function Input({
   children,
   errorMessage,
   value,
-  onClick,
+  onChange,
 }) {
   return (
     <label htmlFor={name}>
@@ -19,7 +19,7 @@ export default function Input({
       <div className='border-2 w-full px-4 py-2 rounded-lg flex items-baseline gap-2'>
         {children}
         <input
-          onClick={onClick}
+          onChange={onChange}
           value={value}
           type={type}
           name={name}
