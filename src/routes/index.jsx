@@ -3,6 +3,7 @@ import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import CreateEventPage from '../pages/CreateEventPage';
+import ExplorePage from '../pages/ExplorePage';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: '/Event',
     element: <CreateEventPage />,
+  },
+  {
+    path: '/explore',
+    element: <ExplorePage />,
   },
 ]);
 

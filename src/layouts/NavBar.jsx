@@ -1,4 +1,4 @@
-import Button from './Button';
+import Button from '../global_components/Button';
 
 function NavBar() {
   return (

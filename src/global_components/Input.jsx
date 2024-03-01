@@ -25,7 +25,7 @@ export default function Input({
           name={name}
           id={name}
           placeholder={placeholder}
-          className=' outline-none w-full'
+          className=' outline-none w-full bg-inherit'
         />
         {type === 'password' && <EyeIcon />}
       </div>
