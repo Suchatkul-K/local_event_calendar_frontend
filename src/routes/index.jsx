@@ -3,6 +3,7 @@ import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
 import CreateEventPage from '../pages/CreateEventPage';
+import ProfilePage from '../pages/ProfilePage';
 
 const router = createBrowserRouter([
   {
@@ -19,9 +20,10 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/Event',
+    path: '/CreateEvent',
     element: <CreateEventPage />,
   },
+  { path: '/profile', element: <ProfilePage /> },
 ]);
 
 export default function Router() {
