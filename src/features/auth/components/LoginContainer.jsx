@@ -4,6 +4,7 @@ import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
 import Apilogin from '../../../api/auth';
+import { storeToken } from '../../../utils/local-storage';
 
 export default function LoginContainer() {
   const [input, setInput] = useState();
@@ -13,7 +14,7 @@ export default function LoginContainer() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     try {
       e.preventDefault();
       console.log(input);
@@ -25,7 +26,9 @@ export default function LoginContainer() {
         setError(validateResult);
       } else {
         console.log('no error validation');
-        Apilogin(input);
+        const result = await Apilogin(input);
+        storeToken(result);
+        console.log(result);
       }
     } catch (err) {
       console.log('error');
