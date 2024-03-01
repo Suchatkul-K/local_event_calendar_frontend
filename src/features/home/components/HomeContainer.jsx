@@ -27,8 +27,8 @@ function HomeContainer() {
       <NavigatorButton />
       <Carousel title='Highlight'>
         {event?.map((value) => (
-          <div className='carousel-item'>
-            <EventCard key={value.id} event={value} />
+          <div key={value.id} className='carousel-item'>
+            <EventCard event={value} />
           </div>
         ))}
       </Carousel>
