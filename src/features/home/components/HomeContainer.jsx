@@ -4,6 +4,7 @@ import EventCard from '../../../global_components/EventCard';
 import SeasonCard from '../../../global_components/SeasonCard';
 import IncomingCard from '../../Events/context/components/IncomingCard';
 import getAllEvent from '../../../api/event';
+import NavigatorButton from './NavigatorButton';
 
 function HomeContainer() {
   const [event, setEvent] = useState();
@@ -23,10 +24,11 @@ function HomeContainer() {
   }, []);
   return (
     <div className='w-full p-[0.75rem] pt-[3rem] flex flex-col gap-4'>
+      <NavigatorButton />
       <Carousel title='Highlight'>
         {event?.map((value) => (
-          <div className='carousel-item'>
-            <EventCard key={value.id} event={value} />
+          <div key={value.id} className='carousel-item'>
+            <EventCard event={value} />
           </div>
         ))}
       </Carousel>
