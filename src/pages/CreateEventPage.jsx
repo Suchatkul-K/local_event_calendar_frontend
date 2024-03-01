@@ -2,5 +2,8 @@
 import CreateEventContainer from '../features/auth/components/CreateEventContainer';
 
 export default function CreateEventPage() {
-  return <CreateEventContainer />;
+  return(
+  <div className='w-dvw'>
+    <CreateEventContainer />
+    </div>)
 }
