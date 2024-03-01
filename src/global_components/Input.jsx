@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import { EyeIcon } from '../icons';
 
 export default function Input({
@@ -13,7 +13,7 @@ export default function Input({
 }) {
   return (
     <label htmlFor={name}>
-      <span className='pl-[0.5rem] py-2 font-medium text-[1.0rem]'>
+      <span className='pl-[0.5rem] pt-2 font-medium text-[1.0rem]'>
         {title}
       </span>
       <div className='border-2 w-full px-4 py-2 rounded-lg flex items-baseline gap-2'>
@@ -25,11 +25,13 @@ export default function Input({
           name={name}
           id={name}
           placeholder={placeholder}
-          className='bg-white outline-none w-full'
+          className=' outline-none w-full'
         />
         {type === 'password' && <EyeIcon />}
       </div>
-      <small className='text-red-500 pl-[0.5rem]'>{errorMessage}</small>
+      {errorMessage && (
+        <small className='text-red-500 pl-[0.5rem]'>{errorMessage}</small>
+      )}
     </label>
   );
 }
