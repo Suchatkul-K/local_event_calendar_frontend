@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
-import { getToken } from '../utils/local-storage.js';
+import { getToken } from '../utils/localStorage.js';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 

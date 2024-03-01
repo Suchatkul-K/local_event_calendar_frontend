@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path: '/Event',
+    path: '/CreateEvent',
     element: <CreateEventPage />,
   },
 ]);
