@@ -10,7 +10,7 @@ function EventCard() {
         </figure>
         <div className='card-body p-[2rem] '>
           <h2 className='card-title'>Event</h2>
-          <p className='text-[0.75rem] pb-[1rem] border-b text-[0.75rem] max-h-[2.5rem] overflow-hidden'>
+          <p className='text-[0.75rem] pb-[1rem] border-b  max-h-[2.5rem] overflow-hidden'>
             If a dog chews shoes whose shoes does he choose? If a dog chews
             shoes whose shoes does he choose? If a dog chews shoes whose shoes
             does he choose? If a dog chews shoes whose shoes does he choose?
