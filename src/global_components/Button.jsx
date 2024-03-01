@@ -1,7 +1,7 @@
 // import React from 'react'
 const primary = 'bg-[#43B97F]';
 
-export default function Button({children,secendary}) {
+export default function Button({ children, secendary }) {
   return (
     <button
       type='button'
