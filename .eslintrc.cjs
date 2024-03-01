@@ -35,5 +35,6 @@ module.exports = {
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx'] }],
     'no-param-reassign': ['error', { props: false }],
     'no-console': 0,
+    "no-unused-vars": "off",
   },
 };
