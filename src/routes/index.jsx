@@ -5,30 +5,38 @@ import RegisterPage from '../pages/RegisterPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import ExplorePage from '../pages/ExplorePage';
 import ProfilePage from '../pages/ProfilePage';
+import Container from '../layouts/Container';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/Register',
-    element: <RegisterPage />,
-  },
+    element: <Container />,
 
-  {
-    path: '/CreateEvent',
-    element: <CreateEventPage />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+      {
+        path: '/login',
+        element: <LoginPage />,
+      },
+      {
+        path: '/Register',
+        element: <RegisterPage />,
+      },
+
+      {
+        path: '/CreateEvent',
+        element: <CreateEventPage />,
+      },
+      {
+        path: '/explore',
+        element: <ExplorePage />,
+      },
+      { path: '/profile', element: <ProfilePage /> },
+    ],
   },
-  {
-    path: '/explore',
-    element: <ExplorePage />,
-  },
-  { path: '/profile', element: <ProfilePage /> },
 ]);
 
 export default function Router() {

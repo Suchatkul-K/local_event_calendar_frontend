@@ -10,13 +10,17 @@ export default function Input({
   errorMessage,
   value,
   onChange,
+  onClick,
+  border,
 }) {
   return (
     <label htmlFor={name}>
       <span className='pl-[0.5rem] pt-2 font-medium text-[1.0rem]'>
         {title}
       </span>
-      <div className='border-2 w-full px-4 py-2 rounded-lg flex items-baseline gap-2'>
+      <div
+        className={`${border || 'border-2 rounded-lg'} w-full px-4 py-2  flex items-center gap-2`}
+      >
         {children}
         <input
           onChange={onChange}
@@ -26,6 +30,7 @@ export default function Input({
           id={name}
           placeholder={placeholder}
           className=' outline-none w-full bg-inherit'
+          onClick={onClick}
         />
         {type === 'password' && <EyeIcon />}
       </div>
