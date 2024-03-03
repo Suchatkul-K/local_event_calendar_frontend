@@ -1,7 +1,6 @@
 import ProfileCalendar from './ProfileCalendar';
 import ProfileEvent from './ProfileEvent';
 import ProfileInfo from './ProfileInfo';
-import NavBar from '../../../layouts/NavBar';
 
 function ProfileContainer() {
   return (

@@ -22,12 +22,12 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: '/Register',
+        path: '/register',
         element: <RegisterPage />,
       },
 
       {
-        path: '/CreateEvent',
+        path: '/create-event',
         element: <CreateEventPage />,
       },
       {

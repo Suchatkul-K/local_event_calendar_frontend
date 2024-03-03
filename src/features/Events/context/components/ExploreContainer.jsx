@@ -88,7 +88,9 @@ export default function ExploreContainer() {
           <span>Facility</span>
           <div className='flex justify-end items-center gap-4'>
             <div className='hover:underline cursor-pointer'>Clear</div>
-            <Button size='w-[5rem]'>Search</Button>
+            <div className='w-[5rem]'>
+              <Button>Search</Button>
+            </div>
           </div>
         </>
       ) : null}
