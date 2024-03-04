@@ -1,4 +1,4 @@
-import EventContainer from '../features/auth/components/EventContainer';
+import EventContainer from '../features/Events/context/components/EventContainer';
 
 export default function EventPage() {
   return <EventContainer />;
