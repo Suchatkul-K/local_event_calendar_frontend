@@ -167,13 +167,6 @@ export default function CreateEventContainer() {
             >
               yearly
             </Input>
-            {/* <input
-              type='checkbox'
-              name='isYearly'
-              value={input.isYearly}
-              onChange={handleCheckbox}
-            />
-            <div>Yearly </div> */}
           </div>
 
           <Input
@@ -262,30 +255,6 @@ export default function CreateEventContainer() {
               }
             />
           </div>
-
-          {/* <Input
-            name='province'
-            placeholder='Province'
-            value={input}
-            onChange={handleChange}
-            title='Province'
-          />
-
-          <Input
-            name='district'
-            placeholder='District'
-            value={input}
-            onChange={handleChange}
-            title='District'
-          />
-
-          <Input
-            name='subDistrict'
-            placeholder='Sub District'
-            value={input}
-            onChange={handleChange}
-            title='Sub District'
-          /> */}
 
           <div className='grid grid-cols-2  gap-[0.25rem] font-medium w-full'>
             {facilityMockup.map((el) => (
