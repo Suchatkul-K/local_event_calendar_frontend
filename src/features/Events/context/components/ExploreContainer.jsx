@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Button from '../../../../global_components/Button';
 import SelectOption from '../../../../global_components/SelectOption';
+import ToggleOnButton from '../../../../global_components/ToggleOnButton';
 
 export default function ExploreContainer() {
   const mockupCateglory = [
@@ -15,40 +16,36 @@ export default function ExploreContainer() {
     { id: 3, name: 'north' },
     { id: 4, name: 'haha' },
   ];
+  const mockupFacility = [
+    { id: 1, name: 'lamad' },
+    { id: 2, name: 'toilet' },
+    { id: 3, name: 'parking' },
+    { id: 4, name: 'praying room' },
+    { id: 5, name: 'sleep' },
+    { id: 6, name: 'hotel' },
+    { id: 7, name: 'pailamad' },
+    { id: 8, name: 'faci' },
+  ];
 
-  const [input, setInput] = useState(false);
+  const [input, setInput] = useState([]);
 
-  console.log(input);
-  const handleClick = (e) => {
-    const elem = document.activeElement;
-    if (elem) {
-      elem?.blur();
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      setInput({ ...input, [e.target.name]: 'true' });
+    } else {
+      // setSelected({ ...selected, [e.target.name]: 'false' });
+      const tempSelected = { ...input };
+      delete tempSelected[e.target.name];
+      setInput(tempSelected);
     }
-
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    });
+    // console.log(selected);
   };
+
   return (
     <div className='px-[3rem]'>
-      <SelectOption
-        title='Category'
-        forMap={mockupCateglory}
-        name='categoryId'
-        handleClick={handleClick}
-      />
-      <SelectOption
-        title='Destination'
-        forMap={mockupDestination}
-        name='provinceId'
-        handleClick={handleClick}
-      />
-
-      <span>Facility</span>
-      <div>
-        <Button>Clear</Button>
-        <Button>Search</Button>
+      <div className='flex flex-col gap-4 p-4'>
+        <span className='font-semibold'>Facility</span>
+        <ToggleOnButton forMap={mockupFacility} onChange={handleCheckbox} />
       </div>
     </div>
   );
