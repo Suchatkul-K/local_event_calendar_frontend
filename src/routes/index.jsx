@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
-import CreateEventPage from '../pages/CreateEventPage';
+import EventPage from '../pages/EventPage';
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 
   {
     path: '/Event',
-    element: <CreateEventPage />,
+    element: <EventPage />,
   },
 ]);
 
