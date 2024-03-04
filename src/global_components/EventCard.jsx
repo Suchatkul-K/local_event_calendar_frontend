@@ -1,4 +1,5 @@
 function EventCard({ event }) {
+  console.log(event);
   return (
     <div className='carousel-item'>
       <div className='card max-w-[16rem] max-h-[28rem] bg-base-100 shadow'>

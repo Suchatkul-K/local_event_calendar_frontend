@@ -6,6 +6,7 @@ import CreateEventPage from '../pages/CreateEventPage';
 import ExplorePage from '../pages/ExplorePage';
 import ProfilePage from '../pages/ProfilePage';
 import Container from '../layouts/Container';
+import MapPage from '../pages/MapPage';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
         element: <ExplorePage />,
       },
       { path: '/profile', element: <ProfilePage /> },
+      { path: '/map', element: <MapPage /> },
     ],
   },
 ]);
