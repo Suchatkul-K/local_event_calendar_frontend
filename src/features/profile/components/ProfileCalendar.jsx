@@ -6,24 +6,39 @@ function ProfileCalendar() {
   const ProfileContextObject = useProfileContext();
 
   const getEventlist = (date) => {
+    const day = date.getDate();
     const newDate = new Date(date);
     newDate.setUTCHours(0, 0, 0, 0);
     const isoDate = newDate.toISOString();
 
-    if (ProfileContextObject.event) {
-      return ProfileContextObject.event?.filter(
-        (value) => value.startDate === isoDate
-      );
+    switch (day) {
+      case 10:
+        return [
+          { title: 'test1', timePeriod: '12' },
+          { title: 'test1', timePeriod: '12' },
+          { title: 'test1', timePeriod: '12' },
+          { title: 'test1', timePeriod: '12' },
+          { title: 'test1', timePeriod: '12' },
+          { title: 'test1', timePeriod: '12' },
+        ];
+      default:
+        return [];
     }
-    return [];
+
+    // if (ProfileContextObject.event) {
+    //   return ProfileContextObject.event?.filter(
+    //     (value) => value.startDate === isoDate
+    //   );
+    // }
+    // return [];
   };
 
   const renderCell = (date) => {
     const list = getEventlist(date);
-    const displayList = list.filter((item, index) => index < 2);
+    const displayList = list.filter((item, index) => index < 1);
 
     if (list.length) {
-      const moreCount = list.length - displayList.length;
+      // const moreCount = list.length - displayList.length;
 
       return (
         <Whisper
@@ -32,24 +47,27 @@ function ProfileCalendar() {
           speaker={
             <Popover>
               {list.map((item) => (
-                <p key={item.id}>
+                <li key={item.id}>
                   <div>
                     <Badge /> {item.title} {item.timePeriod}
                   </div>
-                </p>
+                </li>
               ))}
             </Popover>
           }
         >
-          <ul className='calendar-todo-list'>
-            {displayList.map((item, index) => (
+          <ul className='calendar-todo-list h-full'>
+            {/* {displayList.map((item, index) => (
               <li key={item.id}>
                 <Badge /> {item.title} {item.timePeriod}
               </li>
-            ))}
-            {moreCount ? (
+            ))} */}
+            <div className='w-full h-full flex justify-center items-center'>
+              <Badge />
+            </div>
+            {/* {moreCount ? (
               <li className='text-blue-500'>{moreCount} more</li>
-            ) : null}
+            ) : null} */}
           </ul>
         </Whisper>
       );

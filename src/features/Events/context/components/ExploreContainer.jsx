@@ -3,8 +3,6 @@ import { SelectPicker } from 'rsuite';
 
 import 'rsuite/SelectPicker/styles/index.css';
 import Button from '../../../../global_components/Button';
-import SelectOption from '../../../../global_components/SelectOption';
-import ToggleOnButton from '../../../../global_components/ToggleOnButton';
 import Input from '../../../../global_components/Input';
 import { SearchIcon } from '../../../../icons';
 import EventCard from '../../../../global_components/EventCard';

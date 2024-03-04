@@ -1,8 +1,3 @@
-// import { useState } from 'react';
-// import Button from '../global_components/Button';
-
-// import SelectOption from '../global_components/SelectOption';
-import NavBar from '../layouts/NavBar';
 import ExploreContainer from '../features/Events/context/components/ExploreContainer';
 
 export default function ExplorePage() {
