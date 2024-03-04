@@ -11,7 +11,7 @@ export default function RegisterContainer() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert(`formsubmit${input?.email}`);
+    alert(`form submit${input?.email}`);
   };
 
   return (

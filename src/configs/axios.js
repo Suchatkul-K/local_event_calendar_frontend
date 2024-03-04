@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable no-param-reassign */
 import axios from 'axios';
 import { getToken } from '../utils/local-storage';
 

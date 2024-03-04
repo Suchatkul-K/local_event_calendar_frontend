@@ -1,23 +1,44 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
+import { validateLogin } from '../validation/validate-login';
+import Apilogin from '../../../api/auth';
+import { storeToken } from '../../../utils/local-storage';
 
 export default function LoginContainer() {
   const [input, setInput] = useState();
+  const [error, setError] = useState({});
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`formsubmit${input?.email}`);
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      console.log(input);
+      const validateResult = validateLogin(input);
+      console.log('Validate Result is here');
+      console.log(validateResult);
+
+      if (Object.keys(validateResult).length > 0) {
+        setError(validateResult);
+      } else {
+        console.log('no error validation');
+        const result = await Apilogin(input);
+        storeToken(result);
+        console.log(result);
+      }
+    } catch (err) {
+      console.log('error');
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className='py-12 '>
-        <div className=' mx-auto flex flex-col  gap-[2rem] w-full p-[3rem]'>
+        <div className=' flex flex-col  gap-[2rem] w-full p-[3rem]'>
           <div className='text-[1.75rem] font-semibold'>Login</div>
           <Input
             name='email'
