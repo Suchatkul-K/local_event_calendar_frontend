@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import RegisterPage from '../pages/RegisterPage';
+import EventPage from '../pages/EventPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import ExplorePage from '../pages/ExplorePage';
 import ProfilePage from '../pages/ProfilePage';
@@ -12,7 +13,6 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Container />,
-
     children: [
       {
         path: '/',
@@ -37,6 +37,7 @@ const router = createBrowserRouter([
       },
       { path: '/profile', element: <ProfilePage /> },
       { path: '/map', element: <MapPage /> },
+      { path: '/event', element: <EventPage /> },
     ],
   },
 ]);
