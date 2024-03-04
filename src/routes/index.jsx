@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         element: <ExplorePage />,
       },
       { path: '/profile', element: <ProfilePage /> },
-      { path: '/Event', element: <EventPage /> },
+      { path: '/event', element: <EventPage /> },
     ],
   },
 ]);
