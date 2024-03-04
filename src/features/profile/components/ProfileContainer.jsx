@@ -5,14 +5,11 @@ import ProfileInfo from './ProfileInfo';
 
 function ProfileContainer() {
   return (
-    <>
-      <NavBar />
-      <div className='p-4'>
-        <ProfileInfo />
-        <ProfileCalendar />
-        <ProfileEvent />
-      </div>
-    </>
+    <div className='p-4'>
+      <ProfileInfo />
+      <ProfileCalendar />
+      <ProfileEvent />
+    </div>
   );
 }
 
