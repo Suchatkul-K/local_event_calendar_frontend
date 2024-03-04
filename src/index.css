@@ -22,3 +22,7 @@
   width: 6px;
   height: 6px;
 }
+
+input {
+  color-scheme: light;
+}

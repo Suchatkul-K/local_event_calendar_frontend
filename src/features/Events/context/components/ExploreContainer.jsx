@@ -3,7 +3,6 @@ import { SelectPicker } from 'rsuite';
 
 import 'rsuite/SelectPicker/styles/index.css';
 import Button from '../../../../global_components/Button';
-import SelectOption from '../../../../global_components/SelectOption';
 import ToggleOnButton from '../../../../global_components/ToggleOnButton';
 import Input from '../../../../global_components/Input';
 import { SearchIcon } from '../../../../icons';
@@ -62,8 +61,8 @@ export default function ExploreContainer() {
 
   const handleOnChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
-    console.log(input);
   };
+  console.log(input);
 
   const HandleOnSubmit = (e) => {
     console.log('onSubmit');
@@ -104,7 +103,7 @@ export default function ExploreContainer() {
                 onSearch={updateData}
                 onOpen={updateData}
                 data={category}
-                value='categoryId'
+                // value={input}
                 onChange={(value, event) =>
                   setInput({ ...input, categoryId: value })
                 }
@@ -117,7 +116,7 @@ export default function ExploreContainer() {
                 onSearch={updateData}
                 onOpen={updateData}
                 data={destination}
-                value='provinceId'
+                // value={input}
                 onChange={(value, event) =>
                   setInput({ ...input, provinceId: value })
                 }

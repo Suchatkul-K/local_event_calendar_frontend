@@ -33,7 +33,7 @@ export default function RegisterContainer() {
           <Input
             name='userName'
             placeholder='Username'
-            value={input?.userName}
+            value={input}
             onChange={handleChange}
             title='Username'
           >
@@ -42,7 +42,7 @@ export default function RegisterContainer() {
           <Input
             name='password'
             placeholder='password'
-            value={input?.password}
+            value={input}
             onChange={handleChange}
             title='Password'
             type='password'
@@ -53,7 +53,7 @@ export default function RegisterContainer() {
           <Input
             name='confirmPassword'
             placeholder='confirmPassword'
-            value={input?.confirmPassword}
+            value={input}
             onChange={handleChange}
             title='confirmPassword'
             type='password'

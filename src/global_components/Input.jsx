@@ -29,7 +29,7 @@ export default function Input({
           name={name}
           id={name}
           placeholder={placeholder}
-          className=' outline-none w-full bg-inherit'
+          className=' outline-none w-full bg-inherit '
           onClick={onClick}
         />
         {type === 'password' && <EyeIcon />}
