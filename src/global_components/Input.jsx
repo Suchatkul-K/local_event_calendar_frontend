@@ -2,7 +2,7 @@
 import { EyeIcon } from '../icons';
 
 export default function Input({
-  name = 'name',
+  name,
   type = 'text',
   title = 'title',
   placeholder = 'type here...',
@@ -24,7 +24,7 @@ export default function Input({
         {children}
         <input
           onChange={onChange}
-          value={value}
+          value={value?.name}
           type={type}
           name={name}
           id={name}
