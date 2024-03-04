@@ -15,9 +15,7 @@ export default function Input({
 }) {
   return (
     <label htmlFor={name}>
-      <span className='pl-[0.5rem] pt-2 font-medium text-[1.0rem]'>
-        {title}
-      </span>
+      <p className='p-[0.5rem]  font-semibold text-[1.0rem]'>{title}</p>
       <div
         className={`${border || 'border-2 rounded-lg'} w-full px-4 py-2  flex items-center gap-2`}
       >

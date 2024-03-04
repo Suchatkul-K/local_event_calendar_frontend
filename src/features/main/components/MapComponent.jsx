@@ -54,13 +54,19 @@ function MapComponent() {
   });
 
   useEffect(() => {
-    map.locate();
-
     map.on('locationfound', (e) => {
       setUser(e.latlng);
-      console.log(e.latlng);
+      // console.log(e.latlng);
     });
-  }, []);
+
+    map.locate();
+
+    return () => {
+      map.off('locationfound', (e) => {
+        setUser(e.latlng);
+      });
+    };
+  }, [map]);
 
   const customIcon = (className, fill) =>
     L.divIcon({

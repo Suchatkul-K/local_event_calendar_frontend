@@ -97,7 +97,7 @@ export default function ExploreContainer() {
         {open ? (
           <div className='flex flex-col gap-2'>
             <div className='w-full'>
-              <h1 className='font-semibold p-1'>Category</h1>
+              <p className='font-semibold p-2'>Category</p>
               <SelectPicker
                 block
                 onSearch={updateData}
@@ -110,7 +110,7 @@ export default function ExploreContainer() {
               />
             </div>
             <div className='w-full '>
-              <h1 className='font-semibold p-1'>Destination</h1>
+              <p className='font-semibold p-2'>Destination</p>
               <SelectPicker
                 block
                 onSearch={updateData}

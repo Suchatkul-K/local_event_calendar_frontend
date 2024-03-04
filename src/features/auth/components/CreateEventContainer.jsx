@@ -86,9 +86,11 @@ export default function CreateEventContainer() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className='py-12 '>
+      <div>
         <div className=' mx-auto flex flex-col  gap-[2rem] w-full p-[3rem]'>
-          <div className='text-[1.75rem] font-semibold'>Create An Account</div>
+          <div className='text-[1.75rem] font-semibold text-center'>
+            Create An Event
+          </div>
           <div className='flex flex-col items-center'>
             <PictureIcon />
           </div>
@@ -106,7 +108,7 @@ export default function CreateEventContainer() {
           />
 
           <div>
-            <span className='font-medium'>Description</span>
+            <p className='font-semibold pl-2 pb-2 text-[1rem]'>Description</p>
             <textarea
               placeholder='Description'
               className='textarea textarea-bordered textarea-md w-full'
@@ -118,7 +120,7 @@ export default function CreateEventContainer() {
 
           <div className='flex flex-row justify-between '>
             <div>
-              <div className='font-medium'>Start Date</div>
+              <div className='font-semibold pb-2'>Start Date</div>
               <input
                 className='bg-inherit border border-gray-300 rounded-btn px-2 py-1'
                 type='date'
@@ -127,7 +129,7 @@ export default function CreateEventContainer() {
               />
             </div>
             <div className='flex flex-col items-end'>
-              <div className='font-medium'>End Date</div>
+              <div className='font-semibold pb-2'>End Date</div>
               <input
                 className='bg-inherit border border-gray-300 rounded-btn px-2 py-1'
                 type='date'
@@ -138,7 +140,7 @@ export default function CreateEventContainer() {
           </div>
 
           <div className='flex flex-row justify-between'>
-            <div className='font-medium'>
+            <div className='font-semibold pb-2'>
               <div>Start Time</div>
               <input
                 className='bg-inherit border border-gray-300 rounded-btn px-2 py-1'
@@ -147,7 +149,7 @@ export default function CreateEventContainer() {
                 onChange={handleChange}
               />
             </div>
-            <div className='font-medium'>
+            <div className='font-semibold pb-2'>
               <div className='flex flex-col items-end'>End Time</div>
               <input
                 className='bg-inherit border border-gray-300 rounded-btn px-2 py-1'
@@ -218,7 +220,7 @@ export default function CreateEventContainer() {
           />
 
           <div className='w-full '>
-            <h1 className='font-semibold p-1'>Province</h1>
+            <span className='font-semibold p-1'>Province</span>
             <SelectPicker
               block
               onSearch={updateData}
@@ -231,7 +233,7 @@ export default function CreateEventContainer() {
           </div>
 
           <div className='w-full'>
-            <h1 className='font-semibold p-1'>District</h1>
+            <span className='font-semibold p-1'>District</span>
             <SelectPicker
               block
               onSearch={updateData}
@@ -244,7 +246,7 @@ export default function CreateEventContainer() {
           </div>
 
           <div className='w-full'>
-            <h1 className='font-semibold p-1'>Subdistrict</h1>
+            <span className='font-semibold p-1'>Subdistrict</span>
             <SelectPicker
               block
               onSearch={updateData}
@@ -265,7 +267,7 @@ export default function CreateEventContainer() {
                   value={el.name}
                   onChange={handleCheckbox}
                 />
-                <div>{el.name}</div>
+                <div className='font-semibold'>{el.name}</div>
               </div>
             ))}
           </div>
