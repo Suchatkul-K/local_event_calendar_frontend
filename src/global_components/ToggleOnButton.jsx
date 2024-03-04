@@ -4,7 +4,7 @@ export default function ToggleOnButton({ onChange, forMap }) {
   return (
     <div className='flex gap-3 flex-wrap'>
       {forMap?.map((el) => (
-        <label htmlFor={el.name} className='swap font-medium' key={el.id}>
+        <label htmlFor={el.name} className='swap font-semibold' key={el.id}>
           <input
             type='checkbox'
             id={el.name}

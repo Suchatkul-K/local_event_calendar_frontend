@@ -3,15 +3,17 @@ import Input from '../../../global_components/Input';
 import { EmailIcon, LockerIcon, ProfileIcon } from '../../../icons';
 
 export default function RegisterContainer() {
-  const [input, setInput] = useState();
+  const [input, setInput] = useState({});
 
   const handleChange = (e) => {
+    console.log(input);
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // alert(`form submit${input?.email}`);
+    alert(`form submit${input?.email}`);
+    setInput({});
   };
 
   return (
@@ -22,7 +24,7 @@ export default function RegisterContainer() {
           <Input
             name='email'
             placeholder='Example@gmail.com'
-            value={input?.email}
+            value={input}
             onChange={handleChange}
             title='Email'
           >
@@ -31,7 +33,7 @@ export default function RegisterContainer() {
           <Input
             name='userName'
             placeholder='Username'
-            value={input?.userName}
+            value={input}
             onChange={handleChange}
             title='Username'
           >
@@ -40,7 +42,7 @@ export default function RegisterContainer() {
           <Input
             name='password'
             placeholder='password'
-            value={input?.password}
+            value={input}
             onChange={handleChange}
             title='Password'
             type='password'
@@ -51,7 +53,7 @@ export default function RegisterContainer() {
           <Input
             name='confirmPassword'
             placeholder='confirmPassword'
-            value={input?.confirmPassword}
+            value={input}
             onChange={handleChange}
             title='confirmPassword'
             type='password'

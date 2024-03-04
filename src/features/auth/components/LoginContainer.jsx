@@ -10,6 +10,7 @@ export default function LoginContainer() {
   const [input, setInput] = useState();
   const [error, setError] = useState({});
 
+  // console.log(input);
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -43,7 +44,7 @@ export default function LoginContainer() {
           <Input
             name='email'
             placeholder='Example@gmail.com'
-            value={input?.email}
+            value={input}
             onChange={handleChange}
             title='Email'
           >
@@ -53,7 +54,7 @@ export default function LoginContainer() {
           <Input
             name='password'
             placeholder='password'
-            value={input?.password}
+            value={input}
             onChange={handleChange}
             title='Password'
             type='password'

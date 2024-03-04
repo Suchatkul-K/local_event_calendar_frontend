@@ -2,7 +2,7 @@
 import { EyeIcon } from '../icons';
 
 export default function Input({
-  name = 'name',
+  name,
   type = 'text',
   title = 'title',
   placeholder = 'type here...',
@@ -15,21 +15,19 @@ export default function Input({
 }) {
   return (
     <label htmlFor={name}>
-      <span className='pl-[0.5rem] pt-2 font-medium text-[1.0rem]'>
-        {title}
-      </span>
+      <p className='p-[0.5rem]  font-semibold text-[1.0rem]'>{title}</p>
       <div
         className={`${border || 'border-2 rounded-lg'} w-full px-4 py-2  flex items-center gap-2`}
       >
         {children}
         <input
           onChange={onChange}
-          value={value}
+          value={value?.name}
           type={type}
           name={name}
           id={name}
           placeholder={placeholder}
-          className=' outline-none w-full bg-inherit'
+          className=' outline-none w-full bg-inherit '
           onClick={onClick}
         />
         {type === 'password' && <EyeIcon />}
