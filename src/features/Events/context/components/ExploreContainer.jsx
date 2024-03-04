@@ -37,8 +37,6 @@ export default function ExploreContainer() {
   const [input, setInput] = useState({});
   const [open, setOpen] = useState(false);
 
-
-
   console.log(input);
   const updateData = () => {
     if (category.length === 0) {
@@ -47,7 +45,7 @@ export default function ExploreContainer() {
     if (destination.length === 0) {
       setDestination(mockupDestination);
     }
-
+  };
   const handleCheckbox = (e) => {
     if (e.target.checked) {
       setInput({ ...input, [e.target.name]: 'true' });
@@ -59,6 +57,7 @@ export default function ExploreContainer() {
     }
     // console.log(selected);
   };
+
   return (
     <div className='p-[2rem] flex flex-col gap-2'>
       {open && (
@@ -73,7 +72,7 @@ export default function ExploreContainer() {
           x
         </button>
       )}
-      
+
       <Input
         border='border-b-2'
         title='Search here'
@@ -82,7 +81,7 @@ export default function ExploreContainer() {
         <SearchIcon className='w-[1rem] h-[1.5rem]' />
       </Input>
       {open ? (
-        <>
+        <div>
           <div className='w-full'>
             <h1>Category</h1>
             <SelectPicker
@@ -115,19 +114,20 @@ export default function ExploreContainer() {
               <Button>Search</Button>
             </div>
           </div>
-        </>
+        </div>
       ) : null}
       <div className='grid grid-cols-2 gap-2 py-[1rem]'>
         <EventCard />
         <EventCard />
         <EventCard />
         <EventCard />
+      </div>
+
+      <div className='px-[3rem]'>
+        <div className='flex flex-col gap-4 p-4'>
+          <span className='font-semibold'>Facility</span>
+          <ToggleOnButton forMap={mockupFacility} onChange={handleCheckbox} />
         </div>
-  
-    <div className='px-[3rem]'>
-    <div className='flex flex-col gap-4 p-4'>
-        <span className='font-semibold'>Facility</span>
-        <ToggleOnButton forMap={mockupFacility} onChange={handleCheckbox} />
       </div>
     </div>
   );
