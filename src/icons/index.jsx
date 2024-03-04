@@ -531,7 +531,7 @@ export function ClockIcon({ className }) {
   );
 }
 
-export function CalendarIcon({ className }) {
+export function CalendarIconGray({ className }) {
   return (
     <svg
       width='800px'

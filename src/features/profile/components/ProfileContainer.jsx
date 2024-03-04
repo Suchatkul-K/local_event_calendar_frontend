@@ -4,18 +4,15 @@ import ProfileEvent from './ProfileEvent';
 import ProfileInfo from './ProfileInfo';
 import 'rsuite/dist/rsuite.min.css';
 
-
 function ProfileContainer() {
   return (
-    <>
-      <div className='p-4'>
-        <ProfileContextProvider>
-          <ProfileInfo />
-          <ProfileCalendar />
-          <ProfileEvent />
-        </ProfileContextProvider>
-      </div>
-    </>
+    <div className='p-4'>
+      <ProfileContextProvider>
+        <ProfileInfo />
+        <ProfileCalendar />
+        <ProfileEvent />
+      </ProfileContextProvider>
+    </div>
   );
 }
 

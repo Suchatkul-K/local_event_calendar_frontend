@@ -1,4 +1,4 @@
-import { ClockIcon, CalendarIcon, PinIcon } from '../../../icons';
+import { ClockIcon, CalendarIconGray, PinIcon } from '../../../icons';
 
 export default function EventContainer() {
   return (
@@ -29,7 +29,7 @@ export default function EventContainer() {
             <div className='flex flex-row gap-[1rem]'>
               <div>
                 <span>
-                  <CalendarIcon className='w-[1.5rem] h-[1.5rem]' />
+                  <CalendarIconGray className='w-[1.5rem] h-[1.5rem]' />
                 </span>
               </div>
               <div>Date</div>
