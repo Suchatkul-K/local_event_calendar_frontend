@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
-import Apilogin from '../../../api/auth';
+import { apiLogin } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 
 export default function LoginContainer() {
-  const [input, setInput] = useState();
+  const [input, setInput] = useState({ email: '', password: '' });
   const [error, setError] = useState({});
 
+  // console.log(input);
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -26,9 +27,8 @@ export default function LoginContainer() {
         setError(validateResult);
       } else {
         console.log('no error validation');
-        const result = await Apilogin(input);
-        storeToken(result);
-        console.log(result);
+        const loginResult = await apiLogin(input);
+        storeToken(loginResult.data.token);
       }
     } catch (err) {
       console.log('error');
@@ -43,9 +43,10 @@ export default function LoginContainer() {
           <Input
             name='email'
             placeholder='Example@gmail.com'
-            value={input?.email}
+            value={input}
             onChange={handleChange}
             title='Email'
+            errorMessage={error?.email}
           >
             <EmailIcon />
           </Input>
@@ -53,10 +54,11 @@ export default function LoginContainer() {
           <Input
             name='password'
             placeholder='password'
-            value={input?.password}
+            value={input}
             onChange={handleChange}
             title='Password'
             type='password'
+            errorMessage={error?.password}
           >
             <LockerIcon />
           </Input>

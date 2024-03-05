@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import Carousel from '../../../global_components/Carousel';
 import EventCard from '../../../global_components/EventCard';
 import SeasonContainer from './SeasonContainer';
-import IncomingCard from '../../Events/context/components/IncomingCard';
-import getAllEvent from '../../../api/event';
+import IncomingCard from './IncomingCard';
+import { getAllEvent } from '../../../api/event';
 import NavigatorButton from './NavigatorButton';
 
 function HomeContainer() {
