@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import Joi from 'joi';
 
 const organizerRegisterSchema = Joi.object({
@@ -18,13 +17,10 @@ const organizerRegisterSchema = Joi.object({
     .pattern(/^[a-zA-Z0-9]/)
     .required()
     .messages({ 'string.empty': 'Password is required' }),
-  confirmPassword: Joi.string()
-    .valid(Joi.ref('password'))
-    .required()
-    .messages({
-      'string.empty': ' Confirm password is required',
-      'any.only': 'Password and confirm password should be matched ',
-    }),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+    'string.empty': ' Confirm password is required',
+    'any.only': 'Password and confirm password should be matched ',
+  }),
   gender: Joi.string()
     .required()
     .trim()
@@ -64,13 +60,10 @@ const userRegisterSchema = Joi.object({
     .pattern(/^[a-zA-Z0-9]/)
     .required()
     .messages({ 'string.empty': 'Password is required' }),
-  confirmPassword: Joi.string()
-    .valid(Joi.ref('password'))
-    .required()
-    .messages({
-      'string.empty': ' Confirm password is required',
-      'any.only': 'Password and confirm password should be matched ',
-    }),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+    'string.empty': ' Confirm password is required',
+    'any.only': 'Password and confirm password should be matched ',
+  }),
   gender: Joi.string()
     .required()
     .trim()

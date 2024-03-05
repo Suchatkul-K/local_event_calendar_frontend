@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useRef, useState } from 'react';
 import Input from '../../../global_components/Input';
 import {
