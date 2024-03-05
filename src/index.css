@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 /* @import 'rsuite/dist/rsuite.css'; */
 
 .calendar-todo-list {
@@ -20,4 +21,8 @@
   margin-top: 8px;
   width: 6px;
   height: 6px;
+}
+
+input {
+  color-scheme: light;
 }

@@ -1,18 +1,17 @@
+import ProfileContextProvider from '../context/ProfileContext';
 import ProfileCalendar from './ProfileCalendar';
 import ProfileEvent from './ProfileEvent';
 import ProfileInfo from './ProfileInfo';
-import NavBar from '../../../global_components/NavBar';
 
 function ProfileContainer() {
   return (
-    <>
-      <NavBar />
-      <div className='p-4'>
+    <div className='p-4'>
+      <ProfileContextProvider>
         <ProfileInfo />
         <ProfileCalendar />
         <ProfileEvent />
-      </div>
-    </>
+      </ProfileContextProvider>
+    </div>
   );
 }
 

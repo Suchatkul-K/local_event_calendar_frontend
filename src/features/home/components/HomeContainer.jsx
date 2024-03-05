@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import Carousel from '../../../global_components/Carousel';
 import EventCard from '../../../global_components/EventCard';
-import SeasonCard from '../../../global_components/SeasonCard';
-import IncomingCard from '../../Events/context/components/IncomingCard';
-import getAllEvent from '../../../api/event';
+import SeasonContainer from './SeasonContainer';
+import IncomingCard from './IncomingCard';
+import { getAllEvent } from '../../../api/event';
 import NavigatorButton from './NavigatorButton';
 
 function HomeContainer() {
@@ -38,7 +38,7 @@ function HomeContainer() {
         <IncomingCard />
         <IncomingCard />
       </Carousel>
-      <SeasonCard />
+      <SeasonContainer />
     </div>
   );
 }

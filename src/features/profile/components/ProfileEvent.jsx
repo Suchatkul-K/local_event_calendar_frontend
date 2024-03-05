@@ -3,7 +3,7 @@ import EventCard from '../../../global_components/EventCard';
 function ProfileEvent() {
   return (
     <div className='flex flex-col gap-2'>
-      <h1>My Event</h1>
+      <p className='font-semibold text-[1.5rem]'>My Event</p>
       <div className='grid grid-cols-2 gap-2'>
         <EventCard />
         <EventCard />
