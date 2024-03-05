@@ -3,7 +3,7 @@ import { ClockIcon, CalendarIconGray, PinIcon } from '../../../icons';
 export default function EventContainer() {
   return (
     <div className='p-[1rem]'>
-      <div className='border-2 border-black rounded-2xl mx-auto flex flex-col gap-[2rem] w-[427px] p-[1rem]'>
+      <div className='border-2 border-black rounded-2xl mx-auto flex flex-col gap-[2rem] w-full p-[1rem]'>
         <div className='text-2xl font-semibold text-center'>
           Arun Temple Lighting Festival
         </div>

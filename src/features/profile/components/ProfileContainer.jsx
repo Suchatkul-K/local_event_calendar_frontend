@@ -2,7 +2,7 @@ import ProfileContextProvider from '../context/ProfileContext';
 import ProfileCalendar from './ProfileCalendar';
 import ProfileEvent from './ProfileEvent';
 import ProfileInfo from './ProfileInfo';
-import 'rsuite/dist/rsuite.min.css';
+// import 'rsuite/dist/rsuite.min.css';
 
 function ProfileContainer() {
   return (
