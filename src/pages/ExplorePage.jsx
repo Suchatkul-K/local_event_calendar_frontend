@@ -1,4 +1,4 @@
-import ExploreContainer from '../features/Events/context/components/ExploreContainer';
+import ExploreContainer from '../features/explore/components/ExploreContainer';
 
 export default function ExplorePage() {
   return (
