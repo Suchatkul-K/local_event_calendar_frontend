@@ -6,13 +6,12 @@ import {
   LockerIcon,
   ProfileIcon,
   PictureIcon,
-  IdentityCardIcon
+  IdentityCardIcon,
 } from '../../../icons';
 import { validateUserRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
 import { apiRegister } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
-
 
 export default function UserRegisterContainer() {
   const [input, setInput] = useState({
@@ -21,8 +20,7 @@ export default function UserRegisterContainer() {
     password: '',
     confirmPassword: '',
     gender: 'MALE',
-    role:'USER'
-    
+    role: 'USER',
   });
   const [error, setError] = useState();
   const [profileImage, setProfileImage] = useState('');
@@ -35,10 +33,7 @@ export default function UserRegisterContainer() {
 
   const handleFileChange = (e) => {
     setProfileImage(e.target.files[0]);
-  
   };
-
- 
 
   const handleSubmit = async (e) => {
     try {
@@ -53,16 +48,16 @@ export default function UserRegisterContainer() {
       } else {
         console.log('no error validation');
 
-        const formData = new FormData();    
-        formData.append("profileImage", profileImage);
-        formData.append("email", input.email)
-        formData.append("userName",input.userName)
-        formData.append("password",input.password)
-        formData.append("role", input.role)
-        formData.append("gender", input.gender)
-        const registerResult = await apiRegister(formData)
-        console.log(registerResult)
-        storeToken(registerResult.data.token)
+        const formData = new FormData();
+        formData.append('profileImage', profileImage);
+        formData.append('email', input.email);
+        formData.append('userName', input.userName);
+        formData.append('password', input.password);
+        formData.append('role', input.role);
+        formData.append('gender', input.gender);
+        const registerResult = await apiRegister(formData);
+        console.log(registerResult);
+        storeToken(registerResult.data.token);
       }
     } catch (err) {
       console.log('error');
@@ -79,18 +74,19 @@ export default function UserRegisterContainer() {
               <img
                 src={URL.createObjectURL(profileImage)}
                 alt='event'
-              className='w-[200px] h-[200px] object-cover'/>
-    
+                className='w-[200px] h-[200px] object-cover'
+              />
             ) : (
               <PictureIcon />
             )}
           </div>
-                  <div className='flex flex-row justify-end'>
-                      
-          <div className='md:w-[18%] sm:[30%]'>
-          {profileImage ? <Button secondary='primary'>Cancel  </Button> : null}
-                      </div>
-                      
+          <div className='flex flex-row justify-end'>
+            <div className='md:w-[18%] sm:[30%]'>
+              {profileImage ? (
+                <Button secondary='primary'>Cancel </Button>
+              ) : null}
+            </div>
+
             <div className='md:w-[18%] sm:[30%]'>
               <input
                 type='file'
@@ -145,36 +141,42 @@ export default function UserRegisterContainer() {
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
-          > <LockerIcon />
+          >
+            {' '}
+            <LockerIcon />
           </Input>
 
           <div className='flex flex-row justify-between'>
-           
             <div className='flex flex-col'>
               <div>Sex</div>
-              <select name="gender" className="h-10  rounded-lg" onChange={handleChange}>
-                  <option value="MALE" selected>MALE</option>
-                    <option value="FEMALE">FEMALE</option>
-                    <option value="OTHER">OTHER</option>
-
-               </select>
+              <select
+                name='gender'
+                className='h-10  rounded-lg'
+                onChange={handleChange}
+              >
+                <option value='MALE' selected>
+                  MALE
+                </option>
+                <option value='FEMALE'>FEMALE</option>
+                <option value='OTHER'>OTHER</option>
+              </select>
             </div>
 
             <div className='flex flex-col'>
               <div>User Role</div>
-                <select name="role" className="h-10  rounded-lg" onChange={handleChange}>
-                              <option value="USER" selected >USER</option>
-                              <option value="ADMIN"  >ADMIN</option>
-
-                  </select>
-             </div>  
-         
-
+              <select
+                name='role'
+                className='h-10  rounded-lg'
+                onChange={handleChange}
+              >
+                <option value='USER' selected>
+                  USER
+                </option>
+                <option value='ADMIN'>ADMIN</option>
+              </select>
+            </div>
           </div>
 
-        
-           
-          
           <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-full'>
             <button
               type='submit'
@@ -196,7 +198,6 @@ export default function UserRegisterContainer() {
               Already Have An Account ?{' '}
               <span className='text-green-700'>Register</span>
             </div>
-
           </div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { useRef, useState } from 'react';
 import Input from '../../../global_components/Input';
 import {
@@ -6,7 +5,7 @@ import {
   LockerIcon,
   ProfileIcon,
   PictureIcon,
-  IdentityCardIcon
+  IdentityCardIcon,
 } from '../../../icons';
 import { validateOrganizerRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
@@ -20,8 +19,8 @@ export default function OrganizerRegisterContainer() {
     password: '',
     confirmPassword: '',
     gender: 'OTHER',
-    role:'ORGANIZER',
-    corporation:'INDIVIDUAL'
+    role: 'ORGANIZER',
+    corporation: 'INDIVIDUAL',
   });
   const [error, setError] = useState();
   const [profileImage, setProfileImage] = useState('');
@@ -36,12 +35,10 @@ export default function OrganizerRegisterContainer() {
 
   const handleFileChange = (e) => {
     setProfileImage(e.target.files[0]);
-  
   };
 
   const handleFileChange2 = (e) => {
     setIdentityCopyImage(e.target.files[0]);
-  
   };
 
   const handleSubmit = async (e) => {
@@ -60,23 +57,21 @@ export default function OrganizerRegisterContainer() {
         const formData = new FormData();
 
         if (input.role === 'ORGANIZER') {
-          formData.append("profileImage", profileImage);
-          formData.append("identityCopyImage", identityCopyImage);
-
+          formData.append('profileImage', profileImage);
+          formData.append('identityCopyImage', identityCopyImage);
         }
-        formData.append("email", input.email)
-        formData.append("userName",input.userName)
-        formData.append("password",input.password)
-        formData.append("role", input.role)
-        formData.append("gender", input.gender)
-        formData.append("officialName", input.officialName)
-        formData.append("companyNumber", input.companyNumber)
-        formData.append("corporation", input.corporation)
+        formData.append('email', input.email);
+        formData.append('userName', input.userName);
+        formData.append('password', input.password);
+        formData.append('role', input.role);
+        formData.append('gender', input.gender);
+        formData.append('officialName', input.officialName);
+        formData.append('companyNumber', input.companyNumber);
+        formData.append('corporation', input.corporation);
 
-        const registerResult = await apiRegister(formData)
-        console.log(registerResult)
-        storeToken(registerResult.data.token)
-
+        const registerResult = await apiRegister(formData);
+        console.log(registerResult);
+        storeToken(registerResult.data.token);
       }
     } catch (err) {
       console.log('error');
@@ -93,8 +88,8 @@ export default function OrganizerRegisterContainer() {
               <img
                 src={URL.createObjectURL(profileImage)}
                 alt='event'
-              className='w-[200px] h-[200px] object-cover'/>
-    
+                className='w-[200px] h-[200px] object-cover'
+              />
             ) : (
               <PictureIcon />
             )}
@@ -107,10 +102,7 @@ export default function OrganizerRegisterContainer() {
                 className='hidden'
                 onChange={handleFileChange}
               />
-              <Button
-                onClick={() => fileEl.current.click()}
-
-              >
+              <Button onClick={() => fileEl.current.click()}>
                 Upload Profile
               </Button>
             </div>
@@ -154,29 +146,39 @@ export default function OrganizerRegisterContainer() {
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
-          > <LockerIcon />
+          >
+            {' '}
+            <LockerIcon />
           </Input>
 
           <div className='flex flex-row justify-between'>
-           
             <div className='flex flex-col'>
               <div>Sex</div>
-              <select name="gender" className="h-10  rounded-lg" onChange={handleChange}>
-                  <option value="MALE" selected>MALE</option>
-                    <option value="FEMALE">FEMALE</option>
-                    <option value="OTHER">OTHER</option>
-
-               </select>
+              <select
+                name='gender'
+                className='h-10  rounded-lg'
+                onChange={handleChange}
+              >
+                <option value='MALE' selected>
+                  MALE
+                </option>
+                <option value='FEMALE'>FEMALE</option>
+                <option value='OTHER'>OTHER</option>
+              </select>
             </div>
 
             <div className='flex flex-col'>
               <div>User Role</div>
-                <select name="role" className="h-10  rounded-lg" onChange={handleChange}>
-                   <option value="ORGANIZER" selected >ORGANIZER</option>
-                  </select>
-             </div>  
-         
-
+              <select
+                name='role'
+                className='h-10  rounded-lg'
+                onChange={handleChange}
+              >
+                <option value='ORGANIZER' selected>
+                  ORGANIZER
+                </option>
+              </select>
+            </div>
           </div>
 
           <div className='flex flex-col items-center'>
@@ -184,8 +186,8 @@ export default function OrganizerRegisterContainer() {
               <img
                 src={URL.createObjectURL(identityCopyImage)}
                 alt='event'
-              className='w-[200px] h-[200px] object-cover'/>
-    
+                className='w-[200px] h-[200px] object-cover'
+              />
             ) : (
               <IdentityCardIcon />
             )}
@@ -198,45 +200,42 @@ export default function OrganizerRegisterContainer() {
                 className='hidden'
                 onChange={handleFileChange2}
               />
-              <Button
-                onClick={() => fileEl2.current.click()}
-              >
-                Upload ID
-              </Button>
+              <Button onClick={() => fileEl2.current.click()}>Upload ID</Button>
             </div>
           </div>
 
-         
-              
-            <Input
+          <Input
             name='officialName'
             placeholder='officialName'
             value={input?.officialName}
             onChange={handleChange}
             title='Official Name'
             errorMessage={error?.officialName}
-              />
-              
-  
-              <Input
+          />
+
+          <Input
             name='companyNumber'
             placeholder='companyNumber'
             value={input?.companyNumber}
             onChange={handleChange}
             title='Company Number'
             errorMessage={error?.companyNumber}
-              />
-           
-      
-           <div className='flex flex-col'>
-              <div>User Role</div>
-                <select name='corporation' className="h-10  rounded-lg" onChange={handleChange}>
-              <option value="INDIVIDUAL"  >INDIVIDUAL</option>
-              <option value="CORPORATION" selected >CORPORATION</option>
+          />
 
-                  </select>
-             </div>  
-          
+          <div className='flex flex-col'>
+            <div>User Role</div>
+            <select
+              name='corporation'
+              className='h-10  rounded-lg'
+              onChange={handleChange}
+            >
+              <option value='INDIVIDUAL'>INDIVIDUAL</option>
+              <option value='CORPORATION' selected>
+                CORPORATION
+              </option>
+            </select>
+          </div>
+
           <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-full'>
             <button
               type='submit'
@@ -258,7 +257,6 @@ export default function OrganizerRegisterContainer() {
               Already Have An Account ?{' '}
               <span className='text-green-700'>Register</span>
             </div>
-
           </div>
         </div>
       </div>
