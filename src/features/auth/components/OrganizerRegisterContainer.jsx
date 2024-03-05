@@ -10,7 +10,7 @@ import {
 } from '../../../icons';
 import { validateOrganizerRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
-import { Apiregister } from '../../../api/auth';
+import { apiRegister } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 
 export default function OrganizerRegisterContainer() {
@@ -73,7 +73,7 @@ export default function OrganizerRegisterContainer() {
         formData.append("companyNumber", input.companyNumber)
         formData.append("corporation", input.corporation)
 
-        const registerResult = await Apiregister(formData)
+        const registerResult = await apiRegister(formData)
         console.log(registerResult)
         storeToken(registerResult.data.token)
 
@@ -108,8 +108,8 @@ export default function OrganizerRegisterContainer() {
                 onChange={handleFileChange}
               />
               <Button
-                secondary='primary'
                 onClick={() => fileEl.current.click()}
+
               >
                 Upload Profile
               </Button>
@@ -199,7 +199,6 @@ export default function OrganizerRegisterContainer() {
                 onChange={handleFileChange2}
               />
               <Button
-                secondary='primary'
                 onClick={() => fileEl2.current.click()}
               >
                 Upload ID

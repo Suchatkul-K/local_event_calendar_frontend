@@ -10,7 +10,7 @@ import {
 } from '../../../icons';
 import { validateUserRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
-import { Apiregister } from '../../../api/auth';
+import { apiRegister } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 
 
@@ -60,7 +60,7 @@ export default function UserRegisterContainer() {
         formData.append("password",input.password)
         formData.append("role", input.role)
         formData.append("gender", input.gender)
-        const registerResult = await Apiregister(formData)
+        const registerResult = await apiRegister(formData)
         console.log(registerResult)
         storeToken(registerResult.data.token)
       }

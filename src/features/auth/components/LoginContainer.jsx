@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
-import { Apilogin } from '../../../api/auth';
+import { apiLogin } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 
 export default function LoginContainer() {
@@ -27,7 +27,7 @@ export default function LoginContainer() {
         setError(validateResult);
       } else {
         console.log('no error validation');
-        const loginResult = await Apilogin(input);
+        const loginResult = await apiLogin(input);
         storeToken(loginResult.data.token);
       }
     } catch (err) {
