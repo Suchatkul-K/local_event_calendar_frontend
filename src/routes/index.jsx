@@ -1,13 +1,14 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
-import RegisterPage from '../pages/RegisterPage';
 import EventPage from '../pages/EventPage';
 import CreateEventPage from '../pages/CreateEventPage';
 import ExplorePage from '../pages/ExplorePage';
 import ProfilePage from '../pages/ProfilePage';
 import Container from '../layouts/Container';
 import MapPage from '../pages/MapPage';
+import OrganizerRegisterPage from '../pages/OrganizerRegisterPage';
+import UserRegisterPage from '../pages/UserRegisterPage';
 
 const router = createBrowserRouter([
   {
@@ -23,10 +24,13 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: '/register',
-        element: <RegisterPage />,
+        path: '/OrganizerRegister',
+        element: <OrganizerRegisterPage />,
       },
-
+      {
+        path: '/Userregister',
+        element: <UserRegisterPage />,
+      },
       {
         path: '/create-event',
         element: <CreateEventPage />,

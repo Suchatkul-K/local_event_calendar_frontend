@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { SelectPicker } from 'rsuite';
 
 import 'rsuite/SelectPicker/styles/index.css';
-import Button from '../../../../global_components/Button';
-import ToggleOnButton from '../../../../global_components/ToggleOnButton';
-import Input from '../../../../global_components/Input';
-import { SearchIcon } from '../../../../icons';
-import EventCard from '../../../../global_components/EventCard';
+import Button from '../../../global_components/Button';
+import ToggleOnButton from '../../../global_components/ToggleOnButton';
+import Input from '../../../global_components/Input';
+import { SearchIcon } from '../../../icons';
+import EventCard from '../../../global_components/EventCard';
 
 export default function ExploreContainer() {
   const mockupCategory = [
@@ -33,6 +33,7 @@ export default function ExploreContainer() {
   ];
   const [category, setCategory] = useState([]);
   const [destination, setDestination] = useState([]);
+  const [destinationValue, setDestinationValue] = useState();
   const [input, setInput] = useState({});
   const [open, setOpen] = useState(false);
 
@@ -63,11 +64,18 @@ export default function ExploreContainer() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   console.log(input);
+  console.log(destination);
+  console.log(destinationValue);
 
   const HandleOnSubmit = (e) => {
+    // search
     console.log('onSubmit');
     e.preventDefault();
   };
+
+  // const destinationValue = input?.provinceId
+  //   ? destination.filter((el) => el.value === input.provinceId)[0].label
+  //   : null;
 
   return (
     <div className='p-[2rem] flex flex-col gap-2'>
@@ -83,6 +91,8 @@ export default function ExploreContainer() {
           x
         </button>
       )}
+
+      {/* search event form */}
       <form onSubmit={HandleOnSubmit}>
         <Input
           border='border-b-2'
@@ -116,10 +126,14 @@ export default function ExploreContainer() {
                 onSearch={updateData}
                 onOpen={updateData}
                 data={destination}
-                // value={input}
-                onChange={(value, event) =>
-                  setInput({ ...input, provinceId: value })
-                }
+                value={destinationValue}
+                onChange={(event) => {
+                  setInput({ ...input, provinceId: event });
+                  setDestinationValue(
+                    destination.filter((el) => el.value === input.provinceId)[0]
+                      .label
+                  );
+                }}
               />
             </div>
 
@@ -147,6 +161,8 @@ export default function ExploreContainer() {
           </div>
         ) : null}
       </form>
+
+      {/* render searched event */}
       <div className='grid grid-cols-2 gap-2 py-[1rem]'>
         <EventCard />
         <EventCard />

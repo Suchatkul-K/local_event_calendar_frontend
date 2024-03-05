@@ -1,5 +1,5 @@
-import Avatar from '../../../../global_components/Avatar';
-import CarouselHero from '../../../../global_components/CarouselHero';
+import Avatar from '../../../global_components/Avatar';
+import CarouselHero from '../../../global_components/CarouselHero';
 import {
   ClockIcon,
   CalendarIconGray,
@@ -12,7 +12,7 @@ import {
   FoodIcon,
   WifiIcon,
   MedicalIcon,
-} from '../../../../icons';
+} from '../../../icons';
 
 export default function EventContainer() {
   return (
