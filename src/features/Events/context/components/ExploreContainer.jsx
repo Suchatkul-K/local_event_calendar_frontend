@@ -7,6 +7,7 @@ import ToggleOnButton from '../../../../global_components/ToggleOnButton';
 import Input from '../../../../global_components/Input';
 import { SearchIcon } from '../../../../icons';
 import EventCard from '../../../../global_components/EventCard';
+import ToggleOnButton from '../../../../global_components/ToggleOnButton';
 
 export default function ExploreContainer() {
   const mockupCategory = [
