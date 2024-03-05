@@ -8,6 +8,7 @@ import ExplorePage from '../pages/ExplorePage';
 import ProfilePage from '../pages/ProfilePage';
 import Container from '../layouts/Container';
 import MapPage from '../pages/MapPage';
+import HomeContextProvider from '../features/home/context/HomeContext';
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <HomePage />,
+        element: (
+          <HomeContextProvider>
+            <HomePage />
+          </HomeContextProvider>
+        ),
       },
       {
         path: '/login',
@@ -37,7 +42,7 @@ const router = createBrowserRouter([
       },
       { path: '/profile', element: <ProfilePage /> },
       { path: '/map', element: <MapPage /> },
-      { path: '/event', element: <EventPage /> },
+      { path: '/event/:eventId', element: <EventPage /> },
     ],
   },
 ]);
