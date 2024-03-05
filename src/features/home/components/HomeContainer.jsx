@@ -23,8 +23,10 @@ function HomeContainer() {
     getAll();
   }, []);
   return (
-    <div className='w-full p-[0.75rem] pt-[3rem] flex flex-col gap-4'>
-      <NavigatorButton />
+    <div className='pt-[3rem] flex flex-col gap-4 w-full'>
+      <div className='xl:hidden'>
+        <NavigatorButton />
+      </div>
       <Carousel title='Highlight'>
         {event?.map((value) => (
           <div key={value.id} className='carousel-item'>
@@ -32,13 +34,19 @@ function HomeContainer() {
           </div>
         ))}
       </Carousel>
-      <Carousel title='Incoming'>
-        <IncomingCard />
-        <IncomingCard />
-        <IncomingCard />
-        <IncomingCard />
-      </Carousel>
-      <SeasonContainer />
+      <div className='w-full'>
+        <Carousel title='Incoming'>
+          <IncomingCard />
+          <IncomingCard />
+          <IncomingCard />
+          <IncomingCard />
+          <IncomingCard />
+          <IncomingCard />
+          <IncomingCard />
+          <IncomingCard />
+        </Carousel>
+        <SeasonContainer />
+      </div>
     </div>
   );
 }

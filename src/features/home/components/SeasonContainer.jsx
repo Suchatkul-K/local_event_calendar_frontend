@@ -16,15 +16,15 @@ function SeasonContainer() {
   }
 
   return (
-    <div>
-      <div className='font-bold text-[1.5rem] px-4 py-2'>Seasoning</div>
+    <div className='w-full'>
+      <div className='font-bold text-[1.5rem] py-2'>Seasoning</div>
       <div className='flex justify-center items-center'>
         {/* summer */}
         <button
           className={
             season === 'summer'
-              ? 'flex items-center gap-2 px-4  border-e-2 underline'
-              : 'flex items-center gap-2 px-4  border-e-2'
+              ? 'flex items-center gap-1 px-2 md:px-4  border-e-2 underline'
+              : 'flex items-center gap-1 px-2 md:px-4  border-e-2'
           }
           onClick={() => setSeason('summer')}
           type='button'
@@ -44,8 +44,8 @@ function SeasonContainer() {
         <button
           className={
             season === 'raining'
-              ? 'flex items-center gap-2 px-4  border-e-2 underline'
-              : 'flex items-center gap-2 px-4  border-e-2'
+              ? 'flex items-center gap-2 px-2 md:px-4 border-e-2 underline'
+              : 'flex items-center gap-2 px-2 md:px-4 border-e-2'
           }
           onClick={() => setSeason('raining')}
           type='button'
@@ -65,8 +65,8 @@ function SeasonContainer() {
         <button
           className={
             season === 'winter'
-              ? 'flex items-center gap-2 px-4 underline'
-              : 'flex items-center gap-2 px-4 '
+              ? 'flex items-center gap-2 px-2 md:px-4 underline'
+              : 'flex items-center gap-2 px-2 md:px-4'
           }
           onClick={() => setSeason('winter')}
           type='button'
