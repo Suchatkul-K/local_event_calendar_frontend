@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
+/* eslint-disable import/no-duplicates */
 import React from 'react';
 import { createContext } from 'react';
 
