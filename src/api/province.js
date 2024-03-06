@@ -1,3 +1,5 @@
 import axios from '../configs/axios';
 
-export const getProvince = axios.get('/province');
+const getProvince = () => axios.get('/province');
+
+export default getProvince;
