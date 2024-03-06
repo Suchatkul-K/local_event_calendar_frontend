@@ -1115,7 +1115,7 @@ export function MedicalIcon({ className }) {
     <svg
       fill='#000000'
       width='1.5rem'
-      height='1.5rm'
+      height='1.5rem'
       viewBox='0 -2 28 28'
       className={className}
     >

@@ -13,30 +13,39 @@ import {
   WifiIcon,
   MedicalIcon,
 } from '../../../icons';
+import formatDate from '../../../utils/formatDate';
+import useEventContext from '../hook/useEventContext';
 
 export default function EventContainer() {
+  const eventObj = useEventContext();
+  console.log(eventObj.event);
+
   return (
-    <div className='flex flex-col gap-4 '>
+    <div className='flex flex-col gap-4'>
       {/* cover picture */}
       <div className='w-full'>
         <img
           className='object-contain'
-          src='https://previews.123rf.com/images/mashikomo/mashikomo1601/mashikomo160100013/50268765-chamomile-floral-background-hand-drawn-vector-illustration.jpg'
+          src={eventObj.event?.coverImage}
           alt=''
         />
       </div>
       {/* header description */}
       <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
-        <h1 className='text-[1.5rem]'>Arun Temple Lighting Festival</h1>
+        <h1 className='text-[1.5rem]'>{eventObj?.event?.title}</h1>
         <div className='flex justify-between'>
           <div className='flex items-center gap-2'>
             <ClockIcon />
-            time
+            {eventObj.event?.timePeriod}
           </div>
           <div className='flex items-center gap-2'>
             <CouponIcon />
-            Entrance
-            <span className='text-green-500'>Free</span>
+            Entrance:
+            {eventObj?.event?.EventFacility.entranceFee ? (
+              <span className='text-green-500'>Free </span>
+            ) : (
+              <span className='text-amber-500'>Paid </span>
+            )}
           </div>
         </div>
         <div className='flex items-center gap-2'>
@@ -45,14 +54,14 @@ export default function EventContainer() {
         </div>
         <div className='flex justify-between'>
           <div className='border-2 p-2 rounded-xl'>
-            <p>Start : 12.00 pm</p>
-            <p>End : 12.00 pm</p>
+            <p>Start : {formatDate(eventObj.event?.startDate)}</p>
+            <p>End : {formatDate(eventObj.event?.endDate)}</p>
           </div>
-          <div className='flex gap-2 items-center'>
+          <div className='flex gap-2 items-baseline max-w-[9rem]'>
             <div>
               <PinIcon className='w-[1rem] h-[1rem]' />
             </div>
-            <p>location</p>
+            <p>{eventObj?.event?.EventAddress.address}</p>
           </div>
         </div>
         <div />
@@ -60,24 +69,12 @@ export default function EventContainer() {
       {/* Host */}
       <div className='flex gap-3 items-center px-4'>
         <Avatar size='w-[3rem]' />
-        <p> Hosted By : Mr.Bank</p>
+        <p> Hosted By : {eventObj?.event?.organizerInformation.officialName}</p>
       </div>
       {/* Description */}
       <div className='flex flex-col px-4'>
         <p className='text-[1.5rem] font-bold'>Description</p>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sed.
-          Iusto odio enim similique distinctio. Vel, unde consequuntur, quia
-          nesciunt impedit repellendus itaque ratione optio odit deleniti
-          reprehenderit libero voluptatibus. Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Amet, sed. Iusto odio enim similique
-          distinctio. Vel, unde consequuntur, quia nesciunt impedit repellendus
-          itaque ratione optio odit deleniti reprehenderit libero voluptatibus.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, sed.
-          Iusto odio enim similique distinctio. Vel, unde consequuntur, quia
-          nesciunt impedit repellendus itaque ratione optio odit deleniti
-          reprehenderit libero voluptatibus.
-        </p>
+        <p>{eventObj?.event?.description}</p>
         <div className='flex flex-col items-end'>
           <p>add event</p>
           <div>icon</div>
@@ -87,27 +84,41 @@ export default function EventContainer() {
       <div className='flex flex-col px-4 '>
         <p className='text-[1.5rem] font-bold'>Facility</p>
         <div className='flex gap-2 flex-wrap py-2'>
-          <div className='flex gap-3 items-center'>
-            <ToiletIcon /> Toilet
-          </div>
-          <div className='flex gap-2 items-center'>
-            <CarParkIcon /> Park
-          </div>
-          <div className='flex gap-2 items-center'>
-            <PrayIcon /> Pray room
-          </div>
-          <div className='flex gap-2 items-center'>
-            <DogIcon /> Dog
-          </div>
-          <div className='flex gap-2 items-center'>
-            <FoodIcon /> Food Store
-          </div>
-          <div className='flex gap-2 items-center'>
-            <WifiIcon /> Free Wi-fi
-          </div>
-          <div className='flex gap-2 items-center'>
-            <MedicalIcon /> Medical Store
-          </div>
+          {eventObj?.event?.EventFacility.toilet ? (
+            <div className='flex gap-3 items-center'>
+              <ToiletIcon /> Toilet
+            </div>
+          ) : null}
+          {eventObj?.event?.EventFacility.parking ? (
+            <div className='flex gap-2 items-center'>
+              <CarParkIcon /> Park
+            </div>
+          ) : null}
+          {eventObj?.event?.EventFacility.meditationRoom ? (
+            <div className='flex gap-2 items-center'>
+              <PrayIcon /> Pray room
+            </div>
+          ) : null}
+          {eventObj?.event?.EventFacility.petFriend ? (
+            <div className='flex gap-2 items-center'>
+              <DogIcon /> Dog
+            </div>
+          ) : null}
+          {eventObj?.event?.EventFacility.food ? (
+            <div className='flex gap-2 items-center'>
+              <FoodIcon /> Food Store
+            </div>
+          ) : null}
+          {eventObj?.event?.EventFacility.wifi ? (
+            <div className='flex gap-2 items-center'>
+              <WifiIcon /> Free Wi-fi
+            </div>
+          ) : null}
+          {eventObj?.event?.EventFacility.medicalService ? (
+            <div className='flex gap-2 items-center'>
+              <MedicalIcon /> Medical Store
+            </div>
+          ) : null}
         </div>
       </div>
       {/* Carousel Preview */}
