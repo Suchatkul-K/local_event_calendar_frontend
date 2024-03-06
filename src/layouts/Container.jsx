@@ -4,11 +4,11 @@ import Footer from './Footer';
 
 function Container() {
   return (
-    <>
+    <div className=''>
       <NavBar />
       <Outlet />
       <Footer />
-    </>
+    </div>
   );
 }
 
