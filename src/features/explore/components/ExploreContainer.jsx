@@ -33,7 +33,6 @@ export default function ExploreContainer() {
   ];
   const [category, setCategory] = useState([]);
   const [destination, setDestination] = useState([]);
-  const [destinationValue, setDestinationValue] = useState();
   const [input, setInput] = useState({});
   const [open, setOpen] = useState(false);
 
@@ -48,34 +47,32 @@ export default function ExploreContainer() {
     }
   };
 
+  // const handleSearch = (query) => {
+  //   console.log('Search query:', query);
+  // };
+
   const handleCheckbox = (e) => {
     if (e.target.checked) {
-      setInput({ ...input, [e.target.name]: 'true' });
+      setInput({ ...input, [e.target.name]: true });
     } else {
-      // setSelected({ ...selected, [e.target.name]: 'false' });
       const tempSelected = { ...input };
       delete tempSelected[e.target.name];
       setInput(tempSelected);
+      // setInput({ ...input, [e.target.name]: false });
     }
-    // console.log(selected);
   };
 
   const handleOnChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
   console.log(input);
-  console.log(destination);
-  console.log(destinationValue);
 
-  const HandleOnSubmit = (e) => {
-    // search
+  const handleOnSubmit = (e) => {
     console.log('onSubmit');
     e.preventDefault();
-  };
 
-  // const destinationValue = input?.provinceId
-  //   ? destination.filter((el) => el.value === input.provinceId)[0].label
-  //   : null;
+    // fetch event by input
+  };
 
   return (
     <div className='p-[2rem] flex flex-col gap-2'>
@@ -93,7 +90,7 @@ export default function ExploreContainer() {
       )}
 
       {/* search event form */}
-      <form onSubmit={HandleOnSubmit}>
+      <form onSubmit={handleOnSubmit}>
         <Input
           border='border-b-2'
           title='Search here'
@@ -106,33 +103,32 @@ export default function ExploreContainer() {
         </Input>
         {open ? (
           <div className='flex flex-col gap-2'>
+            {/* search by category */}
             <div className='w-full'>
               <p className='font-semibold p-2'>Category</p>
               <SelectPicker
                 block
-                onSearch={updateData}
+                // onSearch={handleSearch}
                 onOpen={updateData}
                 data={category}
-                // value={input}
-                onChange={(value, event) =>
-                  setInput({ ...input, categoryId: value })
-                }
+                value={input.categoryId}
+                onChange={(value) => {
+                  setInput({ ...input, categoryId: value });
+                }}
               />
             </div>
+
+            {/* search by province */}
             <div className='w-full '>
               <p className='font-semibold p-2'>Destination</p>
               <SelectPicker
                 block
-                onSearch={updateData}
+                // onSearch={handleSearch}
                 onOpen={updateData}
                 data={destination}
-                value={destinationValue}
-                onChange={(event) => {
-                  setInput({ ...input, provinceId: event });
-                  setDestinationValue(
-                    destination.filter((el) => el.value === input.provinceId)[0]
-                      .label
-                  );
+                value={input.provinceId}
+                onChange={(value) => {
+                  setInput({ ...input, provinceId: value });
                 }}
               />
             </div>
@@ -143,6 +139,7 @@ export default function ExploreContainer() {
                 <ToggleOnButton
                   forMap={mockupFacility}
                   onChange={handleCheckbox}
+                  input={input}
                 />
               </div>
             </div>
@@ -150,7 +147,9 @@ export default function ExploreContainer() {
               <button
                 className='hover:underline cursor-pointer'
                 type='button'
-                onClick={() => setInput({ title: '' })}
+                onClick={() => {
+                  setInput({ title: '', provinceId: null, categoryId: null });
+                }}
               >
                 Clear
               </button>
