@@ -41,7 +41,7 @@ export default function EventContainer() {
           <div className='flex items-center gap-2'>
             <CouponIcon />
             Entrance:
-            {eventObj?.event?.EventFacility.entranceFee ? (
+            {eventObj?.event?.EventFacility?.entranceFee ? (
               <span className='text-green-500'>Free </span>
             ) : (
               <span className='text-amber-500'>Paid </span>
@@ -61,7 +61,7 @@ export default function EventContainer() {
             <div>
               <PinIcon className='w-[1rem] h-[1rem]' />
             </div>
-            <p>{eventObj?.event?.EventAddress.address}</p>
+            <p>{eventObj?.event?.EventAddress?.address}</p>
           </div>
         </div>
         <div />
@@ -69,7 +69,10 @@ export default function EventContainer() {
       {/* Host */}
       <div className='flex gap-3 items-center px-4'>
         <Avatar size='w-[3rem]' />
-        <p> Hosted By : {eventObj?.event?.organizerInformation.officialName}</p>
+        <p>
+          {' '}
+          Hosted By : {eventObj?.event?.organizerInformation?.officialName}
+        </p>
       </div>
       {/* Description */}
       <div className='flex flex-col px-4'>
@@ -84,37 +87,37 @@ export default function EventContainer() {
       <div className='flex flex-col px-4 '>
         <p className='text-[1.5rem] font-bold'>Facility</p>
         <div className='flex gap-2 flex-wrap py-2'>
-          {eventObj?.event?.EventFacility.toilet ? (
+          {eventObj?.event?.EventFacility?.toilet ? (
             <div className='flex gap-3 items-center'>
               <ToiletIcon /> Toilet
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility.parking ? (
+          {eventObj?.event?.EventFacility?.parking ? (
             <div className='flex gap-2 items-center'>
               <CarParkIcon /> Park
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility.meditationRoom ? (
+          {eventObj?.event?.EventFacility?.meditationRoom ? (
             <div className='flex gap-2 items-center'>
               <PrayIcon /> Pray room
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility.petFriend ? (
+          {eventObj?.event?.EventFacility?.petFriend ? (
             <div className='flex gap-2 items-center'>
               <DogIcon /> Dog
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility.food ? (
+          {eventObj?.event?.EventFacility?.food ? (
             <div className='flex gap-2 items-center'>
               <FoodIcon /> Food Store
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility.wifi ? (
+          {eventObj?.event?.EventFacility?.wifi ? (
             <div className='flex gap-2 items-center'>
               <WifiIcon /> Free Wi-fi
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility.medicalService ? (
+          {eventObj?.event?.EventFacility?.medicalService ? (
             <div className='flex gap-2 items-center'>
               <MedicalIcon /> Medical Store
             </div>

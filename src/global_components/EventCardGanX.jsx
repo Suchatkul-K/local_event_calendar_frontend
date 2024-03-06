@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Truncate from 'react-truncate';
 import formatDate from '../utils/formatDate';
 
 function EventCardGanX({ event }) {
@@ -20,7 +21,22 @@ function EventCardGanX({ event }) {
             <div>
               <h1 className='font-bold text-[1rem]'>{event?.title}</h1>
               <p className='text-[0.8rem] h-[3.5rem] w-full] text-wrap truncate'>
-                {event?.description}
+                <Truncate
+                  lines={2}
+                  ellipsis={
+                    <span>
+                      ...{' '}
+                      <a
+                        className='text-gray-600 font-bold text-[0.7rem]'
+                        href='/link/to/article'
+                      >
+                        Read more
+                      </a>
+                    </span>
+                  }
+                >
+                  {event?.description}
+                </Truncate>
               </p>
             </div>
           </div>
