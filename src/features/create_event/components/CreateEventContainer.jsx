@@ -1,181 +1,146 @@
-// import React from 'react'
-import { useState } from 'react';
+import { useState, useRef, React } from 'react';
 import { SelectPicker } from 'rsuite';
+import { v4 as uuid } from 'uuid';
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
 import Map from '../../main/components/Map';
 import { EVENT_FACILITY } from '../../../constance/index';
+import useCreateEvent from '../hook/useCreateEvent';
 
 export default function CreateEventContainer() {
-  const provinceMockup = [
-    { id: 1, name: 'Samutprakarn' },
-    { id: 2, name: 'Krungtep' },
-    { id: 3, name: 'Nakorn patom' },
-    { id: 4, name: 'Nakornrachasrima' },
-    { id: 5, name: 'Burirum' },
-    { id: 6, name: 'Pisnulok' },
-    { id: 7, name: 'Rayong' },
-    { id: 8, name: 'Chonburi' },
-  ].map((province) => ({ label: province.name, value: province.id }));
-  const districtMockup = [
-    { id: 1, name: 'Samutprakarn' },
-    { id: 2, name: 'Krungtep' },
-    { id: 3, name: 'Nakorn patom' },
-    { id: 4, name: 'Nakornrachasrima' },
-    { id: 5, name: 'Burirum' },
-    { id: 6, name: 'Pisnulok' },
-    { id: 7, name: 'Rayong' },
-    { id: 8, name: 'Chonburi' },
-  ].map((district) => ({ label: district.name, value: district.id }));
+  const fileEl = useRef();
+  const fileEl2 = useRef();
+  const { CategoryObject, ProvinceObject, inputObject } = useCreateEvent();
+  const { category } = CategoryObject;
+  const { province, district, handleSelectPicker, subDistrict } =
+    ProvinceObject;
+  const {
+    handleTime,
+    handleChange,
+    input,
+    handleCheckbox,
+    handleformSubmit,
+    coverImage,
+    handleUploadCover,
+    handleUploadImage,
+    image,
+    handleDeleteImage,
+  } = inputObject;
 
-  const subdistrictMockup = [
-    { id: 1, name: 'Samutprakarn' },
-    { id: 2, name: 'Krungtep' },
-    { id: 3, name: 'Nakorn patom' },
-    { id: 4, name: 'Nakornrachasrima' },
-    { id: 5, name: 'Burirum' },
-    { id: 6, name: 'Pisnulok' },
-    { id: 7, name: 'Rayong' },
-    { id: 8, name: 'Chonburi' },
-  ].map((subDistrict) => ({ label: subDistrict.name, value: subDistrict.id }));
+  // console.log(province);
+  let districtData;
+  let subDistrictData;
 
-  const categoryMockup = [
-    { id: 1, name: 'food' },
-    { id: 2, name: 'Krungtep' },
-    { id: 3, name: 'Nakorn patom' },
-    { id: 4, name: 'Nakornrachasrima' },
-    { id: 5, name: 'Burirum' },
-    { id: 6, name: 'Pisnulok' },
-    { id: 7, name: 'Rayong' },
-    { id: 8, name: 'Chonburi' },
-  ].map((category) => ({ label: category.name, value: category.id }));
+  const provinceData = province?.map((provinces, index) => ({
+    label: provinces.provinceNameEn,
+    value: provinces.id,
+    name: 'provinceId',
+    index,
+  }));
 
-  const [input, setInput] = useState({});
-  const [province, setProvince] = useState([]);
-  const [district, setDistrict] = useState([]);
-  const [subdistrict, setSubdistrict] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [time, setTime] = useState({});
+  if (district) {
+    districtData = district?.map((districts, index) => ({
+      label: districts?.districtNameEn,
+      value: districts?.id,
+      name: 'districtId',
+      index,
+    }));
+  }
 
-  let tempTime = { startTime: '', endTime: '' };
-  const handleTime = (e) => {
-    // console.log(e.target.value);
-    // console.log(e.target.name);
-    if (e.target.name === 'startTime') {
-      if (tempTime.startTime === '') {
-        tempTime = { ...time };
-      }
-      tempTime = { ...tempTime, [e.target.name]: e.target.value };
-    }
-    if (e.target.name === 'endTime') {
-      if (tempTime.endTime === '') {
-        tempTime = { ...time };
-      }
-      tempTime = { ...tempTime, [e.target.name]: e.target.value };
-    }
+  if (subDistrict) {
+    subDistrictData = subDistrict?.map((subDistricts, index) => ({
+      label: subDistricts?.subdistrictNameEn,
+      value: subDistricts?.id,
+      name: 'subDistrictId',
+      index,
+    }));
+  }
 
-    // console.log(tempTime);
-    if (tempTime.startTime && tempTime.endTime) {
-      const { startTime, endTime } = tempTime;
-      const timePeriod = `${tempTime.startTime}-${tempTime.endTime}`;
-      setInput({ ...input, timePeriod });
-      setTime({
-        ...time,
-        startTime,
-        endTime,
-      });
-    }
-  };
-
-  console.log(input);
-  const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
-  // const handleformSubmit = async (e) => {
-  //   try {
-  //     e.preventDefault();
-  //     // const validateError = validateCreateEvent(input);
-  //     // if (validateError) {
-  //     //   return setError(validateError);
-  //     // }
-  //     const formData = new FormData();
-  //     formData.append('title', input?.title);
-  //     formData.append('description', input.description);
-  //     formData.append('startDate', input.startDate);
-  //     formData.append('timePeriod', input.timePeriod);
-  //     formData.append('isYearly', input.isYearly);
-  //     formData.append('website', input.website);
-  //     formData.append('email', input.email);
-  //     formData.append('facebook', input.facebook);
-  //     formData.append('telephone', input.telephone);
-  //     formData.append('address', input.address);
-  //     formData.append('address2', input.address2);
-  //     formData.append('provinceId', input.provinceId);
-  //     formData.append('districtId', input.districtId);
-  //     formData.append('subdistrictId', input.subdistrictId);
-  //     formData.append('categoryId', input.categoryId);
-  //     formData.append('parking', input.parking);
-  //     formData.append('toilet', input.toilet);
-  //     formData.append('meditationRoom', input.meditationRoom);
-  //     formData.append('food', input.food);
-  //     formData.append('entranceFee', input.entranceFee);
-  //     formData.append('wifi', input.wifi);
-  //     formData.append('mediaclService', input.mediaclService);
-  //     formData.append('petFriendly', input.petFriendly);
-
-  //     formData.append('profileImage', image);
-
-  //     await createEvent(formData);
-  //     toast.success('create successfully');
-  //     // setError({});
-  //     setInput(initial);
-  //   } catch (err) {
-  //     console.log(err);
-  //     // toast.error(err.response?.data.message);
-  //   }
-  // };
-
-  const updateData = () => {
-    if (province.length === 0) {
-      setProvince(provinceMockup);
-    }
-
-    if (district.length === 0) {
-      setDistrict(districtMockup);
-    }
-    if (subdistrict.length === 0) {
-      setSubdistrict(subdistrictMockup);
-    }
-    if (category.length === 0) {
-      setCategory(categoryMockup);
-    }
-  };
-
-  console.log(input);
-
-  const handleCheckbox = (e) => {
-    if (e.target.checked) {
-      setInput({ ...input, [e.target.name]: 'true' });
-    } else {
-      setInput({ ...input, [e.target.name]: 'false' });
-    }
-  };
+  const catagoryData = category?.map((catagories) => ({
+    label: catagories?.name,
+    value: catagories?.id,
+    name: 'catagoryId',
+  }));
 
   return (
-    <form>
+    <form onSubmit={handleformSubmit}>
       <div>
-        <div className=' mx-auto flex flex-col  gap-[2rem] w-full py-[2rem] px-[3rem]'>
-          <div className='text-[1.75rem] font-semibold text-center'>
+        <div className=' mx-auto flex flex-col  gap-[1rem] w-full py-[2rem] px-[3rem]'>
+          <div className='text-[1.75rem] font-semibold text-center pb-3'>
             Create An Event
           </div>
-          <div className='flex flex-col items-center'>
-            <PictureIcon />
-          </div>
-          <div className='flex flex-row justify-end'>
-            <div className='w-[20%]'>
-              <Button secondary='primary'>Upload </Button>{' '}
+          <span className='text-[1.2rem] font-medium'>Cover Image</span>
+
+          {coverImage ? (
+            <div className=' flex justify-center items-center'>
+              <img
+                className='object-cover w-full h-[34vh] rounded-lg'
+                src={URL.createObjectURL(coverImage)}
+                alt='cover pic'
+              />
             </div>
+          ) : (
+            <div className='flex flex-col items-center'>
+              <PictureIcon />
+            </div>
+          )}
+
+          <div className='flex flex-row justify-end'>
+            <div className='md:w-[18%] sm:[30%]'>
+              <input
+                name='coverImage'
+                type='file'
+                multiple
+                ref={fileEl}
+                className='hidden'
+                onChange={handleUploadCover}
+              />
+            </div>
+
+            <Button onClick={() => fileEl.current.click()}>Upload </Button>
+          </div>
+
+          <span className='text-[1.2rem] font-medium '>Image</span>
+          <div />
+          {image[0] ? (
+            <div className=' flex flex-col gap-2 justify-center'>
+              {image.map((el) => (
+                <div className=' relative' key={uuid()}>
+                  <img
+                    id={uuid()}
+                    name={el.name}
+                    className='object-cover w-full h-[34vh] rounded-lg'
+                    src={URL.createObjectURL(el)}
+                    alt='cover pic'
+                  />
+                  <button
+                    type='button'
+                    className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
+                    onClick={() => handleDeleteImage(el)}
+                  >
+                    X
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className='flex flex-col items-center'>
+              <PictureIcon />
+            </div>
+          )}
+          <div className='flex flex-row justify-end'>
+            <div className='md:w-[18%] sm:[30%]'>
+              <input
+                name='image'
+                type='file'
+                ref={fileEl2}
+                className='hidden'
+                onChange={handleUploadImage}
+              />
+            </div>
+
+            <Button onClick={() => fileEl2.current.click()}>Upload </Button>
           </div>
           <Input
             name='title'
@@ -196,7 +161,7 @@ export default function CreateEventContainer() {
             />
           </div>
 
-          <div className='flex flex-row justify-around w-[100%]'>
+          <div className='flex flex-row justify-between w-[100%]'>
             <div>
               <div className='font-semibold '>Start Date</div>
               <input
@@ -301,12 +266,11 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>Province</span>
             <SelectPicker
               block
-              onSearch={updateData}
-              onOpen={updateData}
-              data={province}
-              onChange={(value, event) =>
-                setInput({ ...input, provinceId: value })
-              }
+              // valueKey='test'
+              placeholder='Select Province'
+              data={provinceData}
+              // onChange={handleSelectPicker}
+              onSelect={handleSelectPicker}
             />
           </div>
 
@@ -314,12 +278,8 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>District</span>
             <SelectPicker
               block
-              onSearch={updateData}
-              onOpen={updateData}
-              data={district}
-              onChange={(value, event) =>
-                setInput({ ...input, districtId: value })
-              }
+              data={districtData}
+              onSelect={handleSelectPicker}
             />
           </div>
 
@@ -327,12 +287,8 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>Subdistrict</span>
             <SelectPicker
               block
-              onSearch={updateData}
-              onOpen={updateData}
-              data={subdistrict}
-              onChange={(value, event) =>
-                setInput({ ...input, subDistrictId: value })
-              }
+              data={subDistrictData}
+              onSelect={handleSelectPicker}
             />
           </div>
 
@@ -340,12 +296,8 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>Category Event</span>
             <SelectPicker
               block
-              onSearch={updateData}
-              onOpen={updateData}
-              data={category}
-              onChange={(value, event) =>
-                setInput({ ...input, categoryId: value })
-              }
+              data={catagoryData}
+              onSelect={handleSelectPicker}
             />
           </div>
 
