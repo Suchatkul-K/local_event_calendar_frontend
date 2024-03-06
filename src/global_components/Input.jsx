@@ -1,5 +1,5 @@
 // import React from 'react';
-import { EyeIcon } from '../icons';
+import { EyeIcon, LockerIcon } from '../icons';
 
 export default function Input({
   name,
