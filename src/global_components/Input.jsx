@@ -1,5 +1,4 @@
-// import React from 'react';
-import { EyeIcon, LockerIcon } from '../icons';
+import { EyeIcon } from '../icons';
 
 export default function Input({
   name,
@@ -13,6 +12,10 @@ export default function Input({
   onClick,
   border,
 }) {
+  const finalValue = (value ? value[name] : '') || '';
+
+  console.log(finalValue);
+
   return (
     <label htmlFor={name}>
       <p className='p-[0.5rem]  font-semibold text-[1.0rem]'>{title}</p>
@@ -22,7 +25,7 @@ export default function Input({
         {children}
         <input
           onChange={onChange}
-          value={value?.name}
+          value={finalValue}
           type={type}
           name={name}
           id={name}
