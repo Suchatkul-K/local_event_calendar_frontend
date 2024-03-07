@@ -20,9 +20,7 @@ function MapComponent() {
   const map = useMap();
 
   // Fetch data based on the specified bounds
-  const fetchData = (bounds) =>
-    // console.log('Fetching data for bounds:', bounds);
-    getAllEventInScope(bounds);
+  const fetchData = (bounds) => getAllEventInScope(bounds); // console.log('Fetching data for bounds:', bounds);
   const handleMapChange = async () => {
     // const centerMap = map.getCenter();
     // console.log('Map center :', centerMap);
