@@ -1,6 +1,5 @@
 import axios from '../configs/axios';
 
+const getCategory = () => axios.get('/category');
 
-const getCategory =  () =>  axios.get('/category')
-
-export default getCategory
+export default getCategory;
