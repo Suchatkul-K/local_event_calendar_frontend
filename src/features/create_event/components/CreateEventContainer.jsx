@@ -1,4 +1,4 @@
-import { useState, useRef, React } from 'react';
+import { useState, useRef, React, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
 import { v4 as uuid } from 'uuid';
 import Input from '../../../global_components/Input';
@@ -6,29 +6,146 @@ import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
 import Map from '../../main/components/Map';
 import { EVENT_FACILITY } from '../../../constance/index';
-import useCreateEvent from '../hook/useCreateEvent';
+import categoryApi from '../../../api/category';
+import provinceApi from '../../../api/province';
+import InputDate from '../../../global_components/InputDate';
 
 export default function CreateEventContainer() {
+  const [input, setInput] = useState({});
+  const [province, setProvince] = useState([]);
+  const [district, setDistrict] = useState([]);
+  const [subDistrict, setSubDistrict] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [image, setImage] = useState([]);
+  const [coverImage, setCoverImage] = useState(null);
+  const [time, setTime] = useState({});
+
   const fileEl = useRef();
   const fileEl2 = useRef();
-  const { CategoryObject, ProvinceObject, inputObject } = useCreateEvent();
-  const { category } = CategoryObject;
-  const { province, district, handleSelectPicker, subDistrict } =
-    ProvinceObject;
-  const {
-    handleTime,
-    handleChange,
-    input,
-    handleCheckbox,
-    handleformSubmit,
-    coverImage,
-    handleUploadCover,
-    handleUploadImage,
-    image,
-    handleDeleteImage,
-  } = inputObject;
 
-  // console.log(province);
+  console.log(input);
+
+  // ------------------------fetch-----------------
+  const fetchProvince = async () => {
+    try {
+      const provinces = await provinceApi();
+      setProvince(provinces.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchCategory = async () => {
+    try {
+      const categories = await categoryApi();
+      setCategory(categories.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchProvince();
+    fetchCategory();
+  }, []);
+  /// ///--------------------Handle---------------------------
+
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      setInput({ ...input, [e.target.name]: 'true' });
+    } else {
+      setInput({ ...input, [e.target.name]: 'false' });
+    }
+  };
+
+  const handleUploadCover = (e) => {
+    setInput({ ...input, [[e.target.name]]: e.target.value });
+    setCoverImage(e.target.files[0]);
+  };
+
+  const handleUploadImage = (e) => {
+    const filesImage = e.target.files;
+    setImage([...image, ...filesImage]);
+    setInput({ ...input, [[e.target.name]]: [...image, ...filesImage] });
+  };
+
+  const handleDeleteImage = (el) => {
+    console.log(el);
+    console.log(input.image);
+    const tempImage = image?.filter((file) => file.name !== el.name);
+
+    setInput({ ...input, image: tempImage });
+    setImage(tempImage);
+  };
+
+  const handleSelectPicker = (value, item, event) => {
+    setInput({ ...input, [item.name]: value });
+    if (item.name === 'provinceId') {
+      setDistrict(province[item.index].Districts);
+      setSubDistrict([]);
+      setInput((prev) => {
+        delete prev.districtId;
+
+        return prev;
+      });
+    }
+
+    if (item.name === 'districtId') {
+      setSubDistrict(district[item.index].SubDistricts);
+    }
+  };
+
+  const handleformSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      // const validateError = validateCreateEvent(input);
+      // if (validateError) {
+      //   return setError(validateError);
+      // }
+
+      const formData = new FormData();
+      Object.keys(input).forEach((key) => formData.append(key, input[key]));
+
+      //       await createEvent(formData);
+      //       toast.success('create successfully');
+      //       // setError({});
+      //       setInput(initial);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  let tempTime = { startTime: '', endTime: '' };
+  const handleTime = (e) => {
+    if (e.target.name === 'startTime') {
+      if (tempTime.startTime === '') {
+        tempTime = { ...time };
+      }
+      tempTime = { ...tempTime, [e.target.name]: e.target.value };
+    }
+    if (e.target.name === 'endTime') {
+      if (tempTime.endTime === '') {
+        tempTime = { ...time };
+      }
+      tempTime = { ...tempTime, [e.target.name]: e.target.value };
+    }
+    if (tempTime.startTime && tempTime.endTime) {
+      const { startTime, endTime } = tempTime;
+      const timePeriod = `${tempTime.startTime}-${tempTime.endTime}`;
+      setInput({ ...input, timePeriod });
+      setTime({
+        ...time,
+        startTime,
+        endTime,
+      });
+    }
+  };
+  // ------------------------------map-----------------------------
+
   let districtData;
   let subDistrictData;
 
@@ -161,43 +278,36 @@ export default function CreateEventContainer() {
             />
           </div>
 
-          <div className='flex flex-row justify-between w-[100%]'>
-            <div>
-              <div className='font-semibold '>Start Date</div>
-              <input
-                className='bg-inherit border border-gray-300 rounded-btn px-1 py-1 w-[90%] text-center'
-                type='date'
-                name='startDate'
-                onChange={handleChange}
-              />
-            </div>
-            <div className='flex flex-col items-end'>
-              <div className='font-semibold '>End Date</div>
-              <input
-                className='bg-inherit border border-gray-300 rounded-btn px-1  py-1 w-[90%] text-center'
-                type='date'
+          <div className='flex flex-row justify-between w-fit '>
+            <InputDate
+              name='startDate'
+              title='Start Date'
+              onChange={handleChange}
+            />
+            <div className='text-end'>
+              <InputDate
                 name='endDate'
+                title='End Date'
                 onChange={handleChange}
               />
             </div>
           </div>
 
           <div className='flex flex-row justify-between'>
-            <div className='font-semibold pb-2'>
-              <div>Start Time</div>
-              <input
-                className='bg-inherit border border-gray-300 rounded-btn px-2 py-1'
-                type='time'
+            <div className='font-semibold w-full'>
+              <InputDate
                 name='startTime'
+                title='Start Time'
+                type='time'
                 onChange={handleTime}
               />
             </div>
-            <div className='font-semibold pb-2'>
-              <div className='flex flex-col items-end'>End Time</div>
-              <input
-                className='bg-inherit border border-gray-300 rounded-btn px-2 py-1'
-                type='time'
+
+            <div className='font-semibold w-full text-end'>
+              <InputDate
                 name='endTime'
+                title='End Time'
+                type='time'
                 onChange={handleTime}
               />
             </div>
