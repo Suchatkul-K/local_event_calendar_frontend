@@ -84,9 +84,9 @@ export default function EventContainer() {
         <p className='text-[1.5rem] font-bold'>Description</p>
         <p>{eventObj?.event?.description}</p>
         <div className='flex justify-end py-4'>
-          <div className='border flex items-center gap-2 p-2 rounded-full'>
+          <div className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full'>
             <HearthIconOutline />
-            <div>Remind Me</div>
+            <div className='text-red-400 text-[0.75rem]'>Remind Me</div>
           </div>
         </div>
       </div>

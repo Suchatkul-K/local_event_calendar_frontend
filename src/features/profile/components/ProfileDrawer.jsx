@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 // import { Drawer, ButtonToolbar, Button, Placeholder } from 'rsuite';
 import 'rsuite/Drawer/styles/index.css';
+import 'rsuite/Animation/styles/index.css';
 
 import {
   Drawer,
@@ -10,25 +11,33 @@ import {
   Button,
   IconButton,
   Placeholder,
+  Animation,
 } from 'rsuite';
+import useProfileContext from '../hook/useProfileContext';
 
-function ProfileDrawer({ children }) {
+function ProfileDrawer({ children, props }) {
   const [open, setOpen] = useState(false);
+  const [show, setShow] = useState(true);
+  const [placement, setPlacement] = useState('right');
+
+  // const ProfileContextObject = useProfileContext();
+  // console.log(props, '++++++++++++++++++++');
 
   return (
     <>
       <ButtonToolbar>
         <Button onClick={() => setOpen(true)}>{children}</Button>
       </ButtonToolbar>
-
-      <Drawer size='300px' open={open} onClose={() => setOpen(false)}>
-        <Drawer.Header>
-          <Drawer.Title>Your Event</Drawer.Title>
-        </Drawer.Header>
-        <Drawer.Body>
-          <Placeholder.Paragraph />
-        </Drawer.Body>
-      </Drawer>
+      <Animation.Slide in={show} placement={placement}>
+        <Drawer size='22rem' open={open} onClose={() => setOpen(false)}>
+          <Drawer.Header>
+            <Drawer.Title>Your Event</Drawer.Title>
+          </Drawer.Header>
+          <Drawer.Body>
+            <div className='flex flex-col gap-3'>{props}</div>
+          </Drawer.Body>
+        </Drawer>
+      </Animation.Slide>
     </>
   );
 }

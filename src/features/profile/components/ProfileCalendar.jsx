@@ -4,6 +4,8 @@ import 'rsuite/Popover/styles/index.css';
 import { Calendar, Whisper, Popover, Badge } from 'rsuite';
 import useProfileContext from '../hook/useProfileContext';
 import ProfileDrawer from './ProfileDrawer';
+import EventCardGanX from '../../../global_components/EventCardGanX';
+import EventCard from '../../../global_components/EventCard';
 
 function ProfileCalendar() {
   const ProfileContextObject = useProfileContext();
@@ -42,6 +44,9 @@ function ProfileCalendar() {
 
     if (list.length) {
       // const moreCount = list.length - displayList.length;
+      const event = list.map((item) => (
+        <EventCard key={item.id} event={item} />
+      ));
 
       return (
         // <ProfileDrawer>
@@ -60,7 +65,7 @@ function ProfileCalendar() {
         //     </Popover>
         //   }
         // >
-        <ProfileDrawer>
+        <ProfileDrawer props={event}>
           <ul className='calendar-todo-list h-full'>
             <div className='w-full h-full flex justify-center items-center'>
               <Badge />

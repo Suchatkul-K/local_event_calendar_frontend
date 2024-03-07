@@ -7,7 +7,7 @@ function ProfileInfo() {
       <div className='relative rounded-lg overflow-hidden'>
         {/* background */}
         <img
-          src='https://images.unsplash.com/photo-1709065397155-1cd979c61fac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+          src='https://img.freepik.com/free-photo/wat-arun-temple-twilight-bangkok-thailand_335224-772.jpg?w=1380&t=st=1709804450~exp=1709805050~hmac=4c85aca3c616ca98340e0830af1ee007637ad316e33a824cde3d9d9b15a159c4'
           alt=''
           className='w-full h-full inset-0 opacity-85'
         />
