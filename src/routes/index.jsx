@@ -50,11 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/explore',
-        element: (
-          <ExploreContextProvider>
-            <ExplorePage />
-          </ExploreContextProvider>
-        ),
+        element: <ExplorePage />,
       },
       { path: '/profile', element: <ProfilePage /> },
       { path: '/map', element: <MapPage /> },
