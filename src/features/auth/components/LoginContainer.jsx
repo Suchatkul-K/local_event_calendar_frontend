@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
@@ -34,6 +35,7 @@ export default function LoginContainer() {
       console.log('error');
     }
   };
+  useEffect(() => window.scrollTo(0, 0), []);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -81,8 +83,10 @@ export default function LoginContainer() {
             </button>
 
             <div className='text-[1rem]'>
-              Already Have An Account ?{' '}
-              <span className='text-green-700'>Register</span>
+              <span>{`Don't have an account ? `}</span>
+              <Link to='/register'>
+                <span className='text-green-700'>Register</span>
+              </Link>
             </div>
           </div>
         </div>
