@@ -11,18 +11,13 @@ import HomeContextProvider from '../features/home/context/HomeContext';
 import OrganizerRegisterPage from '../pages/OrganizerRegisterPage';
 import UserRegisterPage from '../pages/UserRegisterPage';
 import EventContextProvider from '../features/Events/context/EventContext';
-import ExploreContextProvider from '../features/explore/context/ExploreContext';
+// import ExploreContextProvider from '../features/explore/context/ExploreContext';
 import AuthContextProvider from '../features/auth/context/AuthContext';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <AuthContextProvider>
-        {' '}
-        <Container />{' '}
-      </AuthContextProvider>
-    ),
+    element: <Container />,
     children: [
       {
         path: '/',

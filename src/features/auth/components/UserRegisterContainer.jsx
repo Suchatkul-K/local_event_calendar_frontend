@@ -35,6 +35,10 @@ export default function UserRegisterContainer() {
     setProfileImage(e.target.files[0]);
   };
 
+  const handleProfilePicDelete = () => {
+    setProfileImage('');
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -59,6 +63,7 @@ export default function UserRegisterContainer() {
         console.log(registerResult);
         storeToken(registerResult.data.accessToken);
         const authResult = await apiAuthMe(registerResult.data.accessToken);
+        console.log(authResult);
         setAuthUser(authResult.data);
       }
     } catch (err) {
@@ -73,22 +78,25 @@ export default function UserRegisterContainer() {
           <div className='text-[1.75rem] font-semibold'>Create An Account</div>
           <div className='flex flex-col items-center'>
             {profileImage ? (
-              <img
-                src={URL.createObjectURL(profileImage)}
-                alt='event'
-                className='w-[200px] h-[200px] object-cover'
-              />
+              <div className='relative'>
+                <img
+                  src={URL.createObjectURL(profileImage)}
+                  alt='event'
+                  className='w-[200px] h-[200px] object-cover'
+                />
+                <button
+                  type='button'
+                  className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
+                  onClick={handleProfilePicDelete}
+                >
+                  X
+                </button>
+              </div>
             ) : (
               <PictureIcon />
             )}
           </div>
           <div className='flex flex-row justify-end'>
-            <div className='md:w-[18%] sm:[30%]'>
-              {profileImage ? (
-                <Button secondary='primary'>Cancel </Button>
-              ) : null}
-            </div>
-
             <div className='md:w-[18%] sm:[30%]'>
               <input
                 type='file'

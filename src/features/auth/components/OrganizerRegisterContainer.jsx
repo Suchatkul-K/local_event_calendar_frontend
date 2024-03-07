@@ -43,6 +43,14 @@ export default function OrganizerRegisterContainer() {
     setIdentityCopyImage(e.target.files[0]);
   };
 
+  const handleProfilePicDelete = () => {
+    setProfileImage('');
+  };
+
+  const handleIdentityCopyPicDelete = () => {
+    setIdentityCopyImage('');
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -89,11 +97,20 @@ export default function OrganizerRegisterContainer() {
           <div className='text-[1.75rem] font-semibold'>Create An Account</div>
           <div className='flex flex-col items-center'>
             {profileImage ? (
-              <img
-                src={URL.createObjectURL(profileImage)}
-                alt='event'
-                className='w-[200px] h-[200px] object-cover'
-              />
+              <div className=' relative'>
+                <img
+                  src={URL.createObjectURL(profileImage)}
+                  alt='event'
+                  className='w-[200px] h-[200px] object-cover'
+                />
+                <button
+                  type='button'
+                  className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
+                  onClick={handleProfilePicDelete}
+                >
+                  X
+                </button>
+              </div>
             ) : (
               <PictureIcon />
             )}
@@ -187,11 +204,20 @@ export default function OrganizerRegisterContainer() {
 
           <div className='flex flex-col items-center'>
             {identityCopyImage ? (
-              <img
-                src={URL.createObjectURL(identityCopyImage)}
-                alt='event'
-                className='w-[200px] h-[200px] object-cover'
-              />
+              <div className='relative'>
+                <img
+                  src={URL.createObjectURL(identityCopyImage)}
+                  alt='event'
+                  className='w-[200px] h-[200px] object-cover'
+                />
+                <button
+                  type='button'
+                  className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
+                  onClick={handleIdentityCopyPicDelete}
+                >
+                  X
+                </button>
+              </div>
             ) : (
               <IdentityCardIcon />
             )}

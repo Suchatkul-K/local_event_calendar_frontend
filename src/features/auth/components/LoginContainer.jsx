@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
@@ -8,6 +9,7 @@ import { storeToken } from '../../../utils/local-storage';
 import useAuth from '../hooks/auth';
 
 export default function LoginContainer() {
+  const navigate = useNavigate();
   const [input, setInput] = useState({ email: '', password: '' });
   const [error, setError] = useState({});
 
@@ -85,7 +87,6 @@ export default function LoginContainer() {
             >
               Login with Line
             </button>
-
             <div className='text-[1rem]'>
               Already Have An Account ?{' '}
               <span className='text-green-700'>Register</span>
