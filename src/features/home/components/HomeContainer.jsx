@@ -21,7 +21,7 @@ function HomeContainer() {
       <CarouselHero />
       <div className='w-full p-[0.75rem] pt-[3rem] flex flex-col gap-4'>
         <NavigatorButton />
-        <Carousel title='Highlight'>
+        <Carousel title='Highlight' hight='h-[30rem]'>
           {highlightEvent?.map((value) => (
             <div key={value.id} className='carousel-item'>
               <EventCard event={value} />
@@ -30,11 +30,9 @@ function HomeContainer() {
         </Carousel>
         <Carousel title='Incoming'>
           {allEventsObj.event?.map((value) => (
-            <Link to={`/event/${value.id}`}>
-              <div key={value.id} className='carousel-item'>
-                <IncomingCard event={value} />
-              </div>
-            </Link>
+            <div key={value.id} className='carousel-item'>
+              <IncomingCard event={value} />
+            </div>
           ))}
         </Carousel>
         <SeasonContainer />

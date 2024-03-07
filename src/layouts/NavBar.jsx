@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <div
       className='flex justify-between w-full
-    text-base font-semibold bg-[#ffffff] items-center py-2'
+    text-base font-semibold bg-[#ffffff] items-center px-4 py-2'
     >
       <div>MENU</div>
       <div className='font-bold text-xl'>LOGO</div>
