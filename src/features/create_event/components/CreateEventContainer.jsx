@@ -1,15 +1,18 @@
 import { useState, useRef, React, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
 import { v4 as uuid } from 'uuid';
+import { MapContainer } from 'react-leaflet';
+import { toast } from 'react-toastify';
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
 
-import { EVENT_FACILITY } from '../../../constance/index';
-import Map from '../../map/components/Map';
+import { EVENT_FACILITY, FACILITY_LIST } from '../../../constance/index';
 import categoryApi from '../../../api/category';
 import provinceApi from '../../../api/province';
 import InputDate from '../../../global_components/InputDate';
+import EventMap from './EventMap';
+import { createEvent } from '../../../api/event';
 
 export default function CreateEventContainer() {
   const [input, setInput] = useState({});
@@ -111,10 +114,10 @@ export default function CreateEventContainer() {
       const formData = new FormData();
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
-      //       await createEvent(formData);
-      //       toast.success('create successfully');
-      //       // setError({});
-      //       setInput(initial);
+      await createEvent(formData);
+      toast.success('create successfully');
+      // setError({});
+      setInput({});
     } catch (err) {
       console.log(err);
     }
@@ -175,11 +178,13 @@ export default function CreateEventContainer() {
     }));
   }
 
-  const catagoryData = category?.map((catagories) => ({
+  const categoryData = category?.map((catagories) => ({
     label: catagories?.name,
     value: catagories?.id,
-    name: 'catagoryId',
+    name: 'categoryId',
   }));
+
+  const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
   return (
     <form onSubmit={handleformSubmit}>
@@ -377,10 +382,8 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>Province</span>
             <SelectPicker
               block
-              // valueKey='test'
               placeholder='Select Province'
               data={provinceData}
-              // onChange={handleSelectPicker}
               onSelect={handleSelectPicker}
             />
           </div>
@@ -407,27 +410,30 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>Category Event</span>
             <SelectPicker
               block
-              data={catagoryData}
+              data={categoryData}
               onSelect={handleSelectPicker}
             />
           </div>
 
           <div className='grid grid-cols-2  gap-[0.25rem] font-medium w-full'>
-            {EVENT_FACILITY.map((el) => (
-              <div className='flex flex-row gap-[0.5rem]' key={el.id}>
+            {Object.entries(FACILITY_LIST).map((el) => (
+              <div className='flex flex-row gap-[0.5rem]' key={el[0]}>
                 <input
                   type='checkbox'
-                  name={el.name}
-                  value={el.name}
+                  name={el[0]}
+                  value={el[0]}
                   onChange={handleCheckbox}
                 />
-                <div className='font-semibold'>{el.name}</div>
+                <div className='font-semibold'>{el[1]}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <Map />
+
+      <MapContainer center={BkkLatLon} zoom={9} style={{ height: '400px' }}>
+        <EventMap input={input} setInput={setInput} />
+      </MapContainer>
 
       <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-fit p-[1.5rem] '>
         <button
