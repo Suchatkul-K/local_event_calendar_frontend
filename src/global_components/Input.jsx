@@ -22,7 +22,7 @@ export default function Input({
         {children}
         <input
           onChange={onChange}
-          value={value[name] || ''}
+          value={value?.name}
           type={type}
           name={name}
           id={name}
