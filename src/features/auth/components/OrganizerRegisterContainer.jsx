@@ -9,8 +9,9 @@ import {
 } from '../../../icons';
 import { validateOrganizerRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
-import { apiRegister } from '../../../api/auth';
+import { apiRegister, apiAuthMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
+import useAuth from '../hooks/auth';
 
 export default function OrganizerRegisterContainer() {
   const [input, setInput] = useState({
@@ -25,6 +26,7 @@ export default function OrganizerRegisterContainer() {
   const [error, setError] = useState();
   const [profileImage, setProfileImage] = useState('');
   const [identityCopyImage, setIdentityCopyImage] = useState('');
+  const { setAuthUser } = useAuth();
 
   const fileEl = useRef(null);
   const fileEl2 = useRef(null);
@@ -72,6 +74,8 @@ export default function OrganizerRegisterContainer() {
         const registerResult = await apiRegister(formData);
         console.log(registerResult);
         storeToken(registerResult.data.accessToken);
+        const authResult = await apiAuthMe(registerResult.data.accessToken);
+        setAuthUser(authResult.data);
       }
     } catch (err) {
       console.log('error');

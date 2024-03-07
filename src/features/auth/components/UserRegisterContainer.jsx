@@ -9,8 +9,9 @@ import {
 } from '../../../icons';
 import { validateUserRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
-import { apiRegister } from '../../../api/auth';
+import { apiRegister, apiAuthMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
+import useAuth from '../hooks/auth';
 
 export default function UserRegisterContainer() {
   const [input, setInput] = useState({
@@ -23,7 +24,7 @@ export default function UserRegisterContainer() {
   });
   const [error, setError] = useState();
   const [profileImage, setProfileImage] = useState('');
-
+  const { setAuthUser } = useAuth();
   const fileEl = useRef(null);
 
   const handleChange = (e) => {
@@ -57,6 +58,8 @@ export default function UserRegisterContainer() {
         const registerResult = await apiRegister(formData);
         console.log(registerResult);
         storeToken(registerResult.data.accessToken);
+        const authResult = await apiAuthMe(registerResult.data.accessToken);
+        setAuthUser(authResult.data);
       }
     } catch (err) {
       console.log('error');
