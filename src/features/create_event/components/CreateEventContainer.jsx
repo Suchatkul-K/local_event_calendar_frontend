@@ -4,8 +4,9 @@ import { v4 as uuid } from 'uuid';
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
-import Map from '../../main/components/Map';
+
 import { EVENT_FACILITY } from '../../../constance/index';
+import Map from '../../map/components/Map';
 import categoryApi from '../../../api/category';
 import provinceApi from '../../../api/province';
 import InputDate from '../../../global_components/InputDate';
