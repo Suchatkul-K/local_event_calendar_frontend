@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../../../global_components/Input';
 import {
   EmailIcon,
@@ -77,6 +78,8 @@ export default function OrganizerRegisterContainer() {
       console.log('error');
     }
   };
+
+  useEffect(() => window.scrollTo(0, 0), []);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -254,8 +257,10 @@ export default function OrganizerRegisterContainer() {
             </button>
 
             <div className='text-[1rem]'>
-              Already Have An Account ?{' '}
-              <span className='text-green-700'>Register</span>
+              <span>Already Have An Account ?</span>
+              <Link to='/login'>
+                <span className='text-green-700'> Log in</span>
+              </Link>
             </div>
           </div>
         </div>
