@@ -12,6 +12,7 @@ import {
   FoodIcon,
   WifiIcon,
   MedicalIcon,
+  HearthIconOutline,
 } from '../../../icons';
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
@@ -57,7 +58,7 @@ export default function EventContainer() {
             <p>Start : {formatDate(eventObj.event?.startDate)}</p>
             <p>End : {formatDate(eventObj.event?.endDate)}</p>
           </div>
-          <div className='flex gap-2 items-baseline max-w-[9rem]'>
+          <div className='flex gap-2 items-baseline max-w-[10rem] '>
             <div>
               <PinIcon className='w-[1rem] h-[1rem]' />
             </div>
@@ -69,18 +70,17 @@ export default function EventContainer() {
       {/* Host */}
       <div className='flex gap-3 items-center px-4'>
         <Avatar size='w-[3rem]' />
-        <p>
-          {' '}
-          Hosted By : {eventObj?.event?.organizerInformation?.officialName}
-        </p>
+        <p>Hosted By : {eventObj?.event?.organizerInformation?.officialName}</p>
       </div>
       {/* Description */}
       <div className='flex flex-col px-4'>
         <p className='text-[1.5rem] font-bold'>Description</p>
         <p>{eventObj?.event?.description}</p>
-        <div className='flex flex-col items-end'>
-          <p>add event</p>
-          <div>icon</div>
+        <div className='flex justify-end py-4'>
+          <div className='border flex items-center gap-2 p-2 rounded-full'>
+            <HearthIconOutline />
+            <div>Remind Me</div>
+          </div>
         </div>
       </div>
       {/* Facility */}

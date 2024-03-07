@@ -1,4 +1,4 @@
-import Map from '../features/main/components/Map';
+import Map from '../features/map/components/Map';
 
 function MapPage() {
   return (
