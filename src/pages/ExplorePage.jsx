@@ -1,4 +1,5 @@
 import ExploreContainer from '../features/explore/components/ExploreContainer';
+import { ExploreContextProvider } from '../features/explore/context/ExploreContext';
 
 export default function ExplorePage() {
   return (
@@ -10,7 +11,9 @@ export default function ExplorePage() {
           alt='cover'
         />
         <div />
-        <ExploreContainer />
+        <ExploreContextProvider>
+          <ExploreContainer />
+        </ExploreContextProvider>
       </div>
     </div>
   );

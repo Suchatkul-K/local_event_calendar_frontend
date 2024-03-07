@@ -11,7 +11,6 @@ import HomeContextProvider from '../features/home/context/HomeContext';
 import OrganizerRegisterPage from '../pages/OrganizerRegisterPage';
 import UserRegisterPage from '../pages/UserRegisterPage';
 import EventContextProvider from '../features/Events/context/EventContext';
-import ExploreContextProvider from '../features/explore/context/ExploreContext';
 
 const router = createBrowserRouter([
   {
@@ -44,11 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/explore',
-        element: (
-          <ExploreContextProvider>
-            <ExplorePage />
-          </ExploreContextProvider>
-        ),
+        element: <ExplorePage />,
       },
       { path: '/profile', element: <ProfilePage /> },
       { path: '/map', element: <MapPage /> },
