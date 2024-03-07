@@ -1,3 +1,4 @@
+import { MapContainer, TileLayer } from 'react-leaflet';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
@@ -17,9 +18,15 @@ import {
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 
+const BkkLatLon = [13.756329334391024, 100.50176927408629];
+
 export default function EventContainer() {
   const eventObj = useEventContext();
   console.log(eventObj.event);
+  const eventLatLng = [
+    eventObj?.EventAddress?.lat,
+    eventObj?.EventAddress?.long,
+  ];
 
   return (
     <div className='flex flex-col gap-4'>
@@ -126,6 +133,13 @@ export default function EventContainer() {
       </div>
       {/* Carousel Preview */}
       <CarouselHero />
+      {/* Map */}
+      <MapContainer center={BkkLatLon} zoom={13} style={{ height: '400px' }}>
+        <TileLayer
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+      </MapContainer>
     </div>
   );
 }
