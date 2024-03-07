@@ -3,7 +3,6 @@ import Truncate from 'react-truncate';
 import formatDate from '../utils/formatDate';
 
 function EventCardGanX({ event }) {
-  console.log(event);
   return (
     <Link to={`/event/${event?.id}`}>
       <div className='flex rounded-lg overflow-hidden h-[10rem] gap-2 shadow-lg border w-full'>
@@ -19,19 +18,26 @@ function EventCardGanX({ event }) {
         <div className='flex flex-col p-2 w-full justify-between '>
           <div>
             <div>
-              <h1 className='font-bold text-[1rem]'>{event?.title}</h1>
+              {/* event title */}
+              <h1 className='font-bold text-[1rem]'>
+                <Truncate ellipsis={<span>...</span>} width={180}>
+                  {event?.title}
+                </Truncate>
+              </h1>
+
+              {/* event description */}
               <p className='text-[0.8rem] h-[3.5rem] w-full] text-wrap truncate'>
                 <Truncate
                   lines={2}
                   ellipsis={
                     <span>
                       ...{' '}
-                      <a
+                      <span
                         className='text-gray-600 font-bold text-[0.7rem]'
                         href='/link/to/article'
                       >
                         Read more
-                      </a>
+                      </span>
                     </span>
                   }
                 >
@@ -40,6 +46,8 @@ function EventCardGanX({ event }) {
               </p>
             </div>
           </div>
+
+          {/* facility detail */}
           <div>
             <p className='font-semibold text-[0.75rem]'>
               category :{' '}
