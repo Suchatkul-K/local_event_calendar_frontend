@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
@@ -9,11 +9,11 @@ import { storeToken } from '../../../utils/local-storage';
 import useAuth from '../hooks/auth';
 
 export default function LoginContainer() {
-  const navigate = useNavigate();
   const [input, setInput] = useState({ email: '', password: '' });
   const [error, setError] = useState({});
 
   const { setAuthUser } = useAuth();
+  const navigate = useNavigate();
 
   // console.log(input);
   const handleChange = (e) => {
@@ -37,6 +37,7 @@ export default function LoginContainer() {
         console.log(loginResult.data);
         const authResult = await apiAuthMe(loginResult.data.accessToken);
         setAuthUser(authResult.data);
+        navigate('/');
       }
     } catch (err) {
       console.log('error');

@@ -107,10 +107,7 @@ export default function UserRegisterContainer() {
                 className='hidden'
                 onChange={handleFileChange}
               />
-              <Button
-                secondary='primary'
-                onClick={() => fileEl.current.click()}
-              >
+              <Button onClick={() => fileEl.current.click()}>
                 Upload Profile
               </Button>
             </div>
@@ -119,7 +116,7 @@ export default function UserRegisterContainer() {
           <Input
             name='email'
             placeholder='Example@gmail.com'
-            value={input?.email}
+            value={input}
             onChange={handleChange}
             title='Email'
             errorMessage={error?.email}
@@ -129,7 +126,7 @@ export default function UserRegisterContainer() {
           <Input
             name='userName'
             placeholder='Username'
-            value={input?.userName}
+            value={input}
             onChange={handleChange}
             title='Username'
             errorMessage={error?.userName}
@@ -139,7 +136,7 @@ export default function UserRegisterContainer() {
           <Input
             name='password'
             placeholder='password'
-            value={input?.password}
+            value={input}
             onChange={handleChange}
             title='Password'
             errorMessage={error?.password}
@@ -150,7 +147,7 @@ export default function UserRegisterContainer() {
           <Input
             name='confirmPassword'
             placeholder='confirmPassword'
-            value={input?.confirmPassword}
+            value={input}
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
@@ -185,7 +182,7 @@ export default function UserRegisterContainer() {
                 <option value='USER' selected>
                   USER
                 </option>
-                <option value='ADMIN'>ADMIN</option>
+                {/* <option value='ADMIN'>ADMIN</option> */}
               </select>
             </div>
           </div>

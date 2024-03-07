@@ -7,7 +7,6 @@ function Container() {
   return (
     <div className=''>
       <NavBar />
-
       <Outlet />
       <Footer />
     </div>
