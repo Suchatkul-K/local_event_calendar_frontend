@@ -2,6 +2,7 @@ import ProfileContextProvider from '../context/ProfileContext';
 import ProfileCalendar from './ProfileCalendar';
 import ProfileEvent from './ProfileEvent';
 import ProfileInfo from './ProfileInfo';
+import ProfileDrawer from './ProfileDrawer';
 
 function ProfileContainer() {
   return (
@@ -9,7 +10,8 @@ function ProfileContainer() {
       <ProfileContextProvider>
         <ProfileInfo />
         <ProfileCalendar />
-        <ProfileEvent />
+        {/* <ProfileEvent /> */}
+        <ProfileDrawer />
       </ProfileContextProvider>
     </div>
   );

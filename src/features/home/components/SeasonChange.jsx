@@ -2,7 +2,7 @@ import PictureSeason from './PictureSeason';
 
 export function SummerSeason() {
   return (
-    <div className='grid grid-cols-2 gap-1 p-4'>
+    <div className=' grid md:grid-cols-2 xl:grid-rows-1 xl:grid-cols-4 gap-2 md:gap-1 xl:gap-2 py-4'>
       <PictureSeason
         src='https://i.pinimg.com/originals/0e/db/8e/0edb8ece9a0d50a2d255f9d1bb65dd52.jpg'
         month='February'
@@ -25,7 +25,7 @@ export function SummerSeason() {
 
 export function RainingSeason() {
   return (
-    <div className='grid grid-cols-2 gap-1 p-4'>
+    <div className='grid xs:grid-cols-2 md:grid-cols-2 xl:grid-rows-1 xl:grid-cols-4 xs:gap-1 md:gap-1 xl:gap-2 py-4'>
       <PictureSeason
         src='https://thailand.go.th/uploads/posts/the_post_1684140959.webp'
         month='June'
@@ -48,7 +48,7 @@ export function RainingSeason() {
 
 export function WinterSeason() {
   return (
-    <div className='grid grid-cols-2 gap-1 p-4'>
+    <div className='grid xs:grid-cols-2 md:grid-cols-2 xl:grid-rows-1 xl:grid-cols-4 xs:gap-1 md:gap-1 xl:gap-2 py-4'>
       <PictureSeason
         src='https://www.shutterstock.com/image-photo/scenic-horizon-kew-mae-pan-600nw-530812552.jpg'
         month='October'

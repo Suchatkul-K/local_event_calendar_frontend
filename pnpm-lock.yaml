@@ -35,6 +35,9 @@ dependencies:
   react-toastify:
     specifier: ^10.0.4
     version: 10.0.4(react-dom@18.2.0)(react@18.2.0)
+  react-truncate:
+    specifier: ^2.4.0
+    version: 2.4.0(prop-types@15.8.1)(react@18.2.0)
   rsuite:
     specifier: ^5.55.0
     version: 5.55.0(react-dom@18.2.0)(react@18.2.0)
@@ -3788,6 +3791,16 @@ packages:
       clsx: 2.1.0
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-truncate@2.4.0(prop-types@15.8.1)(react@18.2.0):
+    resolution: {integrity: sha512-3QW11/COYwi6iPUaunUhl06DW5NJBJD1WkmxW5YxqqUu6kvP+msB3jfoLg8WRbu57JqgebjVW8Lknw6T5/QZdA==}
+    peerDependencies:
+      prop-types: <= 15.x.x
+      react: <= 16.x.x
+    dependencies:
+      prop-types: 15.8.1
+      react: 18.2.0
     dev: false
 
   /react-use-set@1.0.0(react@18.2.0):
