@@ -8,14 +8,17 @@ export default function ToggleOnButton({ onChange, forMap, input }) {
             id={el.name}
             name={el.name}
             onChange={onChange}
-            checked={input[el.name]}
           />
-          <div className='swap-on bg-primary border rounded-btn px-2 py-1 text-white '>
-            {el.label}
-          </div>
-          <div className='swap-off bg-transparent border border-primary rounded-btn px-2 py-1 '>
-            {el.label}
-          </div>
+
+          {input[el.name] ? (
+            <div className='bg-primary border rounded-btn px-2 py-1 text-white '>
+              {el.label}
+            </div>
+          ) : (
+            <div className='bg-transparent border border-primary rounded-btn px-2 py-1 '>
+              {el.label}
+            </div>
+          )}
         </label>
       ))}
     </div>
