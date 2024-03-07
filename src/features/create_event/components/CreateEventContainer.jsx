@@ -4,9 +4,10 @@ import { v4 as uuid } from 'uuid';
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
-import Map from '../../main/components/Map';
+
 import { EVENT_FACILITY } from '../../../constance/index';
 import useCreateEvent from '../hook/useCreateEvent';
+import Map from '../../map/components/Map';
 
 export default function CreateEventContainer() {
   const fileEl = useRef();

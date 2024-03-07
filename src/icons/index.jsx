@@ -1128,25 +1128,35 @@ export function MedicalIcon({ className }) {
 export function MarkerIcon({ className, fill = 'none' }) {
   return (
     <svg
-      width='1rem'
-      height='1rem'
-      viewBox='0 0 24 24'
-      fill={fill}
-      xmlns='http://www.w3.org/2000/svg'
+      width='800px'
+      height='800px'
+      viewBox='-3 0 20 20'
+      version='1.1'
       className={className}
     >
-      <path
-        opacity='0.15'
-        d='M20 11C20 15.4183 16.4183 19 12 21C7.58172 19 4 15.4183 4 11C4 6.58172 7.58172 3 12 3C16.4183 3 20 6.58172 20 11Z'
-        fill='#000000'
-      />
-      <path
-        d='M12 7.5V14.5M8.5 11H15.5M20 11C20 15.4183 16.4183 19 12 21C7.58172 19 4 15.4183 4 11C4 6.58172 7.58172 3 12 3C16.4183 3 20 6.58172 20 11Z'
-        stroke='#000000'
-        strokeWidth='1.5'
-        strokeLinecap='round'
-        strokeLinejoin='round'
-      />
+      <title>pin_fill_sharp_circle [#634]</title>
+      <desc>Created with Sketch.</desc>
+      <defs />
+      <g
+        id='Page-1'
+        stroke='none'
+        strokeWidth='1'
+        fill='none'
+        fillRule='evenodd'
+      >
+        <g
+          id='Dribbble-Light-Preview'
+          transform='translate(-223.000000, -5399.000000)'
+          fill={fill}
+        >
+          <g id='icons' transform='translate(56.000000, 160.000000)'>
+            <path
+              d='M174,5248.219 C172.895,5248.219 172,5247.324 172,5246.219 C172,5245.114 172.895,5244.219 174,5244.219 C175.105,5244.219 176,5245.114 176,5246.219 C176,5247.324 175.105,5248.219 174,5248.219 M174,5239 C170.134,5239 167,5242.134 167,5246 C167,5249.866 174,5259 174,5259 C174,5259 181,5249.866 181,5246 C181,5242.134 177.866,5239 174,5239'
+              id='pin_fill_sharp_circle-[#634]'
+            />
+          </g>
+        </g>
+      </g>
     </svg>
   );
 }
@@ -1201,6 +1211,23 @@ export function IdentityCardIcon({ className = null }) {
           />
         </g>
       </g>
+    </svg>
+  );
+}
+
+export function HearthIconOutline({ className }) {
+  return (
+    <svg
+      width='1.5rem'
+      height='1.5rem'
+      viewBox='0 0 24 24'
+      fill='none'
+      className={className}
+    >
+      <path
+        d='M4.45067 13.9082L11.4033 20.4395C11.6428 20.6644 11.7625 20.7769 11.9037 20.8046C11.9673 20.8171 12.0327 20.8171 12.0963 20.8046C12.2375 20.7769 12.3572 20.6644 12.5967 20.4395L19.5493 13.9082C21.5055 12.0706 21.743 9.0466 20.0978 6.92607L19.7885 6.52734C17.8203 3.99058 13.8696 4.41601 12.4867 7.31365C12.2913 7.72296 11.7087 7.72296 11.5133 7.31365C10.1304 4.41601 6.17972 3.99058 4.21154 6.52735L3.90219 6.92607C2.25695 9.0466 2.4945 12.0706 4.45067 13.9082Z'
+        stroke='#222222'
+      />
     </svg>
   );
 }

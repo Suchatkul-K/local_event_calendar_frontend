@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { getAllEventInScope } from '../../../api/event';
 import { MarkerIcon } from '../../../icons';
+import formatDate from '../../../utils/formatDate';
 
 // const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
@@ -88,7 +89,7 @@ function MapComponent({ events, setEvents }) {
           icon={customIcon('size-10', 'red')}
         >
           <Popup>
-            <MarkerIcon />
+            <MarkerIcon className='w-[1rem] h-[1rem]' />
             Mock up Location
           </Popup>
         </Marker>
@@ -100,7 +101,23 @@ function MapComponent({ events, setEvents }) {
             key={event.id}
             icon={customIcon('size-10', 'green')}
           >
-            <Popup>{event.title}</Popup>
+            <Popup>
+              <div className='p-3'>
+                <div className='pb-2'>
+                  <img src={event?.coverImage} alt='' />
+                </div>
+                <div className='w-full text-center font-bold text-[1rem]'>
+                  {event?.title}
+                </div>
+                <p className='m-0'>
+                  <span className='font-bold'>Start at : </span>
+                  {formatDate(event?.startDate)}
+                </p>
+                <p>
+                  <span className='font-bold'>Time : </span> {event.timePeriod}
+                </p>
+              </div>
+            </Popup>
           </Marker>
         ))}
     </div>
