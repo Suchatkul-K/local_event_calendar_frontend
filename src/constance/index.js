@@ -4,6 +4,17 @@ export const USER_ROLE = {
   GUEST: 'GUEST',
 };
 
+export const FACILITY_LIST = {
+  parking: 'parking',
+  toilet: 'toilet',
+  prayerRoom: 'prayer room',
+  food: 'food',
+  entranceFee: 'entrance fee',
+  wifi: 'wifi',
+  medicalService: 'medical service',
+  petFriend: 'pet friendly',
+};
+
 export const EVENT_FACILITY = [
   { id: 1, name: 'parking' },
   { id: 2, name: 'toilet' },
