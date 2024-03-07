@@ -4,7 +4,7 @@ import Footer from './Footer';
 
 function Container() {
   return (
-    <div className='px-4'>
+    <div className=''>
       <NavBar />
       <Outlet />
       <Footer />
