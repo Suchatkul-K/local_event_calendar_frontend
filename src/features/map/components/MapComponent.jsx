@@ -5,6 +5,7 @@ import {
   useMapEvents,
   useMap,
   useMapEvent,
+  MapContainer,
 } from 'react-leaflet';
 import L from 'leaflet';
 import { useEffect, useState } from 'react';
@@ -14,13 +15,13 @@ import { MarkerIcon } from '../../../icons';
 
 // const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
-function MapComponent() {
-  const [events, setEvents] = useState();
+function MapComponent({ events, setEvents }) {
+  // const [events, setEvents] = useState();
   const [user, setUser] = useState(null);
   const map = useMap();
 
   // Fetch data based on the specified bounds
-  const fetchData = (bounds) => getAllEventInScope(bounds); // console.log('Fetching data for bounds:', bounds);
+  const fetchData = (bounds) => getAllEventInScope(bounds); // console.log('Fetching data for bounds:', bounds); // context
   const handleMapChange = async () => {
     // const centerMap = map.getCenter();
     // console.log('Map center :', centerMap);
@@ -31,11 +32,11 @@ function MapComponent() {
     if (map.getZoom() >= 10) {
       // Fetch data based on the bounds of the visible area
       const bounds = map.getBounds();
-      const result = await fetchData(bounds);
+      const result = await fetchData(bounds); // context
       console.log(result.data);
-      setEvents(result.data);
+      setEvents(result.data); // context
     } else {
-      setEvents(null);
+      setEvents(null); // context
     }
   };
 
@@ -76,7 +77,7 @@ function MapComponent() {
     });
 
   return (
-    <>
+    <div>
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -102,7 +103,7 @@ function MapComponent() {
             <Popup>{event.title}</Popup>
           </Marker>
         ))}
-    </>
+    </div>
   );
 }
 
