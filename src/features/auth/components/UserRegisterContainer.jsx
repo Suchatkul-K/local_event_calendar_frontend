@@ -10,7 +10,7 @@ import {
 } from '../../../icons';
 import { validateUserRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
-import { apiRegister, apiAuthMe } from '../../../api/auth';
+import { apiRegister, authMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 import useAuth from '../hooks/auth';
 
@@ -64,7 +64,7 @@ export default function UserRegisterContainer() {
         const registerResult = await apiRegister(formData);
         console.log(registerResult);
         storeToken(registerResult.data.accessToken);
-        const authResult = await apiAuthMe(registerResult.data.accessToken);
+        const authResult = await authMe(registerResult.data.accessToken);
         console.log(authResult);
         setAuthUser(authResult.data);
       }

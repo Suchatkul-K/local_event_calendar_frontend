@@ -6,4 +6,5 @@ export const apiLogin = (user) => axios.post('/user/login', user);
 
 export const apiRegister = (data) => axios.post('/user/register', data);
 
-export const apiAuthMe = (data) => axios.get('/user/auth', data);
+export const authMe = (credential) => axios.get('user/auth', credential);
+

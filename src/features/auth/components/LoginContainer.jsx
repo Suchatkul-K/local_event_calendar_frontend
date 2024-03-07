@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
-import { apiLogin, apiAuthMe } from '../../../api/auth';
+import { apiLogin, authMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 import useAuth from '../hooks/auth';
 
@@ -35,7 +35,7 @@ export default function LoginContainer() {
         const loginResult = await apiLogin(input);
         storeToken(loginResult.data.accessToken);
         console.log(loginResult.data);
-        const authResult = await apiAuthMe(loginResult.data.accessToken);
+        const authResult = await authMe(loginResult.data.accessToken);
         setAuthUser(authResult.data);
         navigate('/');
       }
