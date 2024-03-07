@@ -71,7 +71,7 @@ export default function OrganizerRegisterContainer() {
 
         const registerResult = await apiRegister(formData);
         console.log(registerResult);
-        storeToken(registerResult.data.token);
+        storeToken(registerResult.data.accessToken);
       }
     } catch (err) {
       console.log('error');
