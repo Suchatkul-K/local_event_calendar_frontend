@@ -16,10 +16,11 @@ import {
 } from '../../../icons';
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
+import EventMapLocation from './EventMapLocation';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  console.log(eventObj.event);
+  // console.log(eventObj);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -126,6 +127,8 @@ export default function EventContainer() {
       </div>
       {/* Carousel Preview */}
       <CarouselHero />
+
+      {eventObj?.event && <EventMapLocation />}
     </div>
   );
 }
