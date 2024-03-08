@@ -1,8 +1,11 @@
 import { TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { useState } from 'react';
+import useCreateEvent from '../hook/useCreateEvent';
 
-function EventMap({ input, setInput }) {
+function EventMap() {
+  const { CreateEventContextObject } = useCreateEvent();
+  const { input, setInput } = CreateEventContextObject;
   const [marker, setMarker] = useState(null);
   const map = useMap();
 
