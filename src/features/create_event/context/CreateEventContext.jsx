@@ -40,7 +40,7 @@ export function CreateEventContextProvider({ children }) {
     fetchCategory();
   }, []);
 
-  /// ///--------------------Handle---------------------------
+  /// ///--------------------Handle--------------------------- ///
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -58,13 +58,13 @@ export function CreateEventContextProvider({ children }) {
 
   const handleUploadCover = (e) => {
     setCoverImage(e.target.files[0]);
-    setInput({ ...input, [[e.target.name]]: [...e.target.files] });
+    setInput({ ...input, [[e.target.name]]: e.target.files[0] });
   };
 
   const handleUploadImage = (e) => {
-    const filesImage = e.target.files;
-    setImage([...image, ...filesImage]);
-    setInput({ ...input, [[e.target.name]]: [...image, ...filesImage] });
+    const filesImage = e.target.files[0];
+    setImage([...image, filesImage]);
+
   };
 
   const handleDeleteImage = (el) => {
@@ -100,10 +100,15 @@ export function CreateEventContextProvider({ children }) {
       // if (validateError) {
       //   return setError(validateError);
       // }
-
       const formData = new FormData();
+      if (image) {
+        image.forEach((value, index) => {
+          formData.append('image', value);
+        });
+       }
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
+      // console.log(...formData);
       await createEvent(formData);
       toast.success('create successfully');
       // setError({});
