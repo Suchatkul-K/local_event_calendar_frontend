@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import {
+  RouterProvider,
+  createBrowserRouter,
+  Navigate,
+} from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import LoginPage from '../pages/LoginPage';
 import EventPage from '../pages/EventPage';
@@ -18,7 +22,7 @@ const router = createBrowserRouter([
     element: <Container />,
     children: [
       {
-        path: '/',
+        path: '/home',
         element: (
           <HomeContextProvider>
             <HomePage />
@@ -30,11 +34,11 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: '/OrganizerRegister',
+        path: '/register/organizer',
         element: <OrganizerRegisterPage />,
       },
       {
-        path: '/Userregister',
+        path: '/register',
         element: <UserRegisterPage />,
       },
       {
@@ -54,6 +58,10 @@ const router = createBrowserRouter([
             <EventPage />
           </EventContextProvider>
         ),
+      },
+      {
+        path: '*',
+        element: <Navigate to='/home' />,
       },
     ],
   },

@@ -1,4 +1,5 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../../global_components/Input';
 import {
   EmailIcon,
@@ -13,6 +14,7 @@ import { apiRegister } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 
 export default function UserRegisterContainer() {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: '',
     userName: '',
@@ -63,6 +65,7 @@ export default function UserRegisterContainer() {
     }
   };
 
+  useEffect(() => window.scrollTo(0, 0), []);
   return (
     <form onSubmit={handleSubmit}>
       <div className='py-12 '>
@@ -194,8 +197,22 @@ export default function UserRegisterContainer() {
             </button>
 
             <div className='text-[1rem]'>
-              Already Have An Account ?{' '}
-              <span className='text-green-700'>Register</span>
+              <span>Already Have An Account ?</span>
+              <Link to='/login'>
+                <span className='text-green-700'> Log in</span>
+              </Link>
+            </div>
+            <div>
+              <span>Join us as Organizer </span>
+              {/* <Link to='./organizer'> */}
+              <button
+                type='button'
+                onClick={() => navigate('./organizer')}
+                className='text-green-700'
+              >
+                here
+              </button>
+              {/* </Link> */}
             </div>
           </div>
         </div>
