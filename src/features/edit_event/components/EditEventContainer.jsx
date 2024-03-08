@@ -1,73 +1,68 @@
 import { useState, useRef, React, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
-import { v4 as uuid } from 'uuid';
+
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
-import Map from '../../main/components/Map';
-import { EVENT_FACILITY } from '../../../constance/index';
-import categoryApi from '../../../api/category';
-import provinceApi from '../../../api/province';
+
+// import categoryApi from '../../../api/category';
+// import provinceApi from '../../../api/province';
 import InputDate from '../../../global_components/InputDate';
+import Map from '../../map/components/Map';
+import FacilityCheckbox from './FacilityCheckbox';
+import UploadImageContainer from './UploadImageContainer';
+import EditOption from './EditOption';
+import useEditEvent from '../hooks/useEditEvent';
+import EditInput from './EditInput';
+import EditDateAndTime from './EditDateAndTime';
 
 export default function EditEventContainer() {
-  const [province, setProvince] = useState([]);
-  const [district, setDistrict] = useState([]);
-  const [subDistrict, setSubDistrict] = useState([]);
-  const [category, setCategory] = useState([]);
+  const [coverImage, setCoverImage] = useState();
+  const { province, category, event } = useEditEvent();
+  console.log(event);
+  const [district, setDistrict] = useState(null);
+  const [subDistrict, setSubDistrict] = useState(null);
   const [image, setImage] = useState([]);
-  const [coverImage, setCoverImage] = useState(null);
-  const [time, setTime] = useState({});
-  const [input, setInput] = useState({
-    // organizerInformationId: 2,
-    // eventId: 40,
-    coverImage:
-      'https://images.ahotu.com/31wp709d97v6gyja2lkikf9mvafy?w=1920&f=webp',
-    title: 'Amazing Thailand Marathon',
-    description:
-      'Experience the renowned hospitality of Thailand and join world-class ',
-    startDate: new Date('2024-03-22'),
-    endDate: new Date('2024-03-24'),
-    categoryId: 3,
-    timePeriod: '06:00-10:00',
-    isYearly: true,
-    address:
-      ' 14/9 Soi Bang Kapi, Bang Kapi, Huai Khwang District, Bangkok, Thailand',
-    provinceId: 10,
-    districtId: 1006,
-    subDistrictId: 100608,
-    lat: 13.756,
-    long: 100.66,
-  });
+  const [time, setTime] = useState(null);
+  const [input, setInput] = useState(null);
+  if (!input && event) {
+    setInput(event);
+    setCoverImage(event?.coverImage);
+  }
+  // coverImage: event?.coverImage,
+  // title: 'Amazing Thailand Marathon',
+  // description:
+  //   'Experience the renowned hospitality of Thailand and join world-class ',
+  // startDate: '2024-03-22',
+  // telNumber: '0625958789',
+  // endDate: '2024-03-24',
+  // categoryId: 3,
+  // category: 'Sports',
+  // timePeriod: '06:00-10:00',
+  // isYearly: true,
+  // address: ' 14/9 Soi Bang Kapi',
+  // provinceId: 10,
+  // districtId: 1006,
+  // subDistrictId: 100608,
+  // toilet: true,
+  // parking: true,
+  // lat: 13.756,
+  // long: 100.66,
 
+  let tempPeriodTime;
   const fileEl = useRef();
-  const fileEl2 = useRef();
+  if (event) {
+    console.log(event);
+    tempPeriodTime = event?.timePeriod?.split('-');
+    console.log(tempPeriodTime);
 
-  console.log(input);
+    console.log(input);
 
-  // ------------------------fetch-----------------
-  const fetchProvince = async () => {
-    try {
-      const provinces = await provinceApi();
-      setProvince(provinces.data);
-    } catch (err) {
-      console.log(err);
+    if (!time) {
+      setTime({ startTime: tempPeriodTime[0], endTime: tempPeriodTime[1] });
     }
-  };
+  }
 
-  const fetchCategory = async () => {
-    try {
-      const categories = await categoryApi();
-      setCategory(categories.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchProvince();
-    fetchCategory();
-  }, []);
   /// ///--------------------Handle---------------------------
 
   const handleChange = (e) => {
@@ -76,9 +71,9 @@ export default function EditEventContainer() {
 
   const handleCheckbox = (e) => {
     if (e.target.checked) {
-      setInput({ ...input, [e.target.name]: 'true' });
+      setInput({ ...input, [e.target.name]: true });
     } else {
-      setInput({ ...input, [e.target.name]: 'false' });
+      setInput({ ...input, [e.target.name]: false });
     }
   };
 
@@ -94,15 +89,13 @@ export default function EditEventContainer() {
   };
 
   const handleDeleteImage = (el) => {
-    console.log(el);
-    console.log(input.image);
     const tempImage = image?.filter((file) => file.name !== el.name);
 
     setInput({ ...input, image: tempImage });
     setImage(tempImage);
   };
 
-  const handleSelectPicker = (value, item, event) => {
+  const handleSelectPicker = (value, item) => {
     setInput({ ...input, [item.name]: value });
     if (item.name === 'provinceId') {
       setDistrict(province[item.index].Districts);
@@ -139,24 +132,22 @@ export default function EditEventContainer() {
     }
   };
 
-  let tempTime = { startTime: '', endTime: '' };
+  let tempTime;
   const handleTime = (e) => {
+    if (!tempTime) {
+      tempTime = { ...time };
+    }
     if (e.target.name === 'startTime') {
-      if (tempTime.startTime === '') {
-        tempTime = { ...time };
-      }
       tempTime = { ...tempTime, [e.target.name]: e.target.value };
+      console.log(tempTime);
     }
     if (e.target.name === 'endTime') {
-      if (tempTime.endTime === '') {
-        tempTime = { ...time };
-      }
       tempTime = { ...tempTime, [e.target.name]: e.target.value };
     }
     if (tempTime.startTime && tempTime.endTime) {
       const { startTime, endTime } = tempTime;
-      const timePeriod = `${tempTime.startTime}-${tempTime.endTime}`;
-      setInput({ ...input, timePeriod });
+      const craetetimePeriod = `${tempTime.startTime}-${tempTime.endTime}`;
+      setInput({ ...input, timePeriod: craetetimePeriod });
       setTime({
         ...time,
         startTime,
@@ -164,8 +155,24 @@ export default function EditEventContainer() {
       });
     }
   };
-  // ------------------------------map-----------------------------
 
+  // ------------------------------map-----------------------------
+  if (!district && province && input) {
+    setDistrict([]);
+    console.log(input);
+    setDistrict(
+      province.find((value) => value.id === input?.EventAddress.provinceId)
+        .Districts
+    );
+  }
+
+  if (!subDistrict && district && input) {
+    setSubDistrict([]);
+    setSubDistrict(
+      district.find((value) => value.id === input?.EventAddress.districtId)
+        .SubDistricts
+    );
+  }
   let districtData;
   let subDistrictData;
 
@@ -194,26 +201,29 @@ export default function EditEventContainer() {
     }));
   }
 
-  const catagoryData = category?.map((catagories) => ({
-    label: catagories?.name,
-    value: catagories?.id,
-    name: 'catagoryId',
+  const categoryData = category?.map((categories) => ({
+    label: categories?.name,
+    value: categories?.id,
+    name: 'categoryId',
   }));
+  if (!event || !province || !coverImage || !input) {
+    return <div>loading</div>;
+  }
 
   return (
     <form onSubmit={handleformSubmit}>
       <div>
-        <div className=' mx-auto flex flex-col  gap-[1rem] w-full py-[2rem] px-[3rem]'>
+        <div className=' mx-auto flex flex-col  gap-[1rem] w-full py-[2rem] px-[2rem]'>
           <div className='text-[1.75rem] font-semibold text-center pb-3'>
-            Create An Event
+            Edit
           </div>
           <span className='text-[1.2rem] font-medium'>Cover Image</span>
 
-          {coverImage ? (
+          {input.coverImage ? (
             <div className=' flex justify-center items-center'>
               <img
                 className='object-cover w-full h-[34vh] rounded-lg'
-                src={URL.createObjectURL(coverImage)}
+                src={coverImage || input?.coverImage}
                 alt='cover pic'
               />
             </div>
@@ -238,47 +248,8 @@ export default function EditEventContainer() {
             <Button onClick={() => fileEl.current.click()}>Upload </Button>
           </div>
 
-          <span className='text-[1.2rem] font-medium '>Image</span>
           <div />
-          {image[0] ? (
-            <div className=' flex flex-col gap-2 justify-center'>
-              {image.map((el) => (
-                <div className=' relative' key={uuid()}>
-                  <img
-                    id={uuid()}
-                    name={el.name}
-                    className='object-cover w-full h-[34vh] rounded-lg'
-                    src={URL.createObjectURL(el)}
-                    alt='cover pic'
-                  />
-                  <button
-                    type='button'
-                    className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
-                    onClick={() => handleDeleteImage(el)}
-                  >
-                    X
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className='flex flex-col items-center'>
-              <PictureIcon />
-            </div>
-          )}
-          <div className='flex flex-row justify-end'>
-            <div className='md:w-[18%] sm:[30%]'>
-              <input
-                name='image'
-                type='file'
-                ref={fileEl2}
-                className='hidden'
-                onChange={handleUploadImage}
-              />
-            </div>
 
-            <Button onClick={() => fileEl2.current.click()}>Upload </Button>
-          </div>
           <Input
             name='title'
             placeholder='Title'
@@ -298,163 +269,45 @@ export default function EditEventContainer() {
             />
           </div>
 
-          <div className='flex justify-between w-full '>
-            <InputDate
-              name='startDate'
-              title='Start Date'
-              onChange={handleChange}
-            />
-            <div className='text-end '>
-              <InputDate
-                name='endDate'
-                title='End Date'
-                onChange={handleChange}
-              />
-            </div>
-          </div>
+          {/* /////////////////// date and tim /////////// */}
+          <EditDateAndTime
+            handleChange={handleChange}
+            handleTime={handleTime}
+            input={input}
+            tempPeriodTime={tempPeriodTime}
+          />
 
-          <div className='flex flex-row justify-between'>
-            <div className='font-semibold w-full'>
-              <InputDate
-                name='startTime'
-                title='Start Time'
-                type='time'
-                onChange={handleTime}
-              />
-            </div>
-
-            <div className='font-semibold w-full text-end'>
-              <InputDate
-                name='endTime'
-                title='End Time'
-                type='time'
-                onChange={handleTime}
-              />
-            </div>
-          </div>
-
-          <div className='flex flex-row gap-[0.5rem]'>
-            <Input
+          <div className='flex gap-[0.5rem] p-2 border rounded-lg'>
+            <span className='font-medium'>Yearly</span>
+            <input
               type='checkbox'
-              title=''
+              checked={input.isYearly}
               name='isYearly'
+              value={input}
               onChange={handleCheckbox}
-            >
-              yearly
-            </Input>
-          </div>
-
-          <Input
-            name='website'
-            placeholder='Web Site'
-            value={input}
-            onChange={handleChange}
-            title='Web Site'
-          />
-
-          <Input
-            name='email'
-            placeholder='Email'
-            value={input}
-            onChange={handleChange}
-            title='Email'
-          />
-
-          <Input
-            name='facebook'
-            placeholder='Facebook'
-            value={input}
-            onChange={handleChange}
-            title='Facebook'
-          />
-
-          <Input
-            name='telNumber'
-            placeholder='Telephone'
-            value={input}
-            onChange={handleChange}
-            title='Telephone'
-          />
-
-          <Input
-            name='address'
-            placeholder='Address'
-            value={input}
-            onChange={handleChange}
-            title='Address'
-          />
-
-          <Input
-            name='address2'
-            placeholder='Address(optional)'
-            value={input}
-            onChange={handleChange}
-            title='Address(optional)'
-          />
-
-          <div className='w-full '>
-            <span className='font-semibold p-1'>Province</span>
-            <SelectPicker
-              block
-              // valueKey='test'
-              placeholder='Select Province'
-              data={provinceData}
-              // onChange={handleSelectPicker}
-              onSelect={handleSelectPicker}
             />
           </div>
+          <EditInput onChange={handleChange} input={input} />
 
-          <div className='w-full'>
-            <span className='font-semibold p-1'>District</span>
-            <SelectPicker
-              block
-              data={districtData}
-              onSelect={handleSelectPicker}
-            />
-          </div>
+          <EditOption
+            data={{ provinceData, districtData, subDistrictData, categoryData }}
+            onSelect={handleSelectPicker}
+            input={input}
+          />
 
-          <div className='w-full'>
-            <span className='font-semibold p-1'>Subdistrict</span>
-            <SelectPicker
-              block
-              data={subDistrictData}
-              onSelect={handleSelectPicker}
-            />
-          </div>
+          <UploadImageContainer
+            onChange={handleUploadImage}
+            onClick={handleDeleteImage}
+            image={image}
+          />
 
-          <div className='w-full'>
-            <span className='font-semibold p-1'>Category Event</span>
-            <SelectPicker
-              block
-              data={catagoryData}
-              onSelect={handleSelectPicker}
-            />
-          </div>
-
-          <div className='grid grid-cols-2  gap-[0.25rem] font-medium w-full'>
-            {EVENT_FACILITY.map((el) => (
-              <div className='flex flex-row gap-[0.5rem]' key={el.id}>
-                <input
-                  type='checkbox'
-                  name={el.name}
-                  value={el.name}
-                  onChange={handleCheckbox}
-                />
-                <div className='font-semibold'>{el.name}</div>
-              </div>
-            ))}
-          </div>
+          <FacilityCheckbox onChange={handleCheckbox} input={input} />
         </div>
       </div>
       <Map />
 
-      <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-fit p-[1.5rem] '>
-        <button
-          type='submit'
-          className='btn bg-primary h-12 text-white text-[1rem] '
-        >
-          Create Event
-        </button>
+      <div className=' mx-auto flex flex-col justify-center text- gap-[1.5rem] space-between w-fit p-[1.5rem] '>
+        <Button type='submit'>Save Edit</Button>
       </div>
     </form>
   );

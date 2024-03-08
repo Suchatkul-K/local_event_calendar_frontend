@@ -3,6 +3,7 @@ export default function InputDate({
   onChange,
   name,
   type = 'date',
+  value,
 }) {
   return (
     <div>
@@ -12,6 +13,7 @@ export default function InputDate({
         type={type}
         name={name}
         onChange={onChange}
+        value={value}
       />
     </div>
   );

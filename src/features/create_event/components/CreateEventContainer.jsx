@@ -175,10 +175,10 @@ export default function CreateEventContainer() {
     }));
   }
 
-  const catagoryData = category?.map((catagories) => ({
-    label: catagories?.name,
-    value: catagories?.id,
-    name: 'catagoryId',
+  const categoryData = category?.map((categories) => ({
+    label: categories?.name,
+    value: categories?.id,
+    name: 'categoryId',
   }));
 
   return (
@@ -407,7 +407,7 @@ export default function CreateEventContainer() {
             <span className='font-semibold p-1'>Category Event</span>
             <SelectPicker
               block
-              data={catagoryData}
+              data={categoryData}
               onSelect={handleSelectPicker}
             />
           </div>
