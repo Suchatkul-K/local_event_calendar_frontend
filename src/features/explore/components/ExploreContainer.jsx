@@ -6,12 +6,10 @@ import ToggleOnButton from '../../../global_components/ToggleOnButton';
 import Input from '../../../global_components/Input';
 import { SearchIcon } from '../../../icons';
 import EventCardGanX from '../../../global_components/EventCardGanX';
-import useExploreContext from '../hook/useExplore';
+import useExploreContext from '../hooks/useExploreContext';
 import { FACILITY_LIST } from '../../../constance';
 
 export default function ExploreContainer() {
-  const ExploreContextObject = useExploreContext();
-
   const {
     input,
     setInput,
@@ -23,7 +21,7 @@ export default function ExploreContainer() {
     handleOnChange,
     handleOnSubmit,
     events,
-  } = ExploreContextObject;
+  } = useExploreContext();
 
   const categoryData = category?.map((el, index) => ({
     label: el.name,
@@ -44,6 +42,7 @@ export default function ExploreContainer() {
     key: index,
   }));
 
+  // select picker state
   const [selectCategory, setSelectCategory] = useState();
   const [selectProvince, setSelectProvince] = useState();
 

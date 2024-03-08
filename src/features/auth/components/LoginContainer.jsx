@@ -19,20 +19,15 @@ export default function LoginContainer() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validateResult = validateLogin(input);
-      console.log('Validate Result is here');
-      console.log(validateResult);
-
       if (Object.keys(validateResult).length > 0) {
         setError(validateResult);
       } else {
-        console.log('no error validation');
         const loginResult = await apiLogin(input);
-        storeToken(loginResult.data.token);
+        storeToken(loginResult.data.accessToken);
       }
     } catch (err) {
-      console.log('error');
+      console.log(err);
     }
   };
   useEffect(() => window.scrollTo(0, 0), []);
