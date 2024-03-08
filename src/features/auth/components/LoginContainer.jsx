@@ -29,7 +29,7 @@ export default function LoginContainer() {
       } else {
         console.log('no error validation');
         const loginResult = await apiLogin(input);
-        storeToken(loginResult.data.token);
+        storeToken(loginResult.data.accessToken);
       }
     } catch (err) {
       console.log('error');

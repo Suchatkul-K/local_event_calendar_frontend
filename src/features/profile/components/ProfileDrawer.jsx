@@ -21,7 +21,7 @@ function ProfileDrawer({ children, props }) {
   const [placement, setPlacement] = useState('right');
 
   // const ProfileContextObject = useProfileContext();
-  // console.log(props, '++++++++++++++++++++');
+  console.log(props, '++++++++++++++++++++');
 
   return (
     <>

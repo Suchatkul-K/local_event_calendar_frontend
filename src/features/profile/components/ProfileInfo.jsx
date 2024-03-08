@@ -1,6 +1,10 @@
 import Avatar from '../../../global_components/Avatar';
+import useProfileContext from '../hook/useProfileContext';
 
 function ProfileInfo() {
+  const ProfileContextObject = useProfileContext();
+  const { authEvents } = ProfileContextObject;
+  console.log(authEvents, '//////////////');
   return (
     <div>
       {/* PROFILE */}
@@ -13,7 +17,7 @@ function ProfileInfo() {
         />
         {/* profile information */}
         <div className='absolute flex flex-col gap-1 justify-center items-center text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
-          <Avatar size='w-[5rem]' />
+          <Avatar size='w-[5rem]' src={authEvents?.profileImage} />
           <div className='text-sm'>Mr.Red Green</div>
           <div>0</div>
           <div className='text-sm'>event reminded</div>

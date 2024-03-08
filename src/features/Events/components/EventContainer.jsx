@@ -76,7 +76,9 @@ export default function EventContainer() {
       </div>
       {/* Host */}
       <div className='flex gap-3 items-center px-4'>
-        <Avatar size='w-[3rem]' />
+        <Avatar
+          src={eventObj?.event?.organizerInformation?.user?.profileImage}
+        />
         <p>Hosted By : {eventObj?.event?.organizerInformation?.officialName}</p>
       </div>
       {/* Description */}

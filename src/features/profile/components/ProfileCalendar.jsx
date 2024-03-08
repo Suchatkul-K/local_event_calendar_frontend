@@ -30,9 +30,9 @@ function ProfileCalendar() {
     //     return [];
     // }
 
-    if (ProfileContextObject.event) {
-      return ProfileContextObject.event?.filter(
-        (value) => value.startDate === isoDate
+    if (ProfileContextObject?.authEvents?.Reminder) {
+      return ProfileContextObject?.authEvents?.Reminder.filter(
+        (value) => value.event.startDate === isoDate
       );
     }
     return [];
@@ -44,9 +44,10 @@ function ProfileCalendar() {
 
     if (list.length) {
       // const moreCount = list.length - displayList.length;
-      const event = list.map((item) => (
-        <EventCard key={item.id} event={item} />
-      ));
+      const event = list.map((item) => {
+        console.log(item);
+        return <EventCard key={item.event.id} event={item.event} />;
+      });
 
       return (
         // <ProfileDrawer>
