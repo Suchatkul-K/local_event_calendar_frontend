@@ -11,8 +11,6 @@ function ProfileContainer() {
       <ProfileContextProvider>
         <ProfileInfo />
         <ProfileNav />
-        {/* <ProfileEvent /> */}
-        {/* <ProfileDrawer /> */}
       </ProfileContextProvider>
     </div>
   );

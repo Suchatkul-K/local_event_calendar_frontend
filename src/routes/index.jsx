@@ -16,6 +16,8 @@ import OrganizerRegisterPage from '../pages/OrganizerRegisterPage';
 import UserRegisterPage from '../pages/UserRegisterPage';
 import EventContextProvider from '../features/Events/context/EventContext';
 
+import EditProfilePage from '../pages/EditProfilePage';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -59,6 +61,7 @@ const router = createBrowserRouter([
           </EventContextProvider>
         ),
       },
+      { path: '/profile/edit', element: <EditProfilePage /> },
       {
         path: '*',
         element: <Navigate to='/home' />,

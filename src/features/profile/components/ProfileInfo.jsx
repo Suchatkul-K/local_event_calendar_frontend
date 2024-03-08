@@ -4,7 +4,7 @@ import useProfileContext from '../hook/useProfileContext';
 function ProfileInfo() {
   const ProfileContextObject = useProfileContext();
   const { authEvents } = ProfileContextObject;
-  console.log(authEvents, '//////////////');
+  console.log(authEvents, 'from Profile Info');
   return (
     <div>
       {/* PROFILE */}

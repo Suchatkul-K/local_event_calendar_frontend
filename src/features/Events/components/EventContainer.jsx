@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
+import { useState, useEffect, Children } from 'react';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
@@ -17,16 +18,40 @@ import {
 } from '../../../icons';
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
+import { authMe } from '../../../api/auth';
 
 const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  console.log(eventObj.event);
-  const eventLatLng = [
-    eventObj?.EventAddress?.lat,
-    eventObj?.EventAddress?.long,
-  ];
+  const [isReminder, setIsReminder] = useState(false);
+  const [authEvents, setAuthEvents] = useState(null);
+  console.log(eventObj.event, 'event +++++++++++++++++++');
+  console.log(authEvents?.Reminder, 'authEvent *****************');
+  // const eventLatLng = [
+  //   eventObj?.EventAddress?.lat,
+  //   eventObj?.EventAddress?.long,
+  // ];
+
+  const checkReminded = authEvents?.Reminder.filter(
+    (el) => el.eventId === eventObj.id
+  );
+
+  console.log(checkReminded); //  reminded arr.length > 0 , reminded []
+
+  const handleReminderClick = () => {};
+  const fetchAuthEvent = async () => {
+    try {
+      const authEvent = await authMe();
+      setAuthEvents(authEvent.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchAuthEvent();
+  }, []);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -87,7 +112,11 @@ export default function EventContainer() {
         <p>{eventObj?.event?.description}</p>
         <div className='flex justify-end py-4'>
           <div className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full'>
-            <HearthIconOutline />
+            {checkReminded?.length === 0 ? (
+              <HearthIconOutline />
+            ) : (
+              <HearthIconOutline className='fill-red-500' />
+            )}
             <div className='text-red-400 text-[0.75rem]'>Remind Me</div>
           </div>
         </div>
