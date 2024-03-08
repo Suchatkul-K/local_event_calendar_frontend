@@ -46,7 +46,6 @@ const CreateEventImages = memo(({ tempImage }) => {
             <input
               name='coverImage'
               type='file'
-              multiple
               ref={fileEl}
               className='hidden'
               onChange={handleUploadCover}

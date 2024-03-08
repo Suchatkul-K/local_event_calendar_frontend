@@ -57,8 +57,8 @@ export function CreateEventContextProvider({ children }) {
   };
 
   const handleUploadCover = (e) => {
-    setInput({ ...input, [[e.target.name]]: e.target.value });
     setCoverImage(e.target.files[0]);
+    setInput({ ...input, [[e.target.name]]: [...e.target.files] });
   };
 
   const handleUploadImage = (e) => {
