@@ -14,7 +14,7 @@ export default function Input({
 }) {
   const finalValue = (value ? value[name] : '') || '';
 
-  console.log(finalValue);
+  // console.log(finalValue);
 
   return (
     <label htmlFor={name}>

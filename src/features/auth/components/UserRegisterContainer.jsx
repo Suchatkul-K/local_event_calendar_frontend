@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Input from '../../../global_components/Input';
 import {
   EmailIcon,
@@ -15,7 +15,6 @@ import { storeToken } from '../../../utils/local-storage';
 import useAuth from '../hooks/auth';
 
 export default function UserRegisterContainer() {
-  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: '',
     userName: '',
@@ -24,10 +23,11 @@ export default function UserRegisterContainer() {
     gender: 'MALE',
     role: 'USER',
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
   const [profileImage, setProfileImage] = useState('');
   const { setAuthUser } = useAuth();
   const fileEl = useRef(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -49,11 +49,16 @@ export default function UserRegisterContainer() {
       console.log('Validate Result is here');
       console.log(validateResult);
 
-      if (Object.keys(validateResult).length > 0) {
+      if (Object.keys(validateResult).length > 0 || !profileImage) {
         setError(validateResult);
+        if (!profileImage) {
+          setError((prev) => ({
+            ...prev,
+            profileImage: 'Profile Image is required',
+          }));
+        }
       } else {
         console.log('no error validation');
-
         const formData = new FormData();
         formData.append('profileImage', profileImage);
         formData.append('email', input.email);
@@ -67,9 +72,11 @@ export default function UserRegisterContainer() {
         const authResult = await authMe(registerResult.data.accessToken);
         console.log(authResult);
         setAuthUser(authResult.data);
+        setError(null);
+        navigate('/home');
       }
     } catch (err) {
-      console.log('error');
+      setError({ email: 'Email already in use' });
     }
   };
 
@@ -99,17 +106,26 @@ export default function UserRegisterContainer() {
               <PictureIcon />
             )}
           </div>
-          <div className='flex flex-row justify-end'>
-            <div className='md:w-[18%] sm:[30%]'>
-              <input
-                type='file'
-                ref={fileEl}
-                className='hidden'
-                onChange={handleFileChange}
-              />
-              <Button onClick={() => fileEl.current.click()}>
-                Upload Profile
-              </Button>
+          <div className='flex flex-row justify-end '>
+            <div className='flex flex-col items-end '>
+              <div className='md:w-[70%] sm:[30%] flex flex-col '>
+                <input
+                  type='file'
+                  ref={fileEl}
+                  className='hidden'
+                  onChange={handleFileChange}
+                />
+                <Button onClick={() => fileEl.current.click()}>
+                  Upload Profile
+                </Button>
+              </div>
+              <div>
+                {error?.profileImage ? (
+                  <div className='text-red-500 pl-[0.5rem]'>
+                    profile Image is required
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
 
@@ -140,6 +156,7 @@ export default function UserRegisterContainer() {
             onChange={handleChange}
             title='Password'
             errorMessage={error?.password}
+            type='password'
           >
             <LockerIcon />
           </Input>
@@ -151,6 +168,7 @@ export default function UserRegisterContainer() {
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
+            type='password'
           >
             {' '}
             <LockerIcon />

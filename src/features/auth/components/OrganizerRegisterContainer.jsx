@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Input from '../../../global_components/Input';
 import {
   EmailIcon,
@@ -23,6 +23,8 @@ export default function OrganizerRegisterContainer() {
     gender: 'OTHER',
     role: 'ORGANIZER',
     corporation: 'INDIVIDUAL',
+    officialName: '',
+    companyNumber: '',
   });
   const [error, setError] = useState();
   const [profileImage, setProfileImage] = useState('');
@@ -31,6 +33,7 @@ export default function OrganizerRegisterContainer() {
 
   const fileEl = useRef(null);
   const fileEl2 = useRef(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -60,8 +63,19 @@ export default function OrganizerRegisterContainer() {
       console.log('Validate Result is here');
       console.log(validateResult);
 
-      if (Object.keys(validateResult).length > 0) {
+      if (Object.keys(validateResult).length > 0 || !profileImage) {
         setError(validateResult);
+        if (!profileImage) {
+          setError((prev) => ({
+            ...prev,
+            profileImage: 'Profile Image is required',
+          }));
+        } else if (!identityCopyImage) {
+          setError((prev) => ({
+            ...prev,
+            identityCopyImage: 'Identity Image is required',
+          }));
+        }
       } else {
         console.log('no error validation');
 
@@ -85,9 +99,11 @@ export default function OrganizerRegisterContainer() {
         storeToken(registerResult.data.accessToken);
         const authResult = await authMe(registerResult.data.accessToken);
         setAuthUser(authResult.data);
+        setError(null);
+        navigate('/home');
       }
     } catch (err) {
-      console.log('error');
+      setError({ email: 'Email already in use' });
     }
   };
 
@@ -119,16 +135,25 @@ export default function OrganizerRegisterContainer() {
             )}
           </div>
           <div className='flex flex-row justify-end'>
-            <div className='md:w-[18%] sm:[30%]'>
-              <input
-                type='file'
-                ref={fileEl}
-                className='hidden'
-                onChange={handleFileChange}
-              />
-              <Button onClick={() => fileEl.current.click()}>
-                Upload Profile
-              </Button>
+            <div className='flex flex-col items-end'>
+              <div className=' sm:[30%] flex flex-col '>
+                <input
+                  type='file'
+                  ref={fileEl}
+                  className='hidden'
+                  onChange={handleFileChange}
+                />
+                <Button onClick={() => fileEl.current.click()}>
+                  Upload Profile
+                </Button>
+              </div>
+              <div>
+                {error?.profileImage ? (
+                  <div className='text-red-500 pl-[0.5rem]'>
+                    Official Profile is required
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
 
@@ -159,6 +184,7 @@ export default function OrganizerRegisterContainer() {
             onChange={handleChange}
             title='Password'
             errorMessage={error?.password}
+            type='password'
           >
             <LockerIcon />
           </Input>
@@ -170,6 +196,7 @@ export default function OrganizerRegisterContainer() {
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
+            type='password'
           >
             {' '}
             <LockerIcon />
@@ -226,21 +253,32 @@ export default function OrganizerRegisterContainer() {
             )}
           </div>
           <div className='flex flex-row justify-end '>
-            <div className='md:w-[18%] sm:[30%]'>
-              <input
-                type='file'
-                ref={fileEl2}
-                className='hidden'
-                onChange={handleFileChange2}
-              />
-              <Button onClick={() => fileEl2.current.click()}>Upload ID</Button>
+            <div className='flex flex-col items-end'>
+              <div className='sm:[30%]'>
+                <input
+                  type='file'
+                  ref={fileEl2}
+                  className='hidden'
+                  onChange={handleFileChange2}
+                />
+                <Button onClick={() => fileEl2.current.click()}>
+                  Upload ID
+                </Button>
+              </div>
+              <div>
+                {error?.profileImage ? (
+                  <div className='text-red-500 pl-[0.5rem]'>
+                    ID Copy is required
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
 
           <Input
             name='officialName'
             placeholder='officialName'
-            value={input?.officialName}
+            value={input}
             onChange={handleChange}
             title='Official Name'
             errorMessage={error?.officialName}
@@ -249,7 +287,7 @@ export default function OrganizerRegisterContainer() {
           <Input
             name='companyNumber'
             placeholder='companyNumber'
-            value={input?.companyNumber}
+            value={input}
             onChange={handleChange}
             title='Company Number'
             errorMessage={error?.companyNumber}
