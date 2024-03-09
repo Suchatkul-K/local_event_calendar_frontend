@@ -1,3 +1,6 @@
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 function CarouselHero() {
   return (
     <div className='carousel w-full h-[16rem]'>
