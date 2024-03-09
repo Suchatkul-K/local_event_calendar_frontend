@@ -5,13 +5,13 @@ import { getEvent } from '../../../api/event';
 export const EventContext = createContext();
 
 export default function EventContextProvider({ children }) {
-  //   const EventContextObject = useMemo(() => {}, []);
   const { eventId } = useParams();
   const [event, setEvent] = useState();
 
   const getEventByEventId = async () => {
     try {
       const response = await getEvent(eventId);
+      console.log(response.data);
       setEvent(response.data);
     } catch (err) {
       console.log(err);
