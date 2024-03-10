@@ -1,12 +1,12 @@
 import Input from '../../../global_components/Input';
 
-export default function EditInput({ input, onChange }) {
+export default function EditInput({ input, onChange, initData }) {
   return (
-    <>
+    <div>
       <Input
         name='website'
         placeholder='Web Site'
-        value={input}
+        value={input || initData}
         onChange={onChange}
         title='Web Site'
       />
@@ -14,7 +14,7 @@ export default function EditInput({ input, onChange }) {
       <Input
         name='email'
         placeholder='Email'
-        value={input}
+        value={input || initData}
         onChange={onChange}
         title='Email'
       />
@@ -22,7 +22,7 @@ export default function EditInput({ input, onChange }) {
       <Input
         name='facebook'
         placeholder='Facebook'
-        value={input}
+        value={input || initData}
         onChange={onChange}
         title='Facebook'
       />
@@ -30,7 +30,7 @@ export default function EditInput({ input, onChange }) {
       <Input
         name='telNumber'
         placeholder='Telephone'
-        value={input}
+        value={input || initData}
         onChange={onChange}
         title='Telephone'
       />
@@ -38,7 +38,7 @@ export default function EditInput({ input, onChange }) {
       <Input
         name='address'
         placeholder='Address'
-        value={input}
+        value={input || initData.EventAddress}
         onChange={onChange}
         title='Address'
       />
@@ -46,10 +46,10 @@ export default function EditInput({ input, onChange }) {
       <Input
         name='address2'
         placeholder='Address(optional)'
-        value={input}
+        value={input || initData.EventAddress}
         onChange={onChange}
         title='Address(optional)'
       />
-    </>
+    </div>
   );
 }

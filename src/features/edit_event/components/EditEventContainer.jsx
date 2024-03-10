@@ -1,12 +1,10 @@
 import { useState, useRef, React, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
-
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
-
-// import categoryApi from '../../../api/category';
-// import provinceApi from '../../../api/province';
 import InputDate from '../../../global_components/InputDate';
 import Map from '../../map/components/Map';
 import FacilityCheckbox from './FacilityCheckbox';
@@ -17,162 +15,35 @@ import EditInput from './EditInput';
 import EditDateAndTime from './EditDateAndTime';
 
 export default function EditEventContainer() {
+  const { province, category, event, loading, setLoading, eventId } =
+    useEditEvent();
+  const [district, setDistrict] = useState([]);
+  const [subDistrict, setSubDistrict] = useState([]);
   const [coverImage, setCoverImage] = useState();
-  const { province, category, event } = useEditEvent();
-  console.log(event);
-  const [district, setDistrict] = useState(null);
-  const [subDistrict, setSubDistrict] = useState(null);
-  const [image, setImage] = useState([]);
+  // const [image, setImage] = useState([]);
   const [time, setTime] = useState(null);
   const [input, setInput] = useState(null);
-  if (!input && event) {
-    setInput(event);
-    setCoverImage(event?.coverImage);
-  }
-  // coverImage: event?.coverImage,
-  // title: 'Amazing Thailand Marathon',
-  // description:
-  //   'Experience the renowned hospitality of Thailand and join world-class ',
-  // startDate: '2024-03-22',
-  // telNumber: '0625958789',
-  // endDate: '2024-03-24',
-  // categoryId: 3,
-  // category: 'Sports',
-  // timePeriod: '06:00-10:00',
-  // isYearly: true,
-  // address: ' 14/9 Soi Bang Kapi',
-  // provinceId: 10,
-  // districtId: 1006,
-  // subDistrictId: 100608,
-  // toilet: true,
-  // parking: true,
-  // lat: 13.756,
-  // long: 100.66,
-
-  let tempPeriodTime;
+  const navigate = useNavigate();
   const fileEl = useRef();
-  if (event) {
-    console.log(event);
-    tempPeriodTime = event?.timePeriod?.split('-');
-    console.log(tempPeriodTime);
+  //  ====================== initial state ======================== //
 
-    console.log(input);
+  // ========================= map value ========================= //
 
-    if (!time) {
-      setTime({ startTime: tempPeriodTime[0], endTime: tempPeriodTime[1] });
-    }
-  }
-
-  /// ///--------------------Handle---------------------------
-
-  const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
-
-  const handleCheckbox = (e) => {
-    if (e.target.checked) {
-      setInput({ ...input, [e.target.name]: true });
-    } else {
-      setInput({ ...input, [e.target.name]: false });
-    }
-  };
-
-  const handleUploadCover = (e) => {
-    setInput({ ...input, [[e.target.name]]: e.target.value });
-    setCoverImage(e.target.files[0]);
-  };
-
-  const handleUploadImage = (e) => {
-    const filesImage = e.target.files;
-    setImage([...image, ...filesImage]);
-    setInput({ ...input, [[e.target.name]]: [...image, ...filesImage] });
-  };
-
-  const handleDeleteImage = (el) => {
-    const tempImage = image?.filter((file) => file.name !== el.name);
-
-    setInput({ ...input, image: tempImage });
-    setImage(tempImage);
-  };
-
-  const handleSelectPicker = (value, item) => {
-    setInput({ ...input, [item.name]: value });
-    if (item.name === 'provinceId') {
-      setDistrict(province[item.index].Districts);
-      setSubDistrict([]);
-      setInput((prev) => {
-        delete prev.districtId;
-
-        return prev;
-      });
-    }
-
-    if (item.name === 'districtId') {
-      setSubDistrict(district[item.index].SubDistricts);
-    }
-  };
-
-  const handleformSubmit = async (e) => {
-    try {
-      e.preventDefault();
-      // const validateError = validateCreateEvent(input);
-      // if (validateError) {
-      //   return setError(validateError);
-      // }
-
-      const formData = new FormData();
-      Object.keys(input).forEach((key) => formData.append(key, input[key]));
-
-      //       await createEvent(formData);
-      //       toast.success('create successfully');
-      //       // setError({});
-      //       setInput(initial);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  let tempTime;
-  const handleTime = (e) => {
-    if (!tempTime) {
-      tempTime = { ...time };
-    }
-    if (e.target.name === 'startTime') {
-      tempTime = { ...tempTime, [e.target.name]: e.target.value };
-      console.log(tempTime);
-    }
-    if (e.target.name === 'endTime') {
-      tempTime = { ...tempTime, [e.target.name]: e.target.value };
-    }
-    if (tempTime.startTime && tempTime.endTime) {
-      const { startTime, endTime } = tempTime;
-      const craetetimePeriod = `${tempTime.startTime}-${tempTime.endTime}`;
-      setInput({ ...input, timePeriod: craetetimePeriod });
-      setTime({
-        ...time,
-        startTime,
-        endTime,
-      });
-    }
-  };
-
-  // ------------------------------map-----------------------------
-  if (!district && province && input) {
-    setDistrict([]);
-    console.log(input);
+  if (district.length < 1 && !loading) {
     setDistrict(
-      province.find((value) => value.id === input?.EventAddress.provinceId)
+      province.find((value) => value.id === event?.EventAddress.provinceId)
         .Districts
     );
   }
 
-  if (!subDistrict && district && input) {
-    setSubDistrict([]);
+  if (subDistrict.length < 1 && district.length > 1) {
     setSubDistrict(
-      district.find((value) => value.id === input?.EventAddress.districtId)
+      district.find((value) => value.id === event?.EventAddress.districtId)
         .SubDistricts
     );
   }
+
+  //= =========================== Select Picker data =======================//
   let districtData;
   let subDistrictData;
 
@@ -183,7 +54,7 @@ export default function EditEventContainer() {
     index,
   }));
 
-  if (district) {
+  if (district.length > 1) {
     districtData = district?.map((districts, index) => ({
       label: districts?.districtNameEn,
       value: districts?.id,
@@ -192,7 +63,7 @@ export default function EditEventContainer() {
     }));
   }
 
-  if (subDistrict) {
+  if (subDistrict.length > 1) {
     subDistrictData = subDistrict?.map((subDistricts, index) => ({
       label: subDistricts?.subdistrictNameEn,
       value: subDistricts?.id,
@@ -206,8 +77,106 @@ export default function EditEventContainer() {
     value: categories?.id,
     name: 'categoryId',
   }));
-  if (!event || !province || !coverImage || !input) {
-    return <div>loading</div>;
+
+  /// ========================== Handle ============================== ///
+  // =========================== Handle change ==========================//
+  const handleChange = (e) => {
+    setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleSelectPicker = (value, item) => {
+    setInput({ ...input, [item.name]: value });
+    if (item.name === 'provinceId') {
+      setDistrict(province[item.index].Districts);
+      setSubDistrict([]);
+      setInput((prev) => {
+        delete prev.districtId;
+        return prev;
+      });
+    }
+
+    if (item.name === 'districtId') {
+      setSubDistrict(district[item.index].SubDistricts);
+    }
+  };
+
+  // =========================== Handle CheckBox ==========================//
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      setInput({ ...input, [e.target.name]: true });
+    } else {
+      setInput({ ...input, [e.target.name]: false });
+    }
+  };
+
+  // =========================== Handle coverImage ==========================//
+  const handleUploadCover = (e) => {
+    setInput({ ...input, [[e.target.name]]: e.target.value });
+    setCoverImage(e.target.files[0]);
+  };
+
+  // const handleUploadImage = (e) => {
+  //   const filesImage = e.target.files;
+  //   setImage([...image, ...filesImage]);
+  //   setInput({ ...input, [[e.target.name]]: [...image, ...filesImage] });
+  // };
+  // const handleDeleteImage = (el) => {
+  //   const tempImage = image?.filter((file) => file.name !== el.name);
+
+  //   setInput({ ...input, image: tempImage });
+  //   setImage(tempImage);
+  // };
+
+  /// ========================== setTime ============================== ///
+
+  let tempPeriodTime;
+  if (event) {
+    tempPeriodTime = event?.timePeriod?.split('-');
+    if (!time) {
+      setTime({ startTime: tempPeriodTime[0], endTime: tempPeriodTime[1] });
+    }
+  }
+
+  // =========================== Handle time ==========================//
+  let craetetimePeriod;
+  const handleTime = (e) => {
+    if (e.target.name === 'startTime') {
+      setTime({ ...time, [e.target.name]: e.target.value });
+      craetetimePeriod = `${e.target.value}-${time.endTime}`;
+    }
+    if (e.target.name === 'endTime') {
+      setTime({ ...time, [e.target.name]: e.target.value });
+      craetetimePeriod = `${time.startTime}-${e.target.value}`;
+    }
+    setInput({ ...input, timePeriod: craetetimePeriod });
+  };
+
+  // =========================== Handle Summit ==========================//
+  const handleformSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      const formData = new FormData();
+      Object.keys(input).forEach((key) => formData.append(key, input[key]));
+      toast.success('create successfully');
+      // const event = await // apiupdate
+      // const { eventId } = event.data.eventId;
+    } catch (err) {
+      console.log(err);
+      setInput(null);
+    } finally {
+      setLoading(false);
+      navigate(`/event/${eventId}`);
+    }
+  };
+
+  // ========================== Loading Spinner =====================//
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        loading...
+      </div>
+    );
   }
 
   return (
@@ -219,20 +188,16 @@ export default function EditEventContainer() {
           </div>
           <span className='text-[1.2rem] font-medium'>Cover Image</span>
 
-          {input.coverImage ? (
-            <div className=' flex justify-center items-center'>
-              <img
-                className='object-cover w-full h-[34vh] rounded-lg'
-                src={coverImage || input?.coverImage}
-                alt='cover pic'
-              />
-            </div>
-          ) : (
-            <div className='flex flex-col items-center'>
-              <PictureIcon />
-            </div>
-          )}
-
+          {/*  ============================= cover Image start ======================== */}
+          <div className=' flex justify-center items-center'>
+            <img
+              className='object-cover w-full h-[34vh] rounded-lg'
+              src={
+                coverImage ? URL.createObjectURL(coverImage) : event?.coverImage
+              }
+              alt='cover pic'
+            />
+          </div>
           <div className='flex flex-row justify-end'>
             <div className='md:w-[18%] sm:[30%]'>
               <input
@@ -244,64 +209,69 @@ export default function EditEventContainer() {
                 onChange={handleUploadCover}
               />
             </div>
-
             <Button onClick={() => fileEl.current.click()}>Upload </Button>
           </div>
+          {/*  ============================= cover Image end ======================== */}
 
-          <div />
-
+          {/*  ============================= Input start ======================== */}
           <Input
             name='title'
             placeholder='Title'
-            value={input}
+            value={input?.title ? input : event}
             onChange={handleChange}
             title='Title'
           />
-
           <div>
             <p className='font-semibold pl-2 pb-2 text-[1rem]'>Description</p>
             <textarea
               placeholder='Description'
               className='textarea textarea-bordered textarea-md w-full'
               name='description'
-              value={input?.description}
+              value={input?.description || event.description}
               onChange={handleChange}
             />
           </div>
-
-          {/* /////////////////// date and tim /////////// */}
+          {/* /////////////////// date and time /////////// */}
           <EditDateAndTime
             handleChange={handleChange}
             handleTime={handleTime}
             input={input}
+            initData={event}
             tempPeriodTime={tempPeriodTime}
+            time={time}
           />
-
           <div className='flex gap-[0.5rem] p-2 border rounded-lg'>
             <span className='font-medium'>Yearly</span>
             <input
               type='checkbox'
-              checked={input.isYearly}
+              // checked={input.isYearly}
               name='isYearly'
-              value={input}
+              value={input?.isYearly || event.isYearly}
               onChange={handleCheckbox}
             />
           </div>
-          <EditInput onChange={handleChange} input={input} />
-
+          <EditInput onChange={handleChange} input={input} initData={event} />
           <EditOption
-            data={{ provinceData, districtData, subDistrictData, categoryData }}
+            data={{
+              provinceData,
+              districtData,
+              subDistrictData,
+              categoryData,
+              event,
+            }}
             onSelect={handleSelectPicker}
             input={input}
           />
-
-          <UploadImageContainer
+          {/* <UploadImageContainer
             onChange={handleUploadImage}
             onClick={handleDeleteImage}
             image={image}
+          /> */}
+          <FacilityCheckbox
+            onChange={handleCheckbox}
+            input={input}
+            initData={event}
           />
-
-          <FacilityCheckbox onChange={handleCheckbox} input={input} />
         </div>
       </div>
       <Map />

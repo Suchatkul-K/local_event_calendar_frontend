@@ -2,7 +2,8 @@ import React from 'react';
 import { SelectPicker } from 'rsuite';
 
 export default function EditOption({ data, onSelect, input }) {
-  const { provinceData, districtData, subDistrictData, categoryData } = data;
+  const { provinceData, districtData, subDistrictData, categoryData, event } =
+    data;
   return (
     <>
       <div className='w-full '>
@@ -12,7 +13,7 @@ export default function EditOption({ data, onSelect, input }) {
           placeholder='Select Province'
           data={provinceData}
           onSelect={onSelect}
-          value={input.provinceId}
+          value={event.EventAddress.provinceId}
         />
       </div>
 
@@ -22,7 +23,7 @@ export default function EditOption({ data, onSelect, input }) {
           block
           data={districtData}
           onSelect={onSelect}
-          value={input.districtId}
+          value={event.EventAddress.districtId}
         />
       </div>
 
@@ -32,7 +33,7 @@ export default function EditOption({ data, onSelect, input }) {
           block
           data={subDistrictData}
           onSelect={onSelect}
-          value={input.subDistrictId}
+          value={event.EventAddress.subDistrictId}
         />
       </div>
 
@@ -42,7 +43,7 @@ export default function EditOption({ data, onSelect, input }) {
           block
           data={categoryData}
           onSelect={onSelect}
-          value={input.categoryId}
+          value={event.categoryId}
           // onChange={setSelectCategory}
         />
       </div>

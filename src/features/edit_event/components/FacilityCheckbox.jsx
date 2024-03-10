@@ -1,6 +1,6 @@
 import { EVENT_FACILITY } from '../../../constance';
 
-export default function FacilityCheckbox({ input, onChange }) {
+export default function FacilityCheckbox({ input, onChange, initData }) {
   return (
     <div className='grid grid-cols-2  gap-[0.5rem] font-medium w-full'>
       {EVENT_FACILITY.map((el) => (
@@ -14,7 +14,7 @@ export default function FacilityCheckbox({ input, onChange }) {
             type='checkbox'
             name={el.name}
             value={el.name}
-            checked={input[el.name]}
+            checked={initData.EventFacility[el.name]}
             onChange={onChange}
           />
           <div className='font-semibold'>{el.name}</div>

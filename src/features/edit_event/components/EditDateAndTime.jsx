@@ -5,22 +5,24 @@ export default function EditDateAndTime({
   handleTime,
   input,
   tempPeriodTime,
+  initData,
+  time,
 }) {
   return (
-    <>
+    <div>
       <div className='flex justify-between w-full '>
         <InputDate
           name='startDate'
           title='Start Date'
           onChange={handleChange}
-          value={input.startDate}
+          value={input?.startDate || initData.startDate.substring(0, 10)}
         />
         <div className='text-end '>
           <InputDate
             name='endDate'
             title='End Date'
             onChange={handleChange}
-            value={input.endDate}
+            value={input?.endDate || initData.endDate.substring(0, 10)}
           />
         </div>
       </div>
@@ -30,7 +32,7 @@ export default function EditDateAndTime({
             name='startTime'
             title='Start Time'
             type='time'
-            value={tempPeriodTime[0]}
+            value={time.startTime || tempPeriodTime[0]}
             onChange={handleTime}
           />
         </div>
@@ -40,11 +42,11 @@ export default function EditDateAndTime({
             name='endTime'
             title='End Time'
             type='time'
-            value={tempPeriodTime[1]}
+            value={time.endTime || tempPeriodTime[1]}
             onChange={handleTime}
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

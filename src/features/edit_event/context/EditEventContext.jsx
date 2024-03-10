@@ -1,4 +1,5 @@
 import { useMemo, useState, createContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import categoryApi from '../../../api/category';
 import provinceApi from '../../../api/province';
 import * as eventApi from '../../../api/event';
@@ -6,42 +7,40 @@ import * as eventApi from '../../../api/event';
 export const EditEventContext = createContext();
 
 export default function EditEventContextProvider({ children }) {
+  const [loading, setLoading] = useState(true);
   const [province, setProvince] = useState(null);
   const [category, setCategory] = useState([]);
   const [event, setEvent] = useState(null);
 
-  const fetchProvince = async () => {
+  // param id
+  const { eventId } = useParams();
+
+  const fetchEditPage = async () => {
     try {
+      setLoading(true);
+
+      // FETCH events
+      const events = await eventApi.getEvent(eventId);
+      console.log(events.data);
+      setEvent(events.data);
+
+      // FETCH province
       const provinces = await provinceApi();
       setProvince(provinces.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
-  const fetchEventById = async () => {
-    try {
-      const res = await eventApi.getEvent(1);
-      console.log(res.data);
-      setEvent(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchCategory = async () => {
-    try {
+      // FETCH category
       const categories = await categoryApi();
       setCategory(categories.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProvince();
-    fetchCategory();
-    fetchEventById();
+    fetchEditPage();
+    window.scrollTo(0, 0);
   }, []);
 
   const selectObject = useMemo(
@@ -49,8 +48,11 @@ export default function EditEventContextProvider({ children }) {
       province,
       category,
       event,
+      loading,
+      setLoading,
+      eventId,
     }),
-    [province, category, event]
+    [province, category, event, loading]
   );
 
   return (
