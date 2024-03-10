@@ -33,6 +33,9 @@ function HomeContainer() {
             <div className='carousel-item flex gap-[2rem]'>
               <EventCard loading={loading} />
               <EventCard loading={loading} />
+              <EventCard loading={loading} />
+              <EventCard loading={loading} />
+              <EventCard loading={loading} />
             </div>
           </Carousel>
         </div>
