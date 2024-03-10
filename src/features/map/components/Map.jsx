@@ -7,7 +7,7 @@ const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
 function Map() {
   const [events, setEvents] = useState([]);
-  console.log(events);
+  // console.log(events);
 
   return (
     <div>
