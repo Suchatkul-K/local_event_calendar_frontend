@@ -1,5 +1,6 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import getProvince from '../../../api/province';
 import getCategory from '../../../api/category';
 import { createEvent } from '../../../api/event';
@@ -18,6 +19,8 @@ export function CreateEventContextProvider({ children }) {
   const [image, setImage] = useState([]);
   const [coverImage, setCoverImage] = useState(null);
   const [time, setTime] = useState({});
+
+  const navigate = useNavigate();
 
   // ------------------------fetch-----------------
   const fetchProvince = async () => {
@@ -117,7 +120,7 @@ export function CreateEventContextProvider({ children }) {
       }
 
       const validateError = validateCreateEvent(input);
-      if (validateError) {
+      if (Object.keys(validateError).length > 0) {
         setError(validateError);
         return;
       }
@@ -131,10 +134,11 @@ export function CreateEventContextProvider({ children }) {
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
       // console.log(...formData);
-      await createEvent(formData);
+      const eventId = await createEvent(formData);
       toast.success('create successfully');
-      // setError({});
+      setError({});
       setInput({});
+      navigate(`/event/${eventId.data}`);
     } catch (err) {
       console.log(err);
     }

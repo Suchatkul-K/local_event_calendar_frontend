@@ -23,7 +23,7 @@ import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
 import { authMe } from '../../../api/auth';
-import createReminder from '../../../api/user';
+import { createReminder } from '../../../api/user';
 
 export default function EventContainer() {
   const eventObj = useEventContext();

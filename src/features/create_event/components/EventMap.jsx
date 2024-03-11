@@ -17,8 +17,6 @@ function EventMap() {
     // Add a marker at the clicked location
     const newMarker = L.marker(e.latlng).addTo(map);
 
-    console.log(e.latlng);
-
     // Set the new marker && update input
     setMarker(newMarker);
     delete error.lat;

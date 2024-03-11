@@ -36,7 +36,7 @@ const createEventSchema = Joi.object({
 
 export const validateCreateEvent = (input) => {
   const { error } = createEventSchema.validate(input, { abortEarly: false });
-  console.dir(error);
+  // console.dir(error);
 
   const errorObject = {};
   error?.details.map((el) => {
