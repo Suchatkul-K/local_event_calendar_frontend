@@ -11,7 +11,6 @@ function NavBar() {
   const navigate = useNavigate();
   const allAuthObj = useAuth();
   const { authUser, setAuthUser } = allAuthObj;
-  console.log(authUser);
 
   const logout = () => {
     setAuthUser(null);

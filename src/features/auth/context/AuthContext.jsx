@@ -8,7 +8,6 @@ export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  console.log('run');
   const allAuthObj = useMemo(
     () => ({
       setAuthUser,

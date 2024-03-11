@@ -85,6 +85,12 @@ export default function EditEventContainer() {
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
+  const handleDate = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: new Date(e.target.value).toISOString(),
+    });
+  };
 
   const handleSelectPicker = (value, item) => {
     setInput({ ...input, [item.name]: value });

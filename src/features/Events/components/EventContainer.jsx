@@ -23,15 +23,13 @@ import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
 import { authMe } from '../../../api/auth';
-import createReminder from '../../../api/user';
+import { createReminder } from '../../../api/user';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  console.log(eventObj, 'this is event');
+
   const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
-  console.log(eventObj?.event?.id, 'event +++++++++++++++++++');
-  console.log(authEvents, 'authEvent *****************');
   const { eventId } = useParams();
   // const eventLatLng = [
   //   eventObj?.EventAddress?.lat,
@@ -41,8 +39,6 @@ export default function EventContainer() {
   const checkReminded = authEvents?.Reminder.filter(
     (el) => el.eventId === eventObj?.event?.id
   );
-
-  console.log(checkReminded, 'this is check Reminder'); //  reminded arr.length > 0 , reminded []
 
   const fetchAuthEvent = async () => {
     try {
@@ -180,7 +176,10 @@ export default function EventContainer() {
         </div>
       </div>
       {/* Carousel Preview */}
-      {eventObj?.event?.image && <CarouselHero />}
+      {
+        // eventObj?.event?.image &&
+        <CarouselHero />
+      }
 
       {eventObj?.event && <EventMapLocation />}
     </div>
