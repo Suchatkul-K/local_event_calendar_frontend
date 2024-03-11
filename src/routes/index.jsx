@@ -15,6 +15,11 @@ import OrganizerRegisterPage from '../pages/OrganizerRegisterPage';
 import UserRegisterPage from '../pages/UserRegisterPage';
 import EventContextProvider from '../features/Events/context/EventContext';
 import EditEventPage from '../pages/EditEventPage';
+// import ExploreContextProvider from '../features/explore/context/ExploreContext';
+import AuthContextProvider from '../features/auth/context/AuthContext';
+
+import EditProfilePage from '../pages/EditProfilePage';
+import CalendarPage from '../pages/CalendarPage';
 
 const router = createBrowserRouter([
   {
@@ -57,6 +62,8 @@ const router = createBrowserRouter([
         path: '/event/:eventId',
         element: <EventPage />,
       },
+      { path: '/profile/edit', element: <EditProfilePage /> },
+      { path: '/calendar', element: <CalendarPage /> },
       {
         path: '',
         element: <Navigate to='/home' />,

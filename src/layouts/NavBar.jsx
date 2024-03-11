@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import Button from '../global_components/Button';
-import { MapIcon, CalendarIcon, ExploreIcon } from '../icons';
+import { MapIcon, CalendarIcon, ExploreIcon, ProfileIcon } from '../icons';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -30,6 +30,19 @@ function NavBar() {
           <div className='flex flex-row'>
             <ExploreIcon className='rounded-full bg-primary p-[0.35rem] w-[2.2rem] h-[2.2rem]' />
           </div>
+        </div>
+        <div className='dropdown dropdown-bottom dropdown-end'>
+          <button
+            type='button'
+            className='   rounded-[100%] border-2 border-gray-500 p-1 '
+          >
+            <ProfileIcon />{' '}
+          </button>
+          <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[10rem]'>
+            <li className='p-2'>Edit profile</li>
+            <hr />
+            <li className='p-2'>Log out</li>
+          </ul>
         </div>
         <Button onClick={() => navigate('/login')}>Login</Button>
       </div>
