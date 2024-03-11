@@ -14,7 +14,6 @@ const organizerRegisterSchema = Joi.object({
     .trim()
     .messages({ 'string.empty': 'Username is required' }),
   password: Joi.string()
-    .pattern(/^[a-zA-Z0-9]/)
     .required()
     .messages({ 'string.empty': 'Password is required' }),
   confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
@@ -24,23 +23,20 @@ const organizerRegisterSchema = Joi.object({
   gender: Joi.string()
     .required()
     .trim()
-    .messages({ 'string.empty': 'sex is required' }),
+    .messages({ 'string.empty': 'gender is required' }),
   role: Joi.string()
     .required()
     .trim()
     .messages({ 'string.empty': 'role is required' }),
-  corporation: Joi.string()
-    .required()
-    .trim()
-    .messages({ 'string.empty': 'corporation is required' }),
-  officialName: Joi.string()
-    .required()
-    .trim()
-    .messages({ 'string.empty': 'officialName is required' }),
-  companyNumber: Joi.string()
-    .required()
-    .trim()
-    .messages({ 'string.empty': 'companyName is required' }),
+  corporation: Joi.string().required().trim().messages({
+    'string.empty': 'corporation is required',
+  }),
+  officialName: Joi.string().required().trim().messages({
+    'string.empty': 'Official Name is required',
+  }),
+  companyNumber: Joi.string().required().trim().messages({
+    'string.empty': 'Company ID is required',
+  }),
 });
 
 const userRegisterSchema = Joi.object({
@@ -57,7 +53,6 @@ const userRegisterSchema = Joi.object({
     .trim()
     .messages({ 'string.empty': 'Username is required' }),
   password: Joi.string()
-    .pattern(/^[a-zA-Z0-9]/)
     .required()
     .messages({ 'string.empty': 'Password is required' }),
   confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
@@ -67,7 +62,7 @@ const userRegisterSchema = Joi.object({
   gender: Joi.string()
     .required()
     .trim()
-    .messages({ 'string.empty': 'sex is required' }),
+    .messages({ 'string.empty': 'gender is required' }),
   role: Joi.string()
     .required()
     .trim()
