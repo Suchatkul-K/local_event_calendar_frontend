@@ -1,4 +1,5 @@
 import EventCard from '../../../global_components/EventCard';
+import useProfileContext from '../hook/useProfileContext';
 
 function ProfileEvent() {
   return (

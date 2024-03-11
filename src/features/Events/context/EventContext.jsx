@@ -13,6 +13,7 @@ export default function EventContextProvider({ children }) {
       const response = await getEvent(eventId);
       console.log(response.data);
       setEvent(response.data);
+      console.log(response.data);
     } catch (err) {
       console.log(err);
     }
