@@ -1,7 +1,6 @@
-export const USER_ROLE = {
-  ORGANIZER: 'ORGANIZER',
-  USER: 'USER',
-  GUEST: 'GUEST',
+export const ORGANIZER = {
+  INDIVIDUAL: 'INDIVIDUAL',
+  CORPORATION: 'CORPORATION',
 };
 
 export const FACILITY_LIST = {

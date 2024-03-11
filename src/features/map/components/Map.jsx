@@ -19,7 +19,7 @@ function Map() {
       )}
       {events?.length > 0 ? (
         events.map((event) => (
-          <div className='p-4'>
+          <div className='p-4' key={event.id}>
             <EventCardGanX event={event} key={event.id} />
           </div>
         ))
