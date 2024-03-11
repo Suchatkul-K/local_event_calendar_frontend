@@ -1,10 +1,23 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+
+import { toast } from 'react-toastify';
 import Button from '../global_components/Button';
 import { MapIcon, CalendarIcon, ExploreIcon, ProfileIcon } from '../icons';
+import useAuth from '../features/auth/hooks/auth';
+import DropdownProfile from '../global_components/DropdownProfile';
+import { clearToken } from '../utils/local-storage';
 
 function NavBar() {
   const navigate = useNavigate();
+  const allAuthObj = useAuth();
+  const { authUser, setAuthUser } = allAuthObj;
+  console.log(authUser);
+
+  const logout = () => {
+    setAuthUser(null);
+    clearToken();
+    toast.success('Logout');
+  };
 
   return (
     <div
@@ -31,20 +44,11 @@ function NavBar() {
             <ExploreIcon className='rounded-full bg-primary p-[0.35rem] w-[2.2rem] h-[2.2rem]' />
           </div>
         </div>
-        <div className='dropdown dropdown-bottom dropdown-end'>
-          <button
-            type='button'
-            className='   rounded-[100%] border-2 border-gray-500 p-1 '
-          >
-            <ProfileIcon />{' '}
-          </button>
-          <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[10rem]'>
-            <li className='p-2'>Edit profile</li>
-            <hr />
-            <li className='p-2'>Log out</li>
-          </ul>
-        </div>
-        <Button onClick={() => navigate('/login')}>Login</Button>
+        {authUser ? (
+          <DropdownProfile logout={logout} />
+        ) : (
+          <Button onClick={() => navigate('/login')}>Login</Button>
+        )}
       </div>
     </div>
   );
