@@ -4,6 +4,7 @@ import { getAllEvent } from '../../../api/event';
 import EventCardGanX from '../../../global_components/EventCardGanX';
 import getProvince from '../../../api/province';
 import formatDate from '../../../utils/formatDate';
+import EventCalendar from './EventCalendar';
 
 function CalendarContainer() {
   const [events, setEvents] = useState([]);
@@ -77,7 +78,7 @@ function CalendarContainer() {
             onSelect={(value) => setSearch({ ...search, province: value })}
             block
           />
-          <input
+          {/* <input
             className='border p-2'
             type='date'
             name='date'
@@ -85,7 +86,8 @@ function CalendarContainer() {
             onChange={(e) =>
               setSearch({ ...search, [e.target.name]: e.target.value })
             }
-          />
+          /> */}
+          <EventCalendar data={events} />
         </div>
 
         <div className='flex flex-row gap-2 justify-end'>

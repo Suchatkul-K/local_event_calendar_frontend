@@ -185,7 +185,7 @@ function EditProfileForm() {
         />
       </div>
 
-      {authUser.role === 'ORGANIZER' ? (
+      {authUser?.role === 'ORGANIZER' ? (
         <div>
           <div className='w-full'>
             <span className='text-[0.8rem]'>Province</span>
