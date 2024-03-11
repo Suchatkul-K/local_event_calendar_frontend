@@ -13,22 +13,24 @@ import Button from '../../../global_components/Button';
 import { apiRegister, authMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
 import useAuth from '../hooks/auth';
+import { ORGANIZER } from '../../../constance/index';
 
 export default function OrganizerRegisterContainer() {
-  const [input, setInput] = useState({
-    email: '',
-    userName: '',
-    password: '',
-    confirmPassword: '',
-    gender: 'OTHER',
-    role: 'ORGANIZER',
-    corporation: 'INDIVIDUAL',
-    officialName: '',
-    companyNumber: '',
-  });
+  // const [input, setInput] = useState({
+  //   email: '',
+  //   userName: '',
+  //   password: '',
+  //   confirmPassword: '',
+  //   gender: 'OTHER',
+  //   role: 'ORGANIZER',
+  //   corporation: 'INDIVIDUAL',
+  //   officialName: '',
+  //   companyNumber: '',
+  // });
+  const [input, setInput] = useState({});
   const [error, setError] = useState();
-  const [profileImage, setProfileImage] = useState('');
-  const [identityCopyImage, setIdentityCopyImage] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
+  const [identityCopyImage, setIdentityCopyImage] = useState(null);
   const { setAuthUser } = useAuth();
 
   const fileEl = useRef(null);
@@ -39,20 +41,20 @@ export default function OrganizerRegisterContainer() {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e) => {
+  const handleProfileImage = (e) => {
     setProfileImage(e.target.files[0]);
   };
 
-  const handleFileChange2 = (e) => {
+  const handleIdentityCopy = (e) => {
     setIdentityCopyImage(e.target.files[0]);
   };
 
   const handleProfilePicDelete = () => {
-    setProfileImage('');
+    setProfileImage(null);
   };
 
   const handleIdentityCopyPicDelete = () => {
-    setIdentityCopyImage('');
+    setIdentityCopyImage(null);
   };
 
   const handleSubmit = async (e) => {
@@ -60,8 +62,6 @@ export default function OrganizerRegisterContainer() {
       e.preventDefault();
       console.log(input);
       const validateResult = validateOrganizerRegister(input);
-      console.log('Validate Result is here');
-      console.log(validateResult);
 
       if (Object.keys(validateResult).length > 0 || !profileImage) {
         setError(validateResult);
@@ -77,25 +77,20 @@ export default function OrganizerRegisterContainer() {
           }));
         }
       } else {
-        console.log('no error validation');
-
         const formData = new FormData();
 
-        if (input.role === 'ORGANIZER') {
-          formData.append('profileImage', profileImage);
-          formData.append('identityCopyImage', identityCopyImage);
-        }
+        formData.append('profileImage', profileImage);
+        formData.append('identityCopyImage', identityCopyImage);
         formData.append('email', input.email);
         formData.append('userName', input.userName);
         formData.append('password', input.password);
-        formData.append('role', input.role);
+        formData.append('role', 'ORGANIZER');
         formData.append('gender', input.gender);
         formData.append('officialName', input.officialName);
         formData.append('companyNumber', input.companyNumber);
         formData.append('corporation', input.corporation);
 
         const registerResult = await apiRegister(formData);
-        console.log(registerResult);
         storeToken(registerResult.data.accessToken);
         const authResult = await authMe(registerResult.data.accessToken);
         setAuthUser(authResult.data);
@@ -141,7 +136,7 @@ export default function OrganizerRegisterContainer() {
                   type='file'
                   ref={fileEl}
                   className='hidden'
-                  onChange={handleFileChange}
+                  onChange={handleProfileImage}
                 />
                 <Button onClick={() => fileEl.current.click()}>
                   Upload Profile
@@ -157,6 +152,7 @@ export default function OrganizerRegisterContainer() {
             </div>
           </div>
 
+          {/* email */}
           <Input
             name='email'
             placeholder='Example@gmail.com'
@@ -167,6 +163,8 @@ export default function OrganizerRegisterContainer() {
           >
             <EmailIcon />
           </Input>
+
+          {/* username */}
           <Input
             name='userName'
             placeholder='Username'
@@ -177,9 +175,11 @@ export default function OrganizerRegisterContainer() {
           >
             <ProfileIcon />
           </Input>
+
+          {/* password */}
           <Input
             name='password'
-            placeholder='password'
+            placeholder='Password'
             value={input}
             onChange={handleChange}
             title='Password'
@@ -189,49 +189,37 @@ export default function OrganizerRegisterContainer() {
             <LockerIcon />
           </Input>
 
+          {/* confirm password */}
           <Input
             name='confirmPassword'
-            placeholder='confirmPassword'
+            placeholder='Confirm password'
             value={input}
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
             type='password'
           >
-            {' '}
             <LockerIcon />
           </Input>
 
           <div className='flex flex-row justify-between'>
+            {/* Select gender */}
             <div className='flex flex-col'>
-              <div>Sex</div>
+              <div>Gender</div>
               <select
                 name='gender'
                 className='h-10  rounded-lg'
                 onChange={handleChange}
+                defaultValue='MALE'
               >
-                <option value='MALE' selected>
-                  MALE
-                </option>
+                <option value='MALE'>MALE</option>
                 <option value='FEMALE'>FEMALE</option>
                 <option value='OTHER'>OTHER</option>
               </select>
             </div>
-
-            <div className='flex flex-col'>
-              <div>User Role</div>
-              <select
-                name='role'
-                className='h-10  rounded-lg'
-                onChange={handleChange}
-              >
-                <option value='ORGANIZER' selected>
-                  ORGANIZER
-                </option>
-              </select>
-            </div>
           </div>
 
+          {/* id copy image */}
           <div className='flex flex-col items-center'>
             {identityCopyImage ? (
               <div className='relative'>
@@ -259,7 +247,7 @@ export default function OrganizerRegisterContainer() {
                   type='file'
                   ref={fileEl2}
                   className='hidden'
-                  onChange={handleFileChange2}
+                  onChange={handleIdentityCopy}
                 />
                 <Button onClick={() => fileEl2.current.click()}>
                   Upload ID
@@ -275,38 +263,41 @@ export default function OrganizerRegisterContainer() {
             </div>
           </div>
 
+          {/* official name */}
           <Input
             name='officialName'
-            placeholder='officialName'
+            placeholder='Official name'
             value={input}
             onChange={handleChange}
             title='Official Name'
             errorMessage={error?.officialName}
           />
 
-          <Input
-            name='companyNumber'
-            placeholder='companyNumber'
-            value={input}
-            onChange={handleChange}
-            title='Company Number'
-            errorMessage={error?.companyNumber}
-          />
-
-          <div className='flex flex-col'>
-            <div>User Role</div>
+          <div className='flex flex-col gap-4'>
+            <div>Please select your entity type:</div>
             <select
               name='corporation'
               className='h-10  rounded-lg'
               onChange={handleChange}
+              defaultValue={ORGANIZER.INDIVIDUAL}
             >
-              <option value='INDIVIDUAL'>INDIVIDUAL</option>
-              <option value='CORPORATION' selected>
-                CORPORATION
-              </option>
+              <option value={ORGANIZER.INDIVIDUAL}>Individual</option>
+              <option value={ORGANIZER.CORPORATION}>Corporation</option>
             </select>
+            {/* company number */}
+            {input?.corporation === ORGANIZER.CORPORATION && (
+              <Input
+                name='companyNumber'
+                placeholder='Company number'
+                value={input}
+                onChange={handleChange}
+                title='Company Number'
+                errorMessage={error?.companyNumber}
+              />
+            )}
           </div>
 
+          {/* button group */}
           <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-full'>
             <button
               type='submit'
