@@ -14,8 +14,6 @@ export default function Input({
 }) {
   const finalValue = (value ? value[name] : '') || '';
 
-  // console.log(finalValue);
-
   return (
     <label htmlFor={name}>
       <p className='p-[0.5rem]  font-semibold text-[1.0rem]'>{title}</p>

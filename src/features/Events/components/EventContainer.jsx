@@ -1,9 +1,7 @@
-import { MapContainer, TileLayer } from 'react-leaflet';
 import { useState, useEffect, Children } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Avatar from '../../../global_components/Avatar';
-import Button from '../../../global_components/Button';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
   ClockIcon,

@@ -10,19 +10,18 @@ export default function AuthContextProvider({ children }) {
 
   const allAuthObj = useMemo(
     () => ({
-      setAuthUser,
       authUser,
       loading,
+      setAuthUser,
     }),
     [authUser, loading]
   );
+
   const fetchAuth = async () => {
-    const storeToken = getToken();
-    const authResult = await authMe(storeToken);
+    const token = getToken();
+    const authResult = await authMe(token);
     setAuthUser(authResult.data);
   };
-
-  console.log(authUser);
 
   useEffect(() => {
     try {

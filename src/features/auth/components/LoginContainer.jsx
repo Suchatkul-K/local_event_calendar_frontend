@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -16,7 +15,6 @@ export default function LoginContainer() {
   const { setAuthUser } = useAuth();
   const navigate = useNavigate();
 
-  // console.log(input);
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -30,7 +28,6 @@ export default function LoginContainer() {
       } else {
         const loginResult = await apiLogin(input);
         storeToken(loginResult.data.accessToken);
-        console.log(loginResult.data);
         const authResult = await authMe(loginResult.data.accessToken);
         setAuthUser(authResult.data);
         navigate('/');

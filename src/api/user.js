@@ -3,4 +3,4 @@ import axios from '../configs/axios';
 export const createReminder = (eventId) =>
   axios.post(`user/reminder/${eventId}`);
 export const deleteReminder = (eventId) =>
-  axios.get(`user/reminder/${eventId}`);
+  axios.delete(`user/reminder/${eventId}`);

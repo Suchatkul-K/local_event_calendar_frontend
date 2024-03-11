@@ -9,8 +9,6 @@ function EventMapLocation() {
     event: { EventAddress },
   } = useEventContext();
 
-  // console.log('EventAdress', EventAddress);
-
   let eventLocation = [];
   if (EventAddress) {
     eventLocation = [EventAddress.lat, EventAddress.long];
@@ -62,11 +60,7 @@ function EventMapLocation() {
                 <h2 className='text-xl font-bold mb-2'>To event location</h2>
                 <p>This will open a new window, Are you sure?</p>
               </div>
-              <Button
-                // className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-                onClick={() => setShowModal(false)}
-                // type='button'
-              >
+              <Button onClick={() => setShowModal(false)}>
                 <a
                   href={`https://maps.google.com/?q=${eventLocation}`}
                   target='_blank'
