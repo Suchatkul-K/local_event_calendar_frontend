@@ -1,5 +1,7 @@
+import Skeleton from 'react-loading-skeleton';
 import { MapIcon, CalendarIcon, ExploreIcon } from '../../../icons';
 import NavigatorButton from './NavigatorButton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function NavigatorButtonContainer() {
   return (

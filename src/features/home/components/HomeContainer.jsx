@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 import Carousel from '../../../global_components/Carousel';
 import EventCard from '../../../global_components/EventCard';
 import SeasonContainer from './SeasonContainer';
@@ -8,16 +9,43 @@ import IncomingCard from './IncomingCard';
 import NavigatorButtonContainer from './NavigatorButtonContainer';
 import CarouselHero from '../../../global_components/CarouselHero';
 import useHomeContext from '../hooks/useHomeContext';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function HomeContainer() {
   const allEventsObj = useHomeContext();
+  const { loading } = useHomeContext();
 
   const highlightEvent = allEventsObj.event?.filter(
     (event) => event.HighlightEvent != null
   );
 
+  // ================= loading Spinner ====================//
+  if (loading) {
+    return (
+      <div>
+        {loading ? (
+          <Skeleton height='10rem' />
+        ) : (
+          <CarouselHero loading={loading} />
+        )}
+        <div className='w-full p-[0.75rem] pt-[3rem] flex flex-col gap-4'>
+          <Carousel title='Highlight' hight='h-[30rem]' loading={loading}>
+            <div className='carousel-item flex gap-[2rem]'>
+              <EventCard loading={loading} />
+              <EventCard loading={loading} />
+              <EventCard loading={loading} />
+              <EventCard loading={loading} />
+              <EventCard loading={loading} />
+            </div>
+          </Carousel>
+        </div>
+      </div>
+    );
+  }
+  //= ======================================================//
+
   return (
-    <>
+    <div>
       <CarouselHero />
       <div className='w-full p-[0.75rem] pt-[3rem] flex flex-col gap-4'>
         <NavigatorButtonContainer />
@@ -37,7 +65,7 @@ function HomeContainer() {
         </Carousel>
         <SeasonContainer />
       </div>
-    </>
+    </div>
   );
 }
 

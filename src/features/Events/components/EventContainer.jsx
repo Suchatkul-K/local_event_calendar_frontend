@@ -3,6 +3,7 @@ import { useState, useEffect, Children } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Avatar from '../../../global_components/Avatar';
+import Button from '../../../global_components/Button';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
   ClockIcon,
@@ -158,7 +159,7 @@ export default function EventContainer() {
           ) : null}
           {eventObj?.event?.EventFacility?.petFriend ? (
             <div className='flex gap-2 items-center'>
-              <DogIcon /> Dog
+              <DogIcon /> Pet
             </div>
           ) : null}
           {eventObj?.event?.EventFacility?.food ? (
@@ -179,7 +180,7 @@ export default function EventContainer() {
         </div>
       </div>
       {/* Carousel Preview */}
-      <CarouselHero />
+      {eventObj?.event?.image && <CarouselHero />}
 
       {eventObj?.event && <EventMapLocation />}
     </div>
