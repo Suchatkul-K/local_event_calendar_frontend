@@ -23,7 +23,7 @@ import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
 import { authMe } from '../../../api/auth';
-import createReminder from '../../../api/user';
+import { createReminder, deleteReminder } from '../../../api/user';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
@@ -55,6 +55,12 @@ export default function EventContainer() {
   const handleReminderClick = async () => {
     await createReminder(+eventId);
     toast.success('keep to reminded');
+    fetchAuthEvent();
+  };
+
+  const handleDelReminderClick = async () => {
+    await deleteReminder(+eventId);
+    toast.success('remove to your reminder');
     fetchAuthEvent();
   };
 
@@ -130,7 +136,11 @@ export default function EventContainer() {
                 <HearthIconOutline />
               </button>
             ) : (
-              <button type='button' aria-label='Save'>
+              <button
+                type='button'
+                aria-label='Save'
+                onClick={handleDelReminderClick}
+              >
                 <HearthIconOutline className='fill-red-500' />
               </button>
             )}
