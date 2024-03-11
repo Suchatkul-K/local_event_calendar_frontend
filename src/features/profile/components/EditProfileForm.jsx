@@ -6,6 +6,7 @@ import useProfileContext from '../hook/useProfileContext';
 import getProvince from '../../../api/province';
 import { authMe } from '../../../api/auth';
 import Input from '../../../global_components/Input';
+import useAuth from '../../auth/hooks/auth';
 
 function EditProfileForm() {
   //   const ProfileContextObject = useProfileContext();
@@ -19,6 +20,9 @@ function EditProfileForm() {
   const [district, setDistrict] = useState(null);
   const [subDistrict, setSubDistrict] = useState(null);
   const [oldData, setOldData] = useState(null);
+  const allAuthObj = useAuth();
+
+  const { authUser } = allAuthObj;
   //   console.log(province);
 
   console.log(oldData);
@@ -180,58 +184,63 @@ function EditProfileForm() {
           onChange={handleChangeInput}
         />
       </div>
-      <div className='w-full'>
-        <span className='text-[0.8rem]'>Province</span>
-        <SelectPicker
-          block
-          placeholder='province'
-          data={provinceData}
-          value={
-            input?.provinceId
-              ? input?.provinceId
-              : oldData?.UserAddress?.provinceId
-          }
-          onSelect={handleSelectPicker}
-        />
-      </div>
-      <div className='w-full'>
-        <span className='text-[0.8rem]'>District</span>
-        <SelectPicker
-          block
-          placeholder='district'
-          data={districtData}
-          onSelect={handleSelectPicker}
-          value={
-            input?.districtId
-              ? input?.districtId
-              : oldData?.UserAddress?.districtId
-          }
-        />
-      </div>
-      <div className='w-full'>
-        <span className='text-[0.8rem]'>Sub-District</span>
-        <SelectPicker
-          block
-          placeholder='sub-district'
-          data={subDistrictData}
-          onSelect={handleSelectPicker}
-          value={
-            input?.subDistrictId
-              ? input?.subDistrictId
-              : oldData?.UserAddress?.subDistrictId
-          }
-        />
-      </div>
-      <div>
-        <span className='text-[0.8rem]'>Address</span>
-        <textarea
-          placeholder='address'
-          className='textarea textarea-bordered textarea-lg w-full max-w-xs text-[0.75rem]'
-          name='address'
-          value={input?.address}
-          onChange={handleChangeInput}
-        />
-      </div>
+
+      {authUser.role === 'ORGANIZER' ? (
+        <div>
+          <div className='w-full'>
+            <span className='text-[0.8rem]'>Province</span>
+            <SelectPicker
+              block
+              placeholder='province'
+              data={provinceData}
+              value={
+                input?.provinceId
+                  ? input?.provinceId
+                  : oldData?.UserAddress?.provinceId
+              }
+              onSelect={handleSelectPicker}
+            />
+          </div>
+          <div className='w-full'>
+            <span className='text-[0.8rem]'>District</span>
+            <SelectPicker
+              block
+              placeholder='district'
+              data={districtData}
+              onSelect={handleSelectPicker}
+              value={
+                input?.districtId
+                  ? input?.districtId
+                  : oldData?.UserAddress?.districtId
+              }
+            />
+          </div>
+          <div className='w-full'>
+            <span className='text-[0.8rem]'>Sub-District</span>
+            <SelectPicker
+              block
+              placeholder='sub-district'
+              data={subDistrictData}
+              onSelect={handleSelectPicker}
+              value={
+                input?.subDistrictId
+                  ? input?.subDistrictId
+                  : oldData?.UserAddress?.subDistrictId
+              }
+            />
+          </div>
+          <div>
+            <span className='text-[0.8rem]'>Address</span>
+            <textarea
+              placeholder='address'
+              className='textarea textarea-bordered textarea-lg w-full max-w-xs text-[0.75rem]'
+              name='address'
+              value={input?.address}
+              onChange={handleChangeInput}
+            />
+          </div>
+        </div>
+      ) : null}
 
       <div className='flex gap-3 justify-end'>
         <button type='button' className='btn '>

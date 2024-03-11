@@ -1,5 +1,7 @@
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { useState, useEffect, Children } from 'react';
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
@@ -19,10 +21,45 @@ import {
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
+import { authMe } from '../../../api/auth';
+import createReminder from '../../../api/user';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  // console.log(eventObj);
+  console.log(eventObj, 'this is event');
+  const [isReminder, setIsReminder] = useState(false);
+  const [authEvents, setAuthEvents] = useState(null);
+  console.log(eventObj?.event?.id, 'event +++++++++++++++++++');
+  console.log(authEvents, 'authEvent *****************');
+  const { eventId } = useParams();
+  // const eventLatLng = [
+  //   eventObj?.EventAddress?.lat,
+  //   eventObj?.EventAddress?.long,
+  // ];
+
+  const checkReminded = authEvents?.Reminder.filter(
+    (el) => el.eventId === eventObj?.event?.id
+  );
+
+  console.log(checkReminded, 'this is check Reminder'); //  reminded arr.length > 0 , reminded []
+
+  const fetchAuthEvent = async () => {
+    try {
+      const authEvent = await authMe();
+      setAuthEvents(authEvent.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleReminderClick = async () => {
+    await createReminder(+eventId);
+    toast.success('keep to reminded');
+    fetchAuthEvent();
+  };
+
+  useEffect(() => {
+    fetchAuthEvent();
+  }, []);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -84,9 +121,17 @@ export default function EventContainer() {
         <div className='flex justify-end py-4'>
           <div className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full'>
             {checkReminded?.length === 0 ? (
-              <HearthIconOutline />
+              <button
+                type='button'
+                onClick={handleReminderClick}
+                aria-label='Save'
+              >
+                <HearthIconOutline />
+              </button>
             ) : (
-              <HearthIconOutline className='fill-red-500' />
+              <button type='button' aria-label='Save'>
+                <HearthIconOutline className='fill-red-500' />
+              </button>
             )}
             <div className='text-red-400 text-[0.75rem]'>Remind Me</div>
           </div>

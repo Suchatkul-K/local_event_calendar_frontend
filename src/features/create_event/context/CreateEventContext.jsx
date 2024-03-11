@@ -64,7 +64,6 @@ export function CreateEventContextProvider({ children }) {
   const handleUploadImage = (e) => {
     const filesImage = e.target.files[0];
     setImage([...image, filesImage]);
-
   };
 
   const handleDeleteImage = (el) => {
@@ -105,7 +104,7 @@ export function CreateEventContextProvider({ children }) {
         image.forEach((value, index) => {
           formData.append('image', value);
         });
-       }
+      }
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
       // console.log(...formData);
