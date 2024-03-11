@@ -2,32 +2,24 @@ import 'rsuite/Calendar/styles/index.css';
 import 'rsuite/Badge/styles/index.css';
 import 'rsuite/Popover/styles/index.css';
 import { Calendar, Whisper, Popover, Badge } from 'rsuite';
-import ProfileDrawer from '../../profile/components/ProfileDrawer';
-import EventCardGanX from '../../../global_components/EventCardGanX';
+import { useState } from 'react';
+import { getDate } from 'rsuite/esm/utils/dateUtils';
 import EventCard from '../../../global_components/EventCard';
 
-function EventCalendar({ data }) {
-  //   const ProfileContextObject = useProfileContext();
-  console.log(data);
+function EventCalendar({ data, setSearch }) {
+  //   const [dateForSearch, setDateForSearch] = useState(null);
+
+  const handleCellClick = (day) => {
+    const newDate = new Date(day);
+    newDate.setUTCHours(0, 0, 0, 0);
+    const isoDate = newDate.toISOString();
+    setSearch({ date: isoDate });
+  };
+
   const getEventList = (date) => {
-    // const day = date.getDate();
     const newDate = new Date(date);
     newDate.setUTCHours(0, 0, 0, 0);
     const isoDate = newDate.toISOString();
-
-    // switch (day) {
-    //   case 10:
-    //     return [
-    //       { title: 'test1', timePeriod: '12' },
-    //       { title: 'test1', timePeriod: '12' },
-    //       { title: 'test1', timePeriod: '12' },
-    //       { title: 'test1', timePeriod: '12' },
-    //       { title: 'test1', timePeriod: '12' },
-    //       { title: 'test1', timePeriod: '12' },
-    //     ];
-    //   default:
-    //     return [];
-    // }
 
     if (data) {
       return data.filter((value) => value?.startDate === isoDate);
@@ -37,46 +29,56 @@ function EventCalendar({ data }) {
 
   const renderCell = (date) => {
     const list = getEventList(date);
-    // const displayList = list.filter((item, index) => index < 1);
 
-    if (list.length) {
-      // const moreCount = list.length - displayList.length;
-      const event = list.map((item) => {
-        console.log(item);
-        return <EventCard key={item.id} event={item.event} />;
-      });
+    // if (list.length) {
+    //   const event = list.map((item) => (
+    //     <EventCard key={item.id} event={item.event} />
+    //   ));
 
-      return (
-        // <ProfileDrawer>
-        // <Whisper
-        //   placement='right'
-        //   trigger='click'
-        //   speaker={
-        //     <Popover>
-        //       {list.map((item) => (
-        //         <li className='list-none' key={item.id}>
-        //           <div>
-        //             <Badge /> {item.title} {item.timePeriod}
-        //           </div>
-        //         </li>
-        //       ))}
-        //     </Popover>
-        //   }
-        // >
-        <ProfileDrawer props={event}>
-          <ul className='calendar-todo-list h-full'>
-            <div className='w-full h-full flex justify-center items-center'>
-              <Badge />
-            </div>
-          </ul>
-        </ProfileDrawer>
-        // </Whisper>
-        // </ProfileDrawer>
-      );
-    }
-
-    return null;
+    return (
+      <button
+        className='w-full h-full'
+        type='button'
+        aria-label='Save'
+        onClick={() => handleCellClick(date)}
+      >
+        {list.length > 0 && (
+          <Whisper
+            placement='right'
+            trigger='click'
+            speaker={
+              <Popover>
+                {list.map((item) => (
+                  <li className='list-none' key={item.id}>
+                    <div>
+                      <Badge /> {item.title} {item.timePeriod}
+                    </div>
+                  </li>
+                ))}
+              </Popover>
+            }
+          >
+            <ul className='calendar-todo-list h-full'>
+              <div className='w-full h-full flex justify-center items-center'>
+                <Badge />
+              </div>
+            </ul>
+          </Whisper>
+        )}
+      </button>
+    );
   };
+  // return (
+  //   <button
+  //     className='w-full h-full'
+  //     type='button'
+  //     aria-label='Save'
+  //     onClick={() => handleCellClick(date)}
+  //   >
+  //     {' '}
+  //   </button>
+  // );
+  //   };
 
   return <Calendar bordered renderCell={renderCell} />;
 }

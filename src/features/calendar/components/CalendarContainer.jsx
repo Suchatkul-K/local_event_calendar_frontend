@@ -7,9 +7,19 @@ import formatDate from '../../../utils/formatDate';
 import EventCalendar from './EventCalendar';
 
 function CalendarContainer() {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState(null);
   const [province, setProvince] = useState([]);
   const [search, setSearch] = useState({ date: '', province: '' });
+  const [tempEvents, setTempEvents] = useState(null);
+  const [clear, setClear] = useState(null);
+
+  console.log(search);
+  if (!tempEvents && events) {
+    setTempEvents([...events]);
+  }
+  console.log(events);
+
+  console.log(tempEvents);
 
   const fetchEventsData = async () => {
     try {
@@ -22,30 +32,33 @@ function CalendarContainer() {
       console.log(err);
     }
   };
+
   const handleSearch = () => {
-    let filteredEvents = [...events];
+    let filterEvent = [...tempEvents];
 
     // Filter by province if selected
     if (search.province !== '') {
-      filteredEvents = filteredEvents.filter(
+      filterEvent = filterEvent.filter(
         (event) => event.EventAddress.provinceId === search.province
       );
+
+      setEvents(filterEvent);
     }
 
     // Filter by date if selected
-    if (search.date !== '') {
-      const formattedDate = formatDate(search.date);
-      filteredEvents = filteredEvents.filter(
-        (event) => formatDate(event.startDate) === formattedDate
-      );
-    }
+    // if (search.date !== '') {
+    //   const formattedDate = formatDate(search.date);
+    //   filteredEvents = filteredEvents.filter(
+    //     (event) => formatDate(event.startDate) === formattedDate
+    //   );
+    // }
 
-    setEvents(filteredEvents);
+    // setEvents(filteredEvents);
   };
 
   const handleClear = () => {
-    fetchEventsData();
-    setSearch({ date: '', province: '' });
+    setEvents([...tempEvents]);
+    setClear(null);
   };
 
   useEffect(() => {
@@ -73,7 +86,9 @@ function CalendarContainer() {
         {/* search from province */}
         <div className='flex flex-col gap-3 py-4'>
           <SelectPicker
-            onClean={(e) => console.log(e)}
+            // onClean={(e) => console.log(e)}
+            value={clear}
+            onChange={setClear}
             data={provinceData}
             onSelect={(value) => setSearch({ ...search, province: value })}
             block
@@ -87,21 +102,21 @@ function CalendarContainer() {
               setSearch({ ...search, [e.target.name]: e.target.value })
             }
           /> */}
-          <EventCalendar data={events} />
+          <EventCalendar data={events} setSearch={setSearch} />
         </div>
 
         <div className='flex flex-row gap-2 justify-end'>
-          <button type='button' className='btn' onClick={handleSearch}>
-            search
-          </button>
           <button type='button' className='btn' onClick={handleClear}>
             clear
+          </button>
+          <button type='button' className='btn' onClick={handleSearch}>
+            search
           </button>
         </div>
       </div>
       {/* data */}
       <div className='flex flex-col gap-3 py-4'>
-        {events.map((event) => (
+        {events?.map((event) => (
           <EventCardGanX key={event.id} event={event} />
         ))}
         {/* {temp} */}
