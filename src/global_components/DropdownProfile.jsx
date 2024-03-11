@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ProfileIcon } from '../icons';
 
 export default function DropdownProfile({ logout }) {
+  const nevigate = useNavigate();
   return (
     <div className='dropdown dropdown-bottom dropdown-end'>
       <button
@@ -11,7 +13,11 @@ export default function DropdownProfile({ logout }) {
         <ProfileIcon />{' '}
       </button>
       <ul className='dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-[10rem]'>
-        <button type='button' className='p-2'>
+        <button
+          type='button'
+          className='p-2'
+          onClick={() => nevigate('/profile/edit')}
+        >
           Edit profile
         </button>
         <hr />

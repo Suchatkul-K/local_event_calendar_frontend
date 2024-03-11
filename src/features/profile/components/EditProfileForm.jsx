@@ -50,7 +50,7 @@ function EditProfileForm() {
     setDistrict([]);
     console.log(province);
     setDistrict(
-      province.find((value) => value.id === oldData?.UserAddress?.provinceId)
+      province?.find((value) => value.id === oldData?.UserAddress?.provinceId)
         .Districts
     );
   }
@@ -58,9 +58,9 @@ function EditProfileForm() {
   if (!subDistrict && district && oldData) {
     console.log('true');
     setSubDistrict([]);
-    console.log(province);
+
     setSubDistrict(
-      district.find((value) => value.id === oldData?.UserAddress?.districtId)
+      district?.find((value) => value.id === oldData?.UserAddress?.districtId)
         .SubDistricts
     );
   }
@@ -185,7 +185,7 @@ function EditProfileForm() {
         />
       </div>
 
-      {authUser.role === 'ORGANIZER' ? (
+      {authUser?.role === 'ORGANIZER' ? (
         <div>
           <div className='w-full'>
             <span className='text-[0.8rem]'>Province</span>
