@@ -1,15 +1,19 @@
 /* eslint-disable no-console */
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
-import { apiLogin } from '../../../api/auth';
+import { apiLogin, authMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
+import useAuth from '../hooks/auth';
 
 export default function LoginContainer() {
   const [input, setInput] = useState({ email: '', password: '' });
   const [error, setError] = useState({});
+
+  const { setAuthUser } = useAuth();
+  const navigate = useNavigate();
 
   // console.log(input);
   const handleChange = (e) => {
@@ -19,20 +23,19 @@ export default function LoginContainer() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validateResult = validateLogin(input);
-      console.log('Validate Result is here');
-      console.log(validateResult);
-
       if (Object.keys(validateResult).length > 0) {
         setError(validateResult);
       } else {
-        console.log('no error validation');
         const loginResult = await apiLogin(input);
         storeToken(loginResult.data.accessToken);
+        console.log(loginResult.data);
+        const authResult = await authMe(loginResult.data.accessToken);
+        setAuthUser(authResult.data);
+        navigate('/');
       }
     } catch (err) {
-      console.log('error');
+      console.log(err);
     }
   };
   useEffect(() => window.scrollTo(0, 0), []);
@@ -81,7 +84,6 @@ export default function LoginContainer() {
             >
               Login with Line
             </button>
-
             <div className='text-[1rem]'>
               <span>{`Don't have an account ? `}</span>
               <Link to='/register'>

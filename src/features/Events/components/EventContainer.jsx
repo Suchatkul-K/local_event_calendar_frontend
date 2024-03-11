@@ -18,40 +18,11 @@ import {
 } from '../../../icons';
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
-import { authMe } from '../../../api/auth';
-
-const BkkLatLon = [13.756329334391024, 100.50176927408629];
+import EventMapLocation from './EventMapLocation';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  const [isReminder, setIsReminder] = useState(false);
-  const [authEvents, setAuthEvents] = useState(null);
-  console.log(eventObj.event, 'event +++++++++++++++++++');
-  console.log(authEvents?.Reminder, 'authEvent *****************');
-  // const eventLatLng = [
-  //   eventObj?.EventAddress?.lat,
-  //   eventObj?.EventAddress?.long,
-  // ];
-
-  const checkReminded = authEvents?.Reminder.filter(
-    (el) => el.eventId === eventObj.id
-  );
-
-  console.log(checkReminded); //  reminded arr.length > 0 , reminded []
-
-  const handleReminderClick = () => {};
-  const fetchAuthEvent = async () => {
-    try {
-      const authEvent = await authMe();
-      setAuthEvents(authEvent.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchAuthEvent();
-  }, []);
+  // console.log(eventObj);
 
   return (
     <div className='flex flex-col gap-4'>
@@ -164,13 +135,8 @@ export default function EventContainer() {
       </div>
       {/* Carousel Preview */}
       <CarouselHero />
-      {/* Map */}
-      <MapContainer center={BkkLatLon} zoom={13} style={{ height: '400px' }}>
-        <TileLayer
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-      </MapContainer>
+
+      {eventObj?.event && <EventMapLocation />}
     </div>
   );
 }
