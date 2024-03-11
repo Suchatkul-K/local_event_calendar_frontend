@@ -5,7 +5,7 @@ import useCreateEvent from '../hook/useCreateEvent';
 
 function EventMap() {
   const { CreateEventContextObject } = useCreateEvent();
-  const { input, setInput } = CreateEventContextObject;
+  const { input, setInput, error } = CreateEventContextObject;
   const [marker, setMarker] = useState(null);
   const map = useMap();
 
@@ -21,6 +21,7 @@ function EventMap() {
 
     // Set the new marker && update input
     setMarker(newMarker);
+    delete error.lat;
     setInput({ ...input, lat: e.latlng.lat, long: e.latlng.lng });
   });
 

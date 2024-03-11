@@ -20,7 +20,6 @@ import EventMapLocation from './EventMapLocation';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  // console.log(eventObj);
 
   return (
     <div className='flex flex-col gap-4'>
