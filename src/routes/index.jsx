@@ -11,10 +11,10 @@ import ExplorePage from '../pages/ExplorePage';
 import ProfilePage from '../pages/ProfilePage';
 import Container from '../layouts/Container';
 import MapPage from '../pages/MapPage';
-import HomeContextProvider from '../features/home/context/HomeContext';
 import OrganizerRegisterPage from '../pages/OrganizerRegisterPage';
 import UserRegisterPage from '../pages/UserRegisterPage';
 import EventContextProvider from '../features/Events/context/EventContext';
+import EditEventPage from '../pages/EditEventPage';
 // import ExploreContextProvider from '../features/explore/context/ExploreContext';
 import AuthContextProvider from '../features/auth/context/AuthContext';
 
@@ -25,11 +25,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/home',
-        element: (
-          <HomeContextProvider>
-            <HomePage />
-          </HomeContextProvider>
-        ),
+        element: <HomePage />,
       },
       {
         path: '/login',
@@ -48,17 +44,27 @@ const router = createBrowserRouter([
         element: <CreateEventPage />,
       },
       {
+        path: '/editevent/:eventId',
+        element: <EditEventPage />,
+      },
+
+      {
         path: '/explore',
         element: <ExplorePage />,
       },
       { path: '/profile', element: <ProfilePage /> },
       { path: '/map', element: <MapPage /> },
+
       {
         path: '/event/:eventId',
         element: <EventPage />,
       },
       {
-        path: '*',
+        path: '',
+        element: <Navigate to='/home' />,
+      },
+      {
+        path: '/*',
         element: <Navigate to='/home' />,
       },
     ],
