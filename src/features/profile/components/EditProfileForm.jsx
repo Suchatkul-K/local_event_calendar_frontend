@@ -20,15 +20,18 @@ function EditProfileForm() {
   const [district, setDistrict] = useState(null);
   const [subDistrict, setSubDistrict] = useState(null);
   const [oldData, setOldData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const allAuthObj = useAuth();
 
   const { authUser } = allAuthObj;
-  //   console.log(province);
+  console.log(authUser);
+  // console.log(province[0]?.Districts, '8;ppppppppppppppp');
 
   console.log(oldData);
 
   const fetchProvince = async () => {
     try {
+      setLoading(true);
       const responseProvince = await getProvince();
       setProvince(responseProvince?.data);
       console.log(responseProvince?.data);
@@ -42,13 +45,12 @@ function EditProfileForm() {
       });
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   if (!district && province && oldData) {
-    console.log('true');
-    setDistrict([]);
-    console.log(province);
     setDistrict(
       province?.find((value) => value.id === oldData?.UserAddress?.provinceId)
         .Districts
@@ -56,7 +58,6 @@ function EditProfileForm() {
   }
 
   if (!subDistrict && district && oldData) {
-    console.log('true');
     setSubDistrict([]);
 
     setSubDistrict(
@@ -147,7 +148,13 @@ function EditProfileForm() {
   //   }
   // };
   console.log(input);
-
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        loading...
+      </div>
+    );
+  }
   return (
     <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-3'>
       <div className='p-3 border-b-2 w-full'>Edit your profile</div>
