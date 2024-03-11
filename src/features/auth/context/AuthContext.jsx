@@ -1,7 +1,33 @@
-import { createContext } from 'react';
+import { createContext, useState, useMemo, useEffect } from 'react';
+import { authMe } from '../../../api/auth';
+import { getToken } from '../../../utils/local-storage';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
-  return <AuthContext.Provider>{children}</AuthContext.Provider>;
+  const [authUser, setAuthUser] = useState(null);
+
+  console.log('run');
+  const allAuthObj = useMemo(
+    () => ({
+      setAuthUser,
+      authUser,
+    }),
+    [authUser]
+  );
+
+  console.log(authUser);
+
+  useEffect(() => {
+    const fetchAuth = async () => {
+      const storeToken = getToken();
+      const authResult = await authMe(storeToken);
+      setAuthUser(authResult.data);
+    };
+    fetchAuth();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={allAuthObj}>{children}</AuthContext.Provider>
+  );
 }

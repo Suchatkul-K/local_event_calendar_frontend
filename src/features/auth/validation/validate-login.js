@@ -4,11 +4,10 @@ const loginSchema = Joi.object({
   email: Joi.string()
     .required()
     .trim()
-    .messages({ 'string.empty': 'email is required' }),
+    .messages({ 'string.empty': 'Email is required' }),
   password: Joi.string()
-    .pattern(/^[a-zA-Z0-9]/)
     .required()
-    .messages({ 'string.empty': 'password is required' }),
+    .messages({ 'string.empty': 'Password is required' }),
 });
 
 export const validateLogin = (input) => {
