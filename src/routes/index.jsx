@@ -55,11 +55,7 @@ const router = createBrowserRouter([
       { path: '/map', element: <MapPage /> },
       {
         path: '/event/:eventId',
-        element: (
-          <EventContextProvider>
-            <EventPage />
-          </EventContextProvider>
-        ),
+        element: <EventPage />,
       },
       {
         path: '*',

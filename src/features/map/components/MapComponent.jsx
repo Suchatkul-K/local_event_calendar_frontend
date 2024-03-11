@@ -17,12 +17,11 @@ import formatDate from '../../../utils/formatDate';
 // const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
 function MapComponent({ events, setEvents }) {
-  // const [events, setEvents] = useState();
   const [user, setUser] = useState(null);
   const map = useMap();
 
   // Fetch data based on the specified bounds
-  const fetchData = (bounds) => getAllEventInScope(bounds); // console.log('Fetching data for bounds:', bounds); // context
+  const fetchData = (bounds) => getAllEventInScope(bounds);
   const handleMapChange = async () => {
     // const centerMap = map.getCenter();
     // console.log('Map center :', centerMap);
