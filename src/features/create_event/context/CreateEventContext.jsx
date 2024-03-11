@@ -1,13 +1,17 @@
 import { createContext, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import getProvince from '../../../api/province';
 import getCategory from '../../../api/category';
 import { createEvent } from '../../../api/event';
+import { getToken } from '../../../utils/local-storage';
+import { validateCreateEvent } from '../validation/validate-create-event';
 
 export const CreateEventContext = createContext();
 
 export function CreateEventContextProvider({ children }) {
   const [input, setInput] = useState({});
+  const [error, setError] = useState({});
   const [province, setProvince] = useState([]);
   const [district, setDistrict] = useState([]);
   const [subDistrict, setSubDistrict] = useState([]);
@@ -15,6 +19,8 @@ export function CreateEventContextProvider({ children }) {
   const [image, setImage] = useState([]);
   const [coverImage, setCoverImage] = useState(null);
   const [time, setTime] = useState({});
+
+  const navigate = useNavigate();
 
   // ------------------------fetch-----------------
   const fetchProvince = async () => {
@@ -43,7 +49,16 @@ export function CreateEventContextProvider({ children }) {
   /// ///--------------------Handle--------------------------- ///
 
   const handleChange = (e) => {
+    delete error[e.target.name];
     setInput({ ...input, [e.target.name]: e.target.value });
+  };
+
+  const handleDate = (e) => {
+    delete error[e.target.name];
+    setInput({
+      ...input,
+      [e.target.name]: new Date(e.target.value).toISOString(),
+    });
   };
 
   const handleCheckbox = (e) => {
@@ -57,6 +72,7 @@ export function CreateEventContextProvider({ children }) {
   };
 
   const handleUploadCover = (e) => {
+    delete error[e.target.name];
     setCoverImage(e.target.files[0]);
     setInput({ ...input, [[e.target.name]]: e.target.files[0] });
   };
@@ -76,6 +92,8 @@ export function CreateEventContextProvider({ children }) {
   };
 
   const handleSelectPicker = (value, item, event) => {
+    // console.log(typeof value);
+    delete error[item.name];
     setInput({ ...input, [item.name]: value });
     if (item.name === 'provinceId') {
       setDistrict(province[item.index].Districts);
@@ -95,10 +113,18 @@ export function CreateEventContextProvider({ children }) {
   const handleformSubmit = async (e) => {
     try {
       e.preventDefault();
-      // const validateError = validateCreateEvent(input);
-      // if (validateError) {
-      //   return setError(validateError);
-      // }
+      const token = getToken();
+      if (!token) {
+        toast.error('Please log in before creating an event');
+        return;
+      }
+
+      const validateError = validateCreateEvent(input);
+      if (Object.keys(validateError).length > 0) {
+        setError(validateError);
+        return;
+      }
+
       const formData = new FormData();
       if (image) {
         image.forEach((value, index) => {
@@ -108,10 +134,11 @@ export function CreateEventContextProvider({ children }) {
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
       // console.log(...formData);
-      await createEvent(formData);
+      const eventId = await createEvent(formData);
       toast.success('create successfully');
-      // setError({});
+      setError({});
       setInput({});
+      navigate(`/event/${eventId.data}`);
     } catch (err) {
       console.log(err);
     }
@@ -119,6 +146,7 @@ export function CreateEventContextProvider({ children }) {
 
   let tempTime = { startTime: '', endTime: '' };
   const handleTime = (e) => {
+    delete error.timePeriod;
     if (e.target.name === 'startTime') {
       if (tempTime.startTime === '') {
         tempTime = { ...time };
@@ -143,13 +171,12 @@ export function CreateEventContextProvider({ children }) {
     }
   };
 
-  const a = () => image;
-  const tempImage = a();
-  console.log(tempImage);
+  const tempImage = image;
 
   const CreateEventContextObject = useMemo(
     () => ({
       input,
+      error,
       setInput,
       province,
       district,
@@ -160,6 +187,7 @@ export function CreateEventContextProvider({ children }) {
       time,
       setTime,
       handleChange,
+      handleDate,
       handleCheckbox,
       handleUploadCover,
       handleUploadImage,
@@ -168,7 +196,17 @@ export function CreateEventContextProvider({ children }) {
       handleformSubmit,
       handleTime,
     }),
-    [input, province, district, subDistrict, category, image, coverImage, time]
+    [
+      input,
+      error,
+      province,
+      district,
+      subDistrict,
+      category,
+      image,
+      coverImage,
+      time,
+    ]
   );
 
   // stop image re-render

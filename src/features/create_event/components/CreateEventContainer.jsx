@@ -10,12 +10,15 @@ import CreateEventImages from './CreateEventImages';
 
 export default function CreateEventContainer() {
   const { CreateEventContextObject, CreateEventImageObject } = useCreateEvent();
-  console.log(CreateEventContextObject);
-  const { input, image, handleChange, handleCheckbox, handleformSubmit } =
-    CreateEventContextObject;
+  const {
+    input,
+    image,
+    handleChange,
+    handleCheckbox,
+    handleformSubmit,
+    error,
+  } = CreateEventContextObject;
   const { tempImage } = CreateEventImageObject;
-
-  console.log(input);
 
   const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
@@ -36,6 +39,7 @@ export default function CreateEventContainer() {
             value={input}
             onChange={handleChange}
             title='Title'
+            errorMessage={error.title}
           />
 
           {/* Description text area */}
@@ -84,11 +88,18 @@ export default function CreateEventContainer() {
           </div>
 
           {/* Map & LatLong selector */}
-          {/* <div className='-z-20 pt-4'> */}
-          <MapContainer center={BkkLatLon} zoom={9} style={{ height: '300px' }}>
+          <MapContainer
+            center={BkkLatLon}
+            zoom={9}
+            style={{ height: '300px', zIndex: '0' }}
+          >
             <EventMap />
           </MapContainer>
-          {/* </div> */}
+          {error?.lat && (
+            <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+              {error.lat}
+            </small>
+          )}
         </div>
       </div>
 

@@ -1,9 +1,7 @@
-import { MapContainer, TileLayer } from 'react-leaflet';
 import { useState, useEffect, Children } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Avatar from '../../../global_components/Avatar';
-import Button from '../../../global_components/Button';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
   ClockIcon,
@@ -23,7 +21,7 @@ import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
 import { authMe } from '../../../api/auth';
-import {createReminder} from '../../../api/user';
+import { createReminder } from '../../../api/user';
 
 export default function EventContainer() {
   const eventObj = useEventContext();

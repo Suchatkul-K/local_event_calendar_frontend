@@ -4,19 +4,31 @@ import useCreateEvent from '../hook/useCreateEvent';
 function CreateEventDateTime() {
   const { CreateEventContextObject } = useCreateEvent();
 
-  const { handleChange, handleTime } = CreateEventContextObject;
+  const { handleDate, handleTime, error } = CreateEventContextObject;
 
   return (
     <div className='flex flex-col  gap-[1rem] w-full'>
       {/* Date Input */}
       <div className='flex flex-row justify-between w-fit '>
-        <InputDate
-          name='startDate'
-          title='Start Date'
-          onChange={handleChange}
-        />
-        <div className='text-end'>
-          <InputDate name='endDate' title='End Date' onChange={handleChange} />
+        <div className='flex flex-col'>
+          <InputDate
+            name='startDate'
+            title='Start Date'
+            onChange={handleDate}
+          />
+          {error?.startDate && (
+            <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+              {error.startDate}
+            </small>
+          )}
+        </div>
+        <div className='text-end flex flex-col items-end'>
+          <InputDate name='endDate' title='End Date' onChange={handleDate} />
+          {error?.endDate && (
+            <small className='text-red-500 ps-[1.5rem] flex  w-full'>
+              {error.endDate}
+            </small>
+          )}
         </div>
       </div>
 
@@ -40,6 +52,11 @@ function CreateEventDateTime() {
           />
         </div>
       </div>
+      {error?.timePeriod && (
+        <small className='text-red-500 ps-[1.5rem] flex  w-full'>
+          {error.timePeriod}
+        </small>
+      )}
     </div>
   );
 }

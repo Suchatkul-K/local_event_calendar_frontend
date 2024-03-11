@@ -14,12 +14,11 @@ const CreateEventImages = memo(({ tempImage }) => {
     handleUploadCover,
     handleUploadImage,
     handleDeleteImage,
+    error,
   } = CreateEventContextObject;
 
   const fileEl = useRef();
   const fileEl2 = useRef();
-
-  // useMemo(() => ({}))
 
   return (
     <div className='flex flex-col  gap-[1rem] w-full'>
@@ -41,8 +40,13 @@ const CreateEventImages = memo(({ tempImage }) => {
         )}
 
         {/* Cover Image upload */}
-        <div className='flex flex-row justify-end'>
-          <div className='md:w-[18%] sm:[30%]'>
+        <div className='flex flex-row w-full items-center justify-end'>
+          {error?.coverImage && (
+            <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+              {error.coverImage}
+            </small>
+          )}
+          <div className='md:w-[18%] sm:[30%] justify-end w-full hidden'>
             <input
               name='coverImage'
               type='file'
