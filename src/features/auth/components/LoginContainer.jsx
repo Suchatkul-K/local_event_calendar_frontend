@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { EmailIcon, LockerIcon } from '../../../icons';
 import Input from '../../../global_components/Input';
 import { validateLogin } from '../validation/validate-login';
@@ -30,9 +31,11 @@ export default function LoginContainer() {
         const authResult = await authMe(loginResult.data.accessToken);
         setAuthUser(authResult.data);
         navigate('/');
+        toast.success('Login Success');
       }
     } catch (err) {
       console.log(err);
+      toast.error('Invalid email or password');
     }
   };
   useEffect(() => window.scrollTo(0, 0), []);

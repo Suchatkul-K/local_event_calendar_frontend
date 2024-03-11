@@ -2,6 +2,7 @@ import { useState, useRef, React, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { MapContainer } from 'react-leaflet';
 import Input from '../../../global_components/Input';
 import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
@@ -13,6 +14,7 @@ import EditOption from './EditOption';
 import useEditEvent from '../hooks/useEditEvent';
 import EditInput from './EditInput';
 import EditDateAndTime from './EditDateAndTime';
+import EventMap from '../../create_event/components/EventMap';
 
 export default function EditEventContainer() {
   const { province, category, event, loading, setLoading, eventId } =
@@ -26,7 +28,7 @@ export default function EditEventContainer() {
   const navigate = useNavigate();
   const fileEl = useRef();
   //  ====================== initial state ======================== //
-
+  console.log(event);
   // ========================= map value ========================= //
 
   if (district.length < 1 && !loading) {
@@ -82,6 +84,12 @@ export default function EditEventContainer() {
   // =========================== Handle change ==========================//
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+  };
+  const handleDate = (e) => {
+    setInput({
+      ...input,
+      [e.target.name]: new Date(e.target.value).toISOString(),
+    });
   };
 
   const handleSelectPicker = (value, item) => {
@@ -274,8 +282,9 @@ export default function EditEventContainer() {
           />
         </div>
       </div>
-      <Map />
-
+      {/* <MapContainer center={input.lat} zoom={9} style={{ height: '300px' }}>
+        <EventMap />
+      </MapContainer> */}
       <div className=' mx-auto flex flex-col justify-center text- gap-[1.5rem] space-between w-fit p-[1.5rem] '>
         <Button type='submit'>Save Edit</Button>
       </div>
