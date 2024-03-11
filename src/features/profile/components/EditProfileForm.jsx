@@ -21,6 +21,8 @@ function EditProfileForm() {
   const [oldData, setOldData] = useState(null);
   //   console.log(province);
 
+  console.log(oldData);
+
   const fetchProvince = async () => {
     try {
       const responseProvince = await getProvince();
@@ -30,7 +32,7 @@ function EditProfileForm() {
       setOldData(responseUserInfo?.data);
       setInput({
         ...input,
-        userName: responseUserInfo?.data?.userName,
+        // userName: responseUserInfo?.data?.userName,
         profileImage: responseUserInfo?.data?.profileImage,
         address: responseUserInfo?.data?.UserAddress?.address,
       });
@@ -174,7 +176,7 @@ function EditProfileForm() {
         <Input
           title='Username'
           name='userName'
-          value={input}
+          value={input?.userName ? input : oldData}
           onChange={handleChangeInput}
         />
       </div>

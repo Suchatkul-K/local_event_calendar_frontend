@@ -17,6 +17,7 @@ import UserRegisterPage from '../pages/UserRegisterPage';
 import EventContextProvider from '../features/Events/context/EventContext';
 
 import EditProfilePage from '../pages/EditProfilePage';
+import CalendarPage from '../pages/CalendarPage';
 
 const router = createBrowserRouter([
   {
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
         ),
       },
       { path: '/profile/edit', element: <EditProfilePage /> },
+      { path: '/calendar', element: <CalendarPage /> },
       {
         path: '*',
         element: <Navigate to='/home' />,
