@@ -7,23 +7,21 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
 
-  console.log('run');
   const allAuthObj = useMemo(
     () => ({
-      setAuthUser,
       authUser,
+      setAuthUser,
     }),
     [authUser]
   );
 
-  console.log(authUser);
+  const fetchAuth = async () => {
+    const token = getToken();
+    const authResult = await authMe(token);
+    setAuthUser(authResult.data);
+  };
 
   useEffect(() => {
-    const fetchAuth = async () => {
-      const storeToken = getToken();
-      const authResult = await authMe(storeToken);
-      setAuthUser(authResult.data);
-    };
     fetchAuth();
   }, []);
 
