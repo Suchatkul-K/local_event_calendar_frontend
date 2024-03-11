@@ -1,8 +1,8 @@
-function Avatar({ size }) {
+function Avatar({ src }) {
   return (
-    <div className='avatar placeholder'>
-      <div className={`bg-green-500 text-neutral-content rounded-full ${size}`}>
-        <span className='text-3xl'>D</span>
+    <div className='avatar'>
+      <div className='w-12 border-4 border-white shadow-md rounded-full'>
+        <img src={src} alt='' />
       </div>
     </div>
   );

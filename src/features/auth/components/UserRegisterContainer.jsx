@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Input from '../../../global_components/Input';
 import {
   EmailIcon,
@@ -10,11 +10,11 @@ import {
 } from '../../../icons';
 import { validateUserRegister } from '../validation/validate-register';
 import Button from '../../../global_components/Button';
-import { apiRegister } from '../../../api/auth';
+import { apiRegister, authMe } from '../../../api/auth';
 import { storeToken } from '../../../utils/local-storage';
+import useAuth from '../hooks/auth';
 
 export default function UserRegisterContainer() {
-  const navigate = useNavigate();
   const [input, setInput] = useState({
     email: '',
     userName: '',
@@ -23,10 +23,11 @@ export default function UserRegisterContainer() {
     gender: 'MALE',
     role: 'USER',
   });
-  const [error, setError] = useState();
+  const [error, setError] = useState(null);
   const [profileImage, setProfileImage] = useState('');
-
+  const { setAuthUser } = useAuth();
   const fileEl = useRef(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -34,6 +35,10 @@ export default function UserRegisterContainer() {
 
   const handleFileChange = (e) => {
     setProfileImage(e.target.files[0]);
+  };
+
+  const handleProfilePicDelete = () => {
+    setProfileImage('');
   };
 
   const handleSubmit = async (e) => {
@@ -44,11 +49,16 @@ export default function UserRegisterContainer() {
       console.log('Validate Result is here');
       console.log(validateResult);
 
-      if (Object.keys(validateResult).length > 0) {
+      if (Object.keys(validateResult).length > 0 || !profileImage) {
         setError(validateResult);
+        if (!profileImage) {
+          setError((prev) => ({
+            ...prev,
+            profileImage: 'Profile Image is required',
+          }));
+        }
       } else {
         console.log('no error validation');
-
         const formData = new FormData();
         formData.append('profileImage', profileImage);
         formData.append('email', input.email);
@@ -58,10 +68,15 @@ export default function UserRegisterContainer() {
         formData.append('gender', input.gender);
         const registerResult = await apiRegister(formData);
         console.log(registerResult);
-        storeToken(registerResult.data.token);
+        storeToken(registerResult.data.accessToken);
+        const authResult = await authMe(registerResult.data.accessToken);
+        console.log(authResult);
+        setAuthUser(authResult.data);
+        setError(null);
+        navigate('/home');
       }
     } catch (err) {
-      console.log('error');
+      setError({ email: 'Email already in use' });
     }
   };
 
@@ -73,42 +88,51 @@ export default function UserRegisterContainer() {
           <div className='text-[1.75rem] font-semibold'>Create An Account</div>
           <div className='flex flex-col items-center'>
             {profileImage ? (
-              <img
-                src={URL.createObjectURL(profileImage)}
-                alt='event'
-                className='w-[200px] h-[200px] object-cover'
-              />
+              <div className='relative'>
+                <img
+                  src={URL.createObjectURL(profileImage)}
+                  alt='event'
+                  className='w-[200px] h-[200px] object-cover'
+                />
+                <button
+                  type='button'
+                  className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
+                  onClick={handleProfilePicDelete}
+                >
+                  X
+                </button>
+              </div>
             ) : (
               <PictureIcon />
             )}
           </div>
-          <div className='flex flex-row justify-end'>
-            <div className='md:w-[18%] sm:[30%]'>
-              {profileImage ? (
-                <Button secondary='primary'>Cancel </Button>
-              ) : null}
-            </div>
-
-            <div className='md:w-[18%] sm:[30%]'>
-              <input
-                type='file'
-                ref={fileEl}
-                className='hidden'
-                onChange={handleFileChange}
-              />
-              <Button
-                secondary='primary'
-                onClick={() => fileEl.current.click()}
-              >
-                Upload Profile
-              </Button>
+          <div className='flex flex-row justify-end '>
+            <div className='flex flex-col items-end '>
+              <div className='md:w-[70%] sm:[30%] flex flex-col '>
+                <input
+                  type='file'
+                  ref={fileEl}
+                  className='hidden'
+                  onChange={handleFileChange}
+                />
+                <Button onClick={() => fileEl.current.click()}>
+                  Upload Profile
+                </Button>
+              </div>
+              <div>
+                {error?.profileImage ? (
+                  <div className='text-red-500 pl-[0.5rem]'>
+                    profile Image is required
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
 
           <Input
             name='email'
             placeholder='Example@gmail.com'
-            value={input?.email}
+            value={input}
             onChange={handleChange}
             title='Email'
             errorMessage={error?.email}
@@ -118,7 +142,7 @@ export default function UserRegisterContainer() {
           <Input
             name='userName'
             placeholder='Username'
-            value={input?.userName}
+            value={input}
             onChange={handleChange}
             title='Username'
             errorMessage={error?.userName}
@@ -128,10 +152,11 @@ export default function UserRegisterContainer() {
           <Input
             name='password'
             placeholder='password'
-            value={input?.password}
+            value={input}
             onChange={handleChange}
             title='Password'
             errorMessage={error?.password}
+            type='password'
           >
             <LockerIcon />
           </Input>
@@ -139,10 +164,11 @@ export default function UserRegisterContainer() {
           <Input
             name='confirmPassword'
             placeholder='confirmPassword'
-            value={input?.confirmPassword}
+            value={input}
             onChange={handleChange}
             title='confirmPassword'
             errorMessage={error?.confirmPassword}
+            type='password'
           >
             {' '}
             <LockerIcon />
@@ -174,7 +200,7 @@ export default function UserRegisterContainer() {
                 <option value='USER' selected>
                   USER
                 </option>
-                <option value='ADMIN'>ADMIN</option>
+                {/* <option value='ADMIN'>ADMIN</option> */}
               </select>
             </div>
           </div>

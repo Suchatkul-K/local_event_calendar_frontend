@@ -1,17 +1,16 @@
-import axios from 'axios';
 import { useEffect, useState, useMemo, createContext } from 'react';
+import { authMe } from '../../../api/auth';
 
 export const ProfileContext = createContext();
 
 export default function ProfileContextProvider({ children }) {
-  const [event, setEvent] = useState(null);
+  const [authEvents, setAuthEvents] = useState(null);
 
   const fetchEvent = async () => {
     try {
-      const events = await axios('/event');
-
-      console.log(events.data);
-      setEvent(events.data);
+      const authEvent = await authMe();
+      setAuthEvents(authEvent.data);
+      console.log(authEvent.data);
     } catch (error) {
       console.log(error);
     }
@@ -19,10 +18,9 @@ export default function ProfileContextProvider({ children }) {
 
   const ProfileContextObject = useMemo(
     () => ({
-      event,
-      setEvent,
+      authEvents,
     }),
-    [event]
+    [authEvents]
   );
 
   useEffect(() => {
