@@ -18,8 +18,8 @@ function ProfileInfo() {
         {/* profile information */}
         <div className='absolute flex flex-col gap-1 justify-center items-center text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
           <Avatar size='w-[5rem]' src={authEvents?.profileImage} />
-          <div className='text-sm'>Mr.Red Green</div>
-          <div>0</div>
+          <div className='text-sm'>{authEvents?.userName}</div>
+          <div>{authEvents?.Reminder?.length}</div>
           <div className='text-sm'>event reminded</div>
         </div>
       </div>

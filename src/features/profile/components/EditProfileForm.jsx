@@ -7,6 +7,7 @@ import getProvince from '../../../api/province';
 import { authMe } from '../../../api/auth';
 import Input from '../../../global_components/Input';
 import useAuth from '../../auth/hooks/auth';
+import { LineIcon } from '../../../icons';
 
 function EditProfileForm() {
   //   const ProfileContextObject = useProfileContext();
@@ -156,108 +157,122 @@ function EditProfileForm() {
     );
   }
   return (
-    <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-3'>
-      <div className='p-3 border-b-2 w-full'>Edit your profile</div>
-      <input
-        type='file'
-        ref={profileImageEl}
-        className='hidden'
-        onChange={(e) => {
-          if (e.target.files[0]) {
-            setProfileImage(e.target.files[0]);
-          }
-        }}
-      />
-      <div className='self-center'>
+    <div className='w-full flex flex-col gap-4 justify-center items-center'>
+      <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-3'>
+        <div className='p-3 border-b-2 w-full'>Edit your profile</div>
+        <input
+          type='file'
+          ref={profileImageEl}
+          className='hidden'
+          onChange={(e) => {
+            if (e.target.files[0]) {
+              setProfileImage(e.target.files[0]);
+            }
+          }}
+        />
+        <div className='self-center'>
+          <button
+            type='button'
+            onClick={() => profileImageEl.current.click()}
+            aria-label='Save'
+          >
+            <Avatar
+              src={
+                profileImage
+                  ? URL.createObjectURL(profileImage)
+                  : input?.profileImage
+              }
+            />
+          </button>
+        </div>
+        <div className='w-full'>
+          <Input
+            title='Username'
+            name='userName'
+            value={input?.userName ? input : oldData}
+            onChange={handleChangeInput}
+          />
+        </div>
+
+        {authUser?.role === 'ORGANIZER' ? (
+          <div>
+            <div className='w-full'>
+              <span className='text-[0.8rem]'>Province</span>
+              <SelectPicker
+                block
+                placeholder='province'
+                data={provinceData}
+                value={
+                  input?.provinceId
+                    ? input?.provinceId
+                    : oldData?.UserAddress?.provinceId
+                }
+                onSelect={handleSelectPicker}
+              />
+            </div>
+            <div className='w-full'>
+              <span className='text-[0.8rem]'>District</span>
+              <SelectPicker
+                block
+                placeholder='district'
+                data={districtData}
+                onSelect={handleSelectPicker}
+                value={
+                  input?.districtId
+                    ? input?.districtId
+                    : oldData?.UserAddress?.districtId
+                }
+              />
+            </div>
+            <div className='w-full'>
+              <span className='text-[0.8rem]'>Sub-District</span>
+              <SelectPicker
+                block
+                placeholder='sub-district'
+                data={subDistrictData}
+                onSelect={handleSelectPicker}
+                value={
+                  input?.subDistrictId
+                    ? input?.subDistrictId
+                    : oldData?.UserAddress?.subDistrictId
+                }
+              />
+            </div>
+            <div className='flex flex-col'>
+              <span className='text-[0.8rem]'>Address</span>
+              <textarea
+                placeholder='address'
+                className='textarea textarea-bordered textarea-lg w-full  text-[0.75rem]'
+                name='address'
+                value={input?.address}
+                onChange={handleChangeInput}
+              />
+            </div>
+          </div>
+        ) : null}
+
+        <div className='flex gap-3 justify-end'>
+          <button type='button' className='btn '>
+            cancel
+          </button>
+          <button type='submit' className='btn '>
+            save
+          </button>
+        </div>
+      </form>
+      <div className='p-3 w-full '>
         <button
+          className='flex justify-center items-center gap-3 border p-4 rounded-lg w-full bg-[#00B900] font-bold text-white'
           type='button'
-          onClick={() => profileImageEl.current.click()}
           aria-label='Save'
         >
-          <Avatar
-            src={
-              profileImage
-                ? URL.createObjectURL(profileImage)
-                : input?.profileImage
-            }
-          />
+          Blinding Line{' '}
+          <span>
+            <LineIcon />
+          </span>
         </button>
       </div>
-      <div className='w-full'>
-        <Input
-          title='Username'
-          name='userName'
-          value={input?.userName ? input : oldData}
-          onChange={handleChangeInput}
-        />
-      </div>
-
-      {authUser?.role === 'ORGANIZER' ? (
-        <div>
-          <div className='w-full'>
-            <span className='text-[0.8rem]'>Province</span>
-            <SelectPicker
-              block
-              placeholder='province'
-              data={provinceData}
-              value={
-                input?.provinceId
-                  ? input?.provinceId
-                  : oldData?.UserAddress?.provinceId
-              }
-              onSelect={handleSelectPicker}
-            />
-          </div>
-          <div className='w-full'>
-            <span className='text-[0.8rem]'>District</span>
-            <SelectPicker
-              block
-              placeholder='district'
-              data={districtData}
-              onSelect={handleSelectPicker}
-              value={
-                input?.districtId
-                  ? input?.districtId
-                  : oldData?.UserAddress?.districtId
-              }
-            />
-          </div>
-          <div className='w-full'>
-            <span className='text-[0.8rem]'>Sub-District</span>
-            <SelectPicker
-              block
-              placeholder='sub-district'
-              data={subDistrictData}
-              onSelect={handleSelectPicker}
-              value={
-                input?.subDistrictId
-                  ? input?.subDistrictId
-                  : oldData?.UserAddress?.subDistrictId
-              }
-            />
-          </div>
-          <div>
-            <span className='text-[0.8rem]'>Address</span>
-            <textarea
-              placeholder='address'
-              className='textarea textarea-bordered textarea-lg w-full max-w-xs text-[0.75rem]'
-              name='address'
-              value={input?.address}
-              onChange={handleChangeInput}
-            />
-          </div>
-        </div>
-      ) : null}
-
-      <div className='flex gap-3 justify-end'>
-        <button type='button' className='btn '>
-          cancel
-        </button>
-        <button type='submit' className='btn '>
-          save
-        </button>
-      </div>
-    </form>
+    </div>
   );
 }
 

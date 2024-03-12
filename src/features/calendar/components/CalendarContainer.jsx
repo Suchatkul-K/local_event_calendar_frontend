@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { DatePicker, SelectPicker } from 'rsuite';
+import { useParams } from 'react-router-dom';
 import { getAllEvent } from '../../../api/event';
 import EventCardGanX from '../../../global_components/EventCardGanX';
 import getProvince from '../../../api/province';
@@ -12,14 +13,61 @@ function CalendarContainer() {
   const [search, setSearch] = useState({ date: '', province: '' });
   const [tempEvents, setTempEvents] = useState(null);
   const [clear, setClear] = useState(null);
+  const { seasonId } = useParams();
 
-  console.log(search);
+  console.log(seasonId, 'sesoniddidididididididididi');
+  const rightNow = new Date();
+  const thisYear = rightNow.getFullYear();
+
+  let season;
+
+  if (!season) {
+    switch (seasonId) {
+      case '1':
+        season = `${thisYear}-01-01`;
+        break;
+      case '2':
+        season = `${thisYear}-02-01`;
+        break;
+      case '3':
+        season = `${thisYear}-03-01`;
+        break;
+      case '4':
+        season = `${thisYear}-04-01`;
+        break;
+      case '5':
+        season = `${thisYear}-05-01`;
+        break;
+      case '6':
+        season = `${thisYear}-06-01`;
+        break;
+      case '7':
+        season = `${thisYear}-07-01`;
+        break;
+      case '8':
+        season = `${thisYear}-08-01`;
+        break;
+      case '9':
+        season = `${thisYear}-09-01`;
+        break;
+      case '10':
+        season = `${thisYear}-10-01`;
+        break;
+      case '11':
+        season = `${thisYear}-11-01`;
+        break;
+      case '12':
+        season = `${thisYear}-12-01`;
+        break;
+
+      default:
+        break;
+    }
+  }
+
   if (!tempEvents && events) {
     setTempEvents([...events]);
   }
-  console.log(events);
-
-  console.log(tempEvents);
 
   const fetchEventsData = async () => {
     try {
@@ -34,7 +82,7 @@ function CalendarContainer() {
   };
 
   const handleSearch = () => {
-    let filterEvent = [...tempEvents];
+    let filterEvent = [...events];
 
     // Filter by province if selected
     if (search.province !== '') {
@@ -61,8 +109,23 @@ function CalendarContainer() {
     setClear(null);
   };
 
+  const fetchSeasonEvent = (input) => {
+    // console.log(input);
+    // const month = new Date(event.startDate);
+    // new Date(input).setUTCHours(0, 0, 0, 0);
+    // const isoDate = input.toISOString();
+    // console.log(isoDate);
+    // if (tempEvents) {
+    //   let filterEvent = [...tempEvents];
+    //   filterEvent = filterEvent.filter((event) => event.startDate === isoDate);
+    //   setEvents(filterEvent);
+    // }
+  };
+
   useEffect(() => {
     fetchEventsData();
+    // fetchSeasonEvent(season);
+    window.scrollTo(0, 0);
   }, []);
 
   const provinceData = province?.map((provinces, index) => ({
@@ -102,7 +165,7 @@ function CalendarContainer() {
               setSearch({ ...search, [e.target.name]: e.target.value })
             }
           /> */}
-          <EventCalendar data={events} setSearch={setSearch} />
+          <EventCalendar season={season} data={events} setSearch={setSearch} />
         </div>
 
         <div className='flex flex-row gap-2 justify-end'>

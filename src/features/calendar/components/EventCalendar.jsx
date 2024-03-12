@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { getDate } from 'rsuite/esm/utils/dateUtils';
 import EventCard from '../../../global_components/EventCard';
 
-function EventCalendar({ data, setSearch }) {
+function EventCalendar({ data, setSearch, season, handle }) {
   //   const [dateForSearch, setDateForSearch] = useState(null);
 
   const handleCellClick = (day) => {
@@ -29,7 +29,6 @@ function EventCalendar({ data, setSearch }) {
 
   const renderCell = (date) => {
     const list = getEventList(date);
-
     // if (list.length) {
     //   const event = list.map((item) => (
     //     <EventCard key={item.id} event={item.event} />
@@ -79,8 +78,14 @@ function EventCalendar({ data, setSearch }) {
   //   </button>
   // );
   //   };
-
-  return <Calendar bordered renderCell={renderCell} />;
+  console.log('calen season', season);
+  return (
+    <Calendar
+      defaultValue={new Date(season)}
+      bordered
+      renderCell={renderCell}
+    />
+  );
 }
 
 export default EventCalendar;

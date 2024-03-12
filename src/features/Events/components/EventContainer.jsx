@@ -1,5 +1,5 @@
 import { useState, useEffect, Children } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
@@ -22,9 +22,16 @@ import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
 import { authMe } from '../../../api/auth';
 import { createReminder, deleteReminder } from '../../../api/user';
+import useAuth from '../../auth/hooks/auth';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
+
+  const allAuthObj = useAuth();
+
+  const { authUser } = allAuthObj;
+
+  const navigate = useNavigate();
 
   const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
@@ -47,12 +54,18 @@ export default function EventContainer() {
     }
   };
   const handleReminderClick = async () => {
+    if (!authUser) {
+      navigate('/login');
+    }
     await createReminder(+eventId);
     toast.success('keep to reminded');
     fetchAuthEvent();
   };
 
   const handleDelReminderClick = async () => {
+    if (!authUser) {
+      navigate('/login');
+    }
     await deleteReminder(+eventId);
     toast.success('remove to your reminder');
     fetchAuthEvent();
@@ -61,6 +74,21 @@ export default function EventContainer() {
   useEffect(() => {
     fetchAuthEvent();
   }, []);
+
+  const reminderButton = () => {
+    if (checkReminded?.length === 0) {
+      return (
+        <button type='button' onClick={handleReminderClick} aria-label='Save'>
+          <HearthIconOutline />
+        </button>
+      );
+    }
+    return (
+      <button type='button' aria-label='Save' onClick={handleDelReminderClick}>
+        <HearthIconOutline className='fill-red-500' />
+      </button>
+    );
+  };
 
   return (
     <div className='flex flex-col gap-4'>
@@ -138,6 +166,7 @@ export default function EventContainer() {
                 <HearthIconOutline className='fill-red-500' />
               </button>
             )}
+
             <div className='text-red-400 text-[0.75rem]'>Remind Me</div>
           </div>
         </div>
