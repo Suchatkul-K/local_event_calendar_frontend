@@ -15,7 +15,15 @@ function CalendarContainer() {
   const [clear, setClear] = useState(null);
   const { seasonId } = useParams();
 
-  console.log(seasonId, 'sesoniddidididididididididi');
+  const renderSeason = events?.filter(
+    (event) =>
+      // console.log(event?.startDate.split('-')[1]);
+      // console.log(seasonId, 'kkkkkkkkkk');
+      event?.startDate.split('-')[1] === seasonId
+  );
+
+  console.log(renderSeason);
+
   const rightNow = new Date();
   const thisYear = rightNow.getFullYear();
 
@@ -23,31 +31,31 @@ function CalendarContainer() {
 
   if (!season) {
     switch (seasonId) {
-      case '1':
+      case '01':
         season = `${thisYear}-01-01`;
         break;
-      case '2':
+      case '02':
         season = `${thisYear}-02-01`;
         break;
-      case '3':
+      case '03':
         season = `${thisYear}-03-01`;
         break;
-      case '4':
+      case '04':
         season = `${thisYear}-04-01`;
         break;
-      case '5':
+      case '05':
         season = `${thisYear}-05-01`;
         break;
-      case '6':
+      case '06':
         season = `${thisYear}-06-01`;
         break;
-      case '7':
+      case '07':
         season = `${thisYear}-07-01`;
         break;
-      case '8':
+      case '08':
         season = `${thisYear}-08-01`;
         break;
-      case '9':
+      case '09':
         season = `${thisYear}-09-01`;
         break;
       case '10':
@@ -179,10 +187,13 @@ function CalendarContainer() {
       </div>
       {/* data */}
       <div className='flex flex-col gap-3 py-4'>
-        {events?.map((event) => (
-          <EventCardGanX key={event.id} event={event} />
-        ))}
-        {/* {temp} */}
+        {seasonId
+          ? renderSeason?.map((event) => (
+              <EventCardGanX key={event.id} event={event} />
+            ))
+          : events?.map((event) => (
+              <EventCardGanX key={event.id} event={event} />
+            ))}
       </div>
     </div>
   );

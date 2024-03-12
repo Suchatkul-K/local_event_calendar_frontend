@@ -198,7 +198,7 @@ function EditProfileForm() {
   }
   return (
     <div className='w-full flex flex-col gap-4 justify-center items-center'>
-      <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-3'>
+      <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-4'>
         <div className='p-3 border-b-2 w-full'>Edit your profile</div>
         <input
           type='file'
@@ -229,15 +229,15 @@ function EditProfileForm() {
           <Input
             title='Username'
             name='userName'
-            value={input?.userName ? input : oldData}
+            value={input?.userName !== undefined ? input : oldData}
             onChange={handleChangeInput}
           />
         </div>
 
         {authUser?.role === 'ORGANIZER' ? (
-          <div>
+          <div className='flex flex-col gap-4'>
             <div className='w-full'>
-              <span className='text-[0.8rem]'>Province</span>
+              <span className='text-[0.8rem] py-3'>Province</span>
               <SelectPicker
                 block
                 placeholder='province'
