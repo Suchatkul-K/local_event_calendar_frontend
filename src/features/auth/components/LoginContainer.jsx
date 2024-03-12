@@ -15,7 +15,6 @@ export default function LoginContainer() {
   const { setAuthUser } = useAuth();
   const navigate = useNavigate();
 
-  // console.log(input);
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -29,13 +28,17 @@ export default function LoginContainer() {
       } else {
         const loginResult = await apiLogin(input);
         storeToken(loginResult.data.accessToken);
-        console.log(loginResult.data);
         const authResult = await authMe(loginResult.data.accessToken);
         setAuthUser(authResult.data);
         navigate('/');
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data.message);
+      setError({
+        ...error,
+        email: err.response.data.message,
+        password: err.response.data.message,
+      });
     }
   };
   useEffect(() => window.scrollTo(0, 0), []);

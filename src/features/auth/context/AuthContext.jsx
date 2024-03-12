@@ -7,7 +7,6 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
 
-  console.log('run');
   const allAuthObj = useMemo(
     () => ({
       setAuthUser,
@@ -15,8 +14,6 @@ export default function AuthContextProvider({ children }) {
     }),
     [authUser]
   );
-
-  console.log(authUser);
 
   useEffect(() => {
     const fetchAuth = async () => {

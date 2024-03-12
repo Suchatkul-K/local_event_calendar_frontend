@@ -58,12 +58,13 @@ export default function OrganizerRegisterContainer() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validateResult = validateOrganizerRegister(input);
-      console.log('Validate Result is here');
-      console.log(validateResult);
 
-      if (Object.keys(validateResult).length > 0 || !profileImage) {
+      if (
+        Object.keys(validateResult).length > 0 ||
+        !profileImage ||
+        !identityCopyImage
+      ) {
         setError(validateResult);
         if (!profileImage) {
           setError((prev) => ({
@@ -77,8 +78,6 @@ export default function OrganizerRegisterContainer() {
           }));
         }
       } else {
-        console.log('no error validation');
-
         const formData = new FormData();
 
         if (input.role === 'ORGANIZER') {
@@ -95,7 +94,6 @@ export default function OrganizerRegisterContainer() {
         formData.append('corporation', input.corporation);
 
         const registerResult = await apiRegister(formData);
-        console.log(registerResult);
         storeToken(registerResult.data.accessToken);
         const authResult = await authMe(registerResult.data.accessToken);
         setAuthUser(authResult.data);

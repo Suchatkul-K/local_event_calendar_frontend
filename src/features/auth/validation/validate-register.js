@@ -79,8 +79,6 @@ export const validateOrganizerRegister = (input) => {
     errorObject[el.path[0]] = el.message;
     return null;
   });
-  console.log('error object is here!!!!');
-  console.log(temp);
 
   return errorObject;
 };
@@ -93,8 +91,6 @@ export const validateUserRegister = (input) => {
     errorObject[el.path[0]] = el.message;
     return null;
   });
-  console.log('error object is here!!!!');
-  console.log(temp);
 
   return errorObject;
 };
