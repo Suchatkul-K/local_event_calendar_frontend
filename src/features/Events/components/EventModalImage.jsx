@@ -119,13 +119,13 @@ export default function EventModalImage() {
         </div>
       </dialog>
 
-      <button
+      {/* <button
         type='button'
         className='btn bg-primary text-white'
         onClick={() => document.getElementById('my_modal_4').showModal()}
       >
         Delete Image
-      </button>
+      </button> */}
       <dialog id='my_modal_4' className='modal'>
         <div className='modal-box w-11/12 max-w-5xl bg-pri'>
           <h3 className='font-bold text-lg'>Hello!</h3>

@@ -20,6 +20,7 @@ import {
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
+import EventModalImage from './EventModalImage';
 import { authMe } from '../../../api/auth';
 import { createReminder, deleteReminder } from '../../../api/user';
 import useAuth from '../../auth/hooks/auth';
@@ -40,7 +41,7 @@ export default function EventContainer() {
   //   eventObj?.EventAddress?.lat,
   //   eventObj?.EventAddress?.long,
   // ];
-
+  const nevigate = useNavigate();
   const checkReminded = authEvents?.Reminder.filter(
     (el) => el.eventId === eventObj?.event?.id
   );
@@ -93,12 +94,19 @@ export default function EventContainer() {
   return (
     <div className='flex flex-col gap-4'>
       {/* cover picture */}
-      <div className='w-full'>
+      <div className='w-full relative'>
         <img
           className='object-contain'
           src={eventObj.event?.coverImage}
           alt=''
         />
+        <button
+          type='button'
+          className='absolute focus:scale-90 hover:scale-95 top-4 right-4 px-3 py-1  shadow-lg text-white font-semibold bg-primary rounded-btn'
+          onClick={() => nevigate(`/editevent/${eventId}`)}
+        >
+          edit profile
+        </button>
       </div>
       {/* header description */}
       <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
@@ -213,10 +221,8 @@ export default function EventContainer() {
         </div>
       </div>
       {/* Carousel Preview */}
-      {
-        // eventObj?.event?.image &&
-        <CarouselHero />
-      }
+      {eventObj?.event?.image && <CarouselHero />}
+      <EventModalImage />
 
       {eventObj?.event && <EventMapLocation />}
     </div>

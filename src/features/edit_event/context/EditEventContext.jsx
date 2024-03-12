@@ -43,7 +43,7 @@ export default function EditEventContextProvider({ children }) {
     window.scrollTo(0, 0);
   }, []);
 
-  const selectObject = useMemo(
+  const eventObject = useMemo(
     () => ({
       province,
       category,
@@ -56,7 +56,7 @@ export default function EditEventContextProvider({ children }) {
   );
 
   return (
-    <EditEventContext.Provider value={selectObject}>
+    <EditEventContext.Provider value={eventObject}>
       {children}
     </EditEventContext.Provider>
   );

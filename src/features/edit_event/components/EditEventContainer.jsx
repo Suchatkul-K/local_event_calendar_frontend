@@ -1,53 +1,52 @@
 import { useState, useRef, React, useEffect } from 'react';
-import { SelectPicker } from 'rsuite';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { MapContainer } from 'react-leaflet';
 import Input from '../../../global_components/Input';
-import { PictureIcon } from '../../../icons';
 import Button from '../../../global_components/Button';
-import InputDate from '../../../global_components/InputDate';
-import Map from '../../map/components/Map';
 import FacilityCheckbox from './FacilityCheckbox';
-import UploadImageContainer from './UploadImageContainer';
 import EditOption from './EditOption';
 import useEditEvent from '../hooks/useEditEvent';
 import EditInput from './EditInput';
 import EditDateAndTime from './EditDateAndTime';
-import EventMap from '../../create_event/components/EventMap';
+import { updateEvent } from '../../../api/event';
+import { validateEditEvent } from '../validation/validate-edit-event';
+import EditeventMap from './EditeventMap';
 
 export default function EditEventContainer() {
   const { province, category, event, loading, setLoading, eventId } =
     useEditEvent();
-  const [district, setDistrict] = useState([]);
-  const [subDistrict, setSubDistrict] = useState([]);
+
+  const [district, setDistrict] = useState(null);
+  const [subDistrict, setSubDistrict] = useState(null);
   const [coverImage, setCoverImage] = useState();
-  // const [image, setImage] = useState([]);
   const [time, setTime] = useState(null);
   const [input, setInput] = useState(null);
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
   const fileEl = useRef();
-  //  ====================== initial state ======================== //
-  console.log(event);
+
+  // console.log(event);
+  // console.log(subDistrict);
+  const BkkLatLon = [13.756329334391024, 100.50176927408629];
   // ========================= map value ========================= //
 
-  if (district.length < 1 && !loading) {
+  if (!district && !loading) {
     setDistrict(
-      province.find((value) => value.id === event?.EventAddress.provinceId)
+      province?.find((value) => value.id === event?.EventAddress.provinceId)
         .Districts
     );
   }
-
-  if (subDistrict.length < 1 && district.length > 1) {
+  if (!subDistrict && district) {
     setSubDistrict(
-      district.find((value) => value.id === event?.EventAddress.districtId)
+      district?.find((value) => value.id === event?.EventAddress?.districtId)
         .SubDistricts
     );
   }
 
   //= =========================== Select Picker data =======================//
-  let districtData;
-  let subDistrictData;
+  let districtData = [];
+  let subDistrictData = [];
 
   const provinceData = province?.map((provinces, index) => ({
     label: provinces.provinceNameEn,
@@ -56,7 +55,7 @@ export default function EditEventContainer() {
     index,
   }));
 
-  if (district.length > 1) {
+  if (district?.length > 1) {
     districtData = district?.map((districts, index) => ({
       label: districts?.districtNameEn,
       value: districts?.id,
@@ -65,7 +64,7 @@ export default function EditEventContainer() {
     }));
   }
 
-  if (subDistrict.length > 1) {
+  if (subDistrict?.length > 1) {
     subDistrictData = subDistrict?.map((subDistricts, index) => ({
       label: subDistricts?.subdistrictNameEn,
       value: subDistricts?.id,
@@ -82,6 +81,7 @@ export default function EditEventContainer() {
 
   /// ========================== Handle ============================== ///
   // =========================== Handle change ==========================//
+
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -99,6 +99,7 @@ export default function EditEventContainer() {
       setSubDistrict([]);
       setInput((prev) => {
         delete prev.districtId;
+        delete prev.subDistrictId;
         return prev;
       });
     }
@@ -119,21 +120,9 @@ export default function EditEventContainer() {
 
   // =========================== Handle coverImage ==========================//
   const handleUploadCover = (e) => {
-    setInput({ ...input, [[e.target.name]]: e.target.value });
+    setInput({ ...input, [[e.target.name]]: e.target.files[0] });
     setCoverImage(e.target.files[0]);
   };
-
-  // const handleUploadImage = (e) => {
-  //   const filesImage = e.target.files;
-  //   setImage([...image, ...filesImage]);
-  //   setInput({ ...input, [[e.target.name]]: [...image, ...filesImage] });
-  // };
-  // const handleDeleteImage = (el) => {
-  //   const tempImage = image?.filter((file) => file.name !== el.name);
-
-  //   setInput({ ...input, image: tempImage });
-  //   setImage(tempImage);
-  // };
 
   /// ========================== setTime ============================== ///
 
@@ -164,17 +153,22 @@ export default function EditEventContainer() {
     try {
       e.preventDefault();
       setLoading(true);
+
+      const validateError = validateEditEvent(input);
+      if (Object.keys(validateError).length > 0) {
+        setError(validateError);
+      }
       const formData = new FormData();
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
-      toast.success('create successfully');
-      // const event = await // apiupdate
-      // const { eventId } = event.data.eventId;
+      console.log(...formData);
+      await updateEvent(eventId, formData);
+      toast.success('edit successfully');
+      navigate(`/event/${eventId}`);
     } catch (err) {
       console.log(err);
       setInput(null);
     } finally {
       setLoading(false);
-      navigate(`/event/${eventId}`);
     }
   };
 
@@ -225,7 +219,7 @@ export default function EditEventContainer() {
           <Input
             name='title'
             placeholder='Title'
-            value={input?.title ? input : event}
+            value={input?.title !== undefined ? input : event}
             onChange={handleChange}
             title='Title'
           />
@@ -235,13 +229,17 @@ export default function EditEventContainer() {
               placeholder='Description'
               className='textarea textarea-bordered textarea-md w-full'
               name='description'
-              value={input?.description || event.description}
+              value={
+                input?.description !== undefined
+                  ? input?.description
+                  : event.description
+              }
               onChange={handleChange}
             />
           </div>
           {/* /////////////////// date and time /////////// */}
           <EditDateAndTime
-            handleChange={handleChange}
+            handleChange={handleDate}
             handleTime={handleTime}
             input={input}
             initData={event}
@@ -252,7 +250,6 @@ export default function EditEventContainer() {
             <span className='font-medium'>Yearly</span>
             <input
               type='checkbox'
-              // checked={input.isYearly}
               name='isYearly'
               value={input?.isYearly || event.isYearly}
               onChange={handleCheckbox}
@@ -270,21 +267,33 @@ export default function EditEventContainer() {
             onSelect={handleSelectPicker}
             input={input}
           />
-          {/* <UploadImageContainer
-            onChange={handleUploadImage}
-            onClick={handleDeleteImage}
-            image={image}
-          /> */}
+
           <FacilityCheckbox
             onChange={handleCheckbox}
             input={input}
             initData={event}
           />
         </div>
+        <MapContainer
+          center={BkkLatLon}
+          zoom={9}
+          style={{ height: '300px', zIndex: '0' }}
+        >
+          <EditeventMap
+            error={error}
+            setInput={setInput}
+            input={input}
+            event={event}
+          />
+          {/* <EventMap /> */}
+        </MapContainer>
+        {error?.lat && (
+          <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+            {error.lat}
+          </small>
+        )}
       </div>
-      {/* <MapContainer center={input.lat} zoom={9} style={{ height: '300px' }}>
-        <EventMap />
-      </MapContainer> */}
+
       <div className=' mx-auto flex flex-col justify-center text- gap-[1.5rem] space-between w-fit p-[1.5rem] '>
         <Button type='submit'>Save Edit</Button>
       </div>
