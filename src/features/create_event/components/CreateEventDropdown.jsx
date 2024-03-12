@@ -4,8 +4,14 @@ import useCreateEvent from '../hook/useCreateEvent';
 function CreateEventDropdown() {
   const { CreateEventContextObject } = useCreateEvent();
 
-  const { province, district, subDistrict, category, handleSelectPicker } =
-    CreateEventContextObject;
+  const {
+    province,
+    district,
+    subDistrict,
+    category,
+    handleSelectPicker,
+    error,
+  } = CreateEventContextObject;
 
   // ------------------------------map-----------------------------
 
@@ -55,6 +61,11 @@ function CreateEventDropdown() {
             data={provinceData}
             onSelect={handleSelectPicker}
           />
+          {error?.provinceId && (
+            <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+              {error.provinceId}
+            </small>
+          )}
         </div>
 
         <div className='w-full'>
@@ -64,6 +75,11 @@ function CreateEventDropdown() {
             data={districtData}
             onSelect={handleSelectPicker}
           />
+          {error?.districtId && (
+            <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+              {error.districtId}
+            </small>
+          )}
         </div>
 
         <div className='w-full'>
@@ -73,6 +89,11 @@ function CreateEventDropdown() {
             data={subDistrictData}
             onSelect={handleSelectPicker}
           />
+          {error?.subDistrictId && (
+            <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+              {error.subDistrictId}
+            </small>
+          )}
         </div>
       </div>
 
@@ -81,6 +102,11 @@ function CreateEventDropdown() {
         <span className='font-semibold p-1'>Category Event</span>
         <SelectPicker block data={categoryData} onSelect={handleSelectPicker} />
       </div>
+      {error?.categoryId && (
+        <small className='text-red-500 pl-[0.5rem] flex  w-full'>
+          {error.categoryId}
+        </small>
+      )}
     </div>
   );
 }

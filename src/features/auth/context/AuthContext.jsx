@@ -6,22 +6,31 @@ export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
   const [authUser, setAuthUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const allAuthObj = useMemo(
     () => ({
       setAuthUser,
       authUser,
+      loading,
     }),
-    [authUser]
+    [authUser, loading]
   );
+  const fetchAuth = async () => {
+    const storeToken = getToken();
+    const authResult = await authMe(storeToken);
+    setAuthUser(authResult.data);
+  };
 
   useEffect(() => {
-    const fetchAuth = async () => {
-      const storeToken = getToken();
-      const authResult = await authMe(storeToken);
-      setAuthUser(authResult.data);
-    };
-    fetchAuth();
+    try {
+      setLoading(true);
+      fetchAuth();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import { Slide, ToastContainer } from 'react-toastify';
 import Router from './routes';
 import AuthContextProvider from './features/auth/context/AuthContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   // console.log('api', import.meta.env);
