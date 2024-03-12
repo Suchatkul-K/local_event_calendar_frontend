@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 import Avatar from '../../../global_components/Avatar';
 import useProfileContext from '../hook/useProfileContext';
 import getProvince from '../../../api/province';
@@ -8,12 +10,9 @@ import { authMe } from '../../../api/auth';
 import Input from '../../../global_components/Input';
 import useAuth from '../../auth/hooks/auth';
 import { LineIcon } from '../../../icons';
+import configaxios from '../../../configs/axios';
 
 function EditProfileForm() {
-  //   const ProfileContextObject = useProfileContext();
-
-  //   console.log(ProfileContextObject, 'from Edit Profile form');
-
   const profileImageEl = useRef(null);
   const [profileImage, setProfileImage] = useState();
   const [input, setInput] = useState(null);
@@ -23,12 +22,47 @@ function EditProfileForm() {
   const [oldData, setOldData] = useState(null);
   const [loading, setLoading] = useState(true);
   const allAuthObj = useAuth();
+  // =============================== Line api ===========================//
+  const [linecode, setLinecode] = useState();
+  const [code] = useSearchParams();
+  console.log(code.size > 2);
+  if (code.size > 0 && !linecode) {
+    console.log('codesss');
+    setLinecode(code.get('code'));
+  }
+  //= ===================================== Line ===================================//
+  const lineAccess =
+    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=http://localhost:5173/profile/edit&state=12345abcde&scope=profile%20openid';
+  const url = 'https://api.line.me/oauth2/v2.1/token';
 
+  const data = {
+    grant_type: 'authorization_code',
+    client_id: '2003956202',
+    client_secret: '8db90c43497495d698fc5cf607ef80c2',
+    code: linecode,
+    redirect_uri: 'http://localhost:5173/profile/edit',
+  };
+
+  const oAuthLine = async () => {
+    try {
+      setLoading(true);
+      const lineLogin = await axios.post(url, data, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+      console.log(lineLogin);
+      const res = await configaxios.post('/line/binding', lineLogin.data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //= ============================================= line api ===============================//
   const { authUser } = allAuthObj;
-  console.log(authUser);
-  // console.log(province[0]?.Districts, '8;ppppppppppppppp');
-
-  console.log(oldData);
 
   const fetchProvince = async () => {
     try {
@@ -70,6 +104,12 @@ function EditProfileForm() {
   useEffect(() => {
     fetchProvince();
   }, []);
+
+  useEffect(() => {
+    if (linecode) {
+      oAuthLine();
+    }
+  }, [linecode]);
 
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -261,16 +301,18 @@ function EditProfileForm() {
         </div>
       </form>
       <div className='p-3 w-full '>
-        <button
-          className='flex justify-center items-center gap-3 border p-4 rounded-lg w-full bg-[#00B900] font-bold text-white'
-          type='button'
-          aria-label='Save'
-        >
-          Blinding Line{' '}
-          <span>
-            <LineIcon />
-          </span>
-        </button>
+        <a href={lineAccess}>
+          <button
+            className='flex justify-center items-center gap-3 border p-4 rounded-lg w-full bg-[#00B900] font-bold text-white'
+            type='button'
+            aria-label='Save'
+          >
+            Blinding Line{' '}
+            <span>
+              <LineIcon />
+            </span>
+          </button>
+        </a>
       </div>
     </div>
   );
