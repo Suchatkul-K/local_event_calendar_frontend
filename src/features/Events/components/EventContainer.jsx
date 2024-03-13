@@ -42,9 +42,8 @@ export default function EventContainer() {
 
   const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
-
+  const [loading, setLoading] = useState(true);
   const { eventId } = useParams();
-  const { loading } = useEventContext();
 
   const nevigate = useNavigate();
   const checkReminded = authEvents?.Reminder.filter(
