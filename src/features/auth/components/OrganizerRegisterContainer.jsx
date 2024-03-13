@@ -86,7 +86,10 @@ export default function OrganizerRegisterContainer() {
         navigate('/home');
       }
     } catch (err) {
-      setError({ email: 'Email already in use' });
+      console.log(err);
+      if (err.response.data.message === 'this email has aleady been used') {
+        setError({ ...error, email: 'This email has already been used' });
+      }
     }
   };
 
