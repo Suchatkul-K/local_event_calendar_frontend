@@ -1,87 +1,30 @@
 import { useState, useEffect } from 'react';
-import { DatePicker, SelectPicker } from 'rsuite';
+import { SelectPicker } from 'rsuite';
 import { useParams } from 'react-router-dom';
-import { getAllEvent } from '../../../api/event';
-import EventCardGanX from '../../../global_components/EventCardGanX';
+import { getCalendarEvent } from '../../../api/event';
 import getProvince from '../../../api/province';
-import formatDate from '../../../utils/formatDate';
 import EventCalendar from './EventCalendar';
+import EventList from './EventList';
 
 function CalendarContainer() {
   const [events, setEvents] = useState(null);
   const [province, setProvince] = useState([]);
-  const [search, setSearch] = useState({ date: '', province: '' });
+  const [search, setSearch] = useState(null);
   const [tempEvents, setTempEvents] = useState(null);
-  const [clear, setClear] = useState(null);
+  const [currentProvince, setCurrentProvince] = useState(null);
   const { seasonId } = useParams();
 
-  const renderSeason = events?.filter(
-    (event) =>
-      // console.log(event?.startDate.split('-')[1]);
-      // console.log(seasonId, 'kkkkkkkkkk');
-      event?.startDate.split('-')[1] === seasonId
-  );
-
-  console.log(renderSeason);
-
-  const rightNow = new Date();
-  const thisYear = rightNow.getFullYear();
-
-  let season;
-
-  if (!season) {
-    switch (seasonId) {
-      case '01':
-        season = `${thisYear}-01-01`;
-        break;
-      case '02':
-        season = `${thisYear}-02-01`;
-        break;
-      case '03':
-        season = `${thisYear}-03-01`;
-        break;
-      case '04':
-        season = `${thisYear}-04-01`;
-        break;
-      case '05':
-        season = `${thisYear}-05-01`;
-        break;
-      case '06':
-        season = `${thisYear}-06-01`;
-        break;
-      case '07':
-        season = `${thisYear}-07-01`;
-        break;
-      case '08':
-        season = `${thisYear}-08-01`;
-        break;
-      case '09':
-        season = `${thisYear}-09-01`;
-        break;
-      case '10':
-        season = `${thisYear}-10-01`;
-        break;
-      case '11':
-        season = `${thisYear}-11-01`;
-        break;
-      case '12':
-        season = `${thisYear}-12-01`;
-        break;
-
-      default:
-        break;
-    }
+  const init = new Date();
+  if (seasonId) {
+    init.setMonth(seasonId - 1);
   }
 
   if (!tempEvents && events) {
     setTempEvents([...events]);
   }
 
-  const fetchEventsData = async () => {
+  const fetchProvinceData = async () => {
     try {
-      const getEvent = await getAllEvent();
-      setEvents(getEvent.data);
-
       const getProvinces = await getProvince();
       setProvince(getProvinces.data);
     } catch (err) {
@@ -90,51 +33,19 @@ function CalendarContainer() {
   };
 
   const handleSearch = () => {
-    let filterEvent = [...events];
-
     // Filter by province if selected
-    if (search.province !== '') {
-      filterEvent = filterEvent.filter(
-        (event) => event.EventAddress.provinceId === search.province
+    if (search?.provinceId) {
+      const filterEvent = [...tempEvents].filter(
+        (event) => event.EventAddress.provinceId === search.provinceId
       );
-
       setEvents(filterEvent);
     }
-
-    // Filter by date if selected
-    // if (search.date !== '') {
-    //   const formattedDate = formatDate(search.date);
-    //   filteredEvents = filteredEvents.filter(
-    //     (event) => formatDate(event.startDate) === formattedDate
-    //   );
-    // }
-
-    // setEvents(filteredEvents);
   };
 
   const handleClear = () => {
     setEvents([...tempEvents]);
-    setClear(null);
+    setCurrentProvince(null);
   };
-
-  const fetchSeasonEvent = (input) => {
-    // console.log(input);
-    // const month = new Date(event.startDate);
-    // new Date(input).setUTCHours(0, 0, 0, 0);
-    // const isoDate = input.toISOString();
-    // console.log(isoDate);
-    // if (tempEvents) {
-    //   let filterEvent = [...tempEvents];
-    //   filterEvent = filterEvent.filter((event) => event.startDate === isoDate);
-    //   setEvents(filterEvent);
-    // }
-  };
-
-  useEffect(() => {
-    fetchEventsData();
-    // fetchSeasonEvent(season);
-    window.scrollTo(0, 0);
-  }, []);
 
   const provinceData = province?.map((provinces, index) => ({
     label: provinces.provinceNameEn,
@@ -143,37 +54,86 @@ function CalendarContainer() {
     index,
   }));
 
+  const fetchCalendarEvent = async (input) => {
+    try {
+      const getEvent = await getCalendarEvent(input);
+      setEvents(getEvent.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // calendar handling state
+  const [focusDate, setFocusDate] = useState(init);
+
+  const generateCalendarDates = (year, month) => {
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    const numDaysInMonth = lastDayOfMonth.getDate();
+    const startingDayOfWeek = firstDayOfMonth.getDay();
+
+    const calendarDates = [];
+
+    // Fill in the previous month's days if necessary
+    for (let i = 0; i < startingDayOfWeek; i += 1) {
+      const prevMonthDate = new Date(
+        year,
+        month,
+        -startingDayOfWeek + i + 1,
+        7
+      );
+      calendarDates.push(prevMonthDate);
+    }
+
+    // Fill in the current month's days
+    for (let i = 1; i <= numDaysInMonth; i += 1) {
+      const currentDate = new Date(year, month, i, 7);
+      calendarDates.push(currentDate);
+    }
+
+    // Fill in the next month's days if necessary
+    const totalDays = 42; // Total cells in a typical 6-week calendar view
+    const remainingDays = totalDays - calendarDates.length;
+    for (let i = 1; i <= remainingDays; i += 1) {
+      const nextMonthDate = new Date(year, month + 1, i, 7);
+      calendarDates.push(nextMonthDate);
+    }
+
+    // console.log('firstDay', calendarDates[0].toISOString());
+    // console.log('lastDay', calendarDates[41].toISOString());
+
+    fetchCalendarEvent({
+      firstDay: calendarDates[0].toISOString(),
+      lastDay: calendarDates[41].toISOString(),
+    });
+  };
+
+  useEffect(() => {
+    fetchProvinceData();
+    generateCalendarDates(focusDate.getFullYear(), focusDate.getMonth());
+
+    window.scrollTo(0, 0);
+  }, [focusDate]);
+
   return (
     <div className='p-4'>
       {/* search form */}
       <div className='flex flex-col'>
-        {/* search from date */}
-        {/* <DatePicker
-          format='dd.MM.yyyy'
-          size='sm'
-          placeholder='select date'
-          onSelect={(value) => setSearch({ ...search, date: value })}
-        /> */}
         {/* search from province */}
         <div className='flex flex-col gap-3 py-4'>
           <SelectPicker
-            // onClean={(e) => console.log(e)}
-            value={clear}
-            onChange={setClear}
+            value={currentProvince}
+            onChange={setCurrentProvince}
             data={provinceData}
-            onSelect={(value) => setSearch({ ...search, province: value })}
+            onSelect={(value) => setSearch({ ...search, provinceId: value })}
             block
           />
-          {/* <input
-            className='border p-2'
-            type='date'
-            name='date'
-            value={search?.data}
-            onChange={(e) =>
-              setSearch({ ...search, [e.target.name]: e.target.value })
-            }
-          /> */}
-          <EventCalendar season={season} data={events} setSearch={setSearch} />
+
+          <EventCalendar
+            data={events}
+            setSearch={setSearch}
+            focusDate={focusDate}
+            setFocusDate={setFocusDate}
+          />
         </div>
 
         <div className='flex flex-row gap-2 justify-end'>
@@ -187,13 +147,7 @@ function CalendarContainer() {
       </div>
       {/* data */}
       <div className='flex flex-col gap-3 py-4'>
-        {seasonId
-          ? renderSeason?.map((event) => (
-              <EventCardGanX key={event.id} event={event} />
-            ))
-          : events?.map((event) => (
-              <EventCardGanX key={event.id} event={event} />
-            ))}
+        <EventList currentEvents={events} />
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ function HomeContextProvider({ children }) {
       setLoading(true);
       const response = await getAllEvent();
       setEvent(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (err) {
       console.log(err);
     } finally {
