@@ -113,7 +113,7 @@ export default function EventContainer() {
         </div>
         {/* header description */}
         <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
-          <h1 className='text-[1.5rem]'>{eventObj?.event?.title}</h1>
+          <h1 className='text-[1.5rem]'>{<Skeleton /> || 'This is title'}</h1>
           <div className='flex justify-between'>
             <div className='flex items-center gap-2'>
               <ClockIcon />
@@ -154,7 +154,9 @@ export default function EventContainer() {
               <span>
                 {loading ? <Skeleton count='1.5' width='3rem' /> : 'PinIcon'}
               </span>
-              <p>{eventObj?.event?.EventAddress?.address}</p>
+              <p>
+                {<Skeleton /> || '460/15 ezio Hatyai Songkhla Thailand 90110'}
+              </p>
             </div>
           </div>
           <div />
@@ -179,54 +181,6 @@ export default function EventContainer() {
           <p className='text-[1.5rem] font-bold'>Description</p>
           <span>{loading ? <Skeleton count='3.5' /> : 'Descrption'}</span>
           <span>{loading ? <Skeleton count='3.5' /> : 'Descrption'}</span>
-
-          <div className='flex justify-end py-4'>
-            <div className='border flex items-center gap-2 p-2 rounded-full'>
-              <HearthIconOutline />
-              <div>Remind Me</div>
-            </div>
-          </div>
-        </div>
-        {/* Facility */}
-        <div className='flex flex-col px-4 '>
-          <p className='text-[1.5rem] font-bold'>Facility</p>
-          <div className='flex gap-2 flex-wrap py-2'>
-            {eventObj?.event?.EventFacility?.toilet ? (
-              <div className='flex gap-3 items-center'>
-                <ToiletIcon /> Toilet
-              </div>
-            ) : null}
-            {eventObj?.event?.EventFacility?.parking ? (
-              <div className='flex gap-2 items-center'>
-                <CarParkIcon /> Park
-              </div>
-            ) : null}
-            {eventObj?.event?.EventFacility?.prayerRoom ? (
-              <div className='flex gap-2 items-center'>
-                <PrayIcon /> Pray room
-              </div>
-            ) : null}
-            {eventObj?.event?.EventFacility?.petFriendly ? (
-              <div className='flex gap-2 items-center'>
-                <DogIcon /> Pet
-              </div>
-            ) : null}
-            {eventObj?.event?.EventFacility?.food ? (
-              <div className='flex gap-2 items-center'>
-                <FoodIcon /> Food Store
-              </div>
-            ) : null}
-            {eventObj?.event?.EventFacility?.wifi ? (
-              <div className='flex gap-2 items-center'>
-                <WifiIcon /> Free Wi-fi
-              </div>
-            ) : null}
-            {eventObj?.event?.EventFacility?.medicalService ? (
-              <div className='flex gap-2 items-center'>
-                <MedicalIcon /> Medical Store
-              </div>
-            ) : null}
-          </div>
         </div>
       </div>
     );
