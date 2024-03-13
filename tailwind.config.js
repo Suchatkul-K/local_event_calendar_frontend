@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         //set custom color here
-        primary: '#43B97F',
+        primary: '#00103c',
         Line: '#00B900',
       },
     },

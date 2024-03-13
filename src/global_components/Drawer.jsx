@@ -31,6 +31,15 @@ function DrawerForNav({ children }) {
         </Drawer.Header>
         <Drawer.Body style={{ padding: '1rem' }}>
           <div className='flex flex-col '>
+            <Link to='/home'>
+              <button
+                onClick={() => setOpen(false)}
+                className='w-full p-4 border-b text-[1.2rem] text-start'
+                type='button'
+              >
+                Home
+              </button>
+            </Link>
             <Link to='/map'>
               <button
                 onClick={() => setOpen(false)}
