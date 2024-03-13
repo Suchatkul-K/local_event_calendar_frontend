@@ -6,7 +6,7 @@ import EditPasswordForm from './EditPasswordForm';
 function EditProfile() {
   const [togglePage, setTogglePage] = useState('editProfile');
   return (
-    <div className='flex flex-col justify-start items-start h-screen p-4  '>
+    <div className='flex flex-col justify-start items-start h-auto p-4'>
       <div className='flex justify-between py-4 w-full'>
         <button
           className={

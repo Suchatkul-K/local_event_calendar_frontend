@@ -5,7 +5,7 @@ import AuthContextProvider from '../features/auth/context/AuthContext';
 
 function Container() {
   return (
-    <div className=''>
+    <div>
       <NavBar />
       <Outlet />
       <Footer />
