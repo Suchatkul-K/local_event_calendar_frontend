@@ -11,7 +11,7 @@ import logo from '../asset/pic/OurLogo.png';
 export default function Footer() {
   const navigate = useNavigate();
   return (
-    <div className='text-center flex flex-col gap-2 pb-6 pt-2 justify-center items-center '>
+    <div className='text-center flex flex-col gap-2 pb-6 pt-2 justify-center items-center bg-primary text-white'>
       <div className='flex justify-center  w-[5.5rem]'>
         <button
           onClick={() => navigate('/home')}

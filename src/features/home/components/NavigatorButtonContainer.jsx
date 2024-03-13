@@ -6,7 +6,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 function NavigatorButtonContainer() {
   return (
-    <div className='flex justify-evenly md:px-[9.5rem] md:gap-2'>
+    <div className='flex justify-evenly md:px-[9.5rem] md:gap-2 pb-8'>
       <NavigatorButton link='/map'>
         <MapIcon className='w-[2rem] h-[2rem] md:mr-3 lg:mr-4' />
         <p className='hidden md:block text-white md:text-xl md:font-semibold'>

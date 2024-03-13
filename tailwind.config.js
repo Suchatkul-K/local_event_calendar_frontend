@@ -2,6 +2,9 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      Jua: ['Jua', 'sans-serif'],
+    },
     extend: {
       colors: {
         //set custom color here
@@ -15,6 +18,7 @@ export default {
     themes: [
       {
         mytheme: {
+          // primary: '#a991f7',
           primary: '#a991f7',
           secondary: '#f6d860',
           accent: '#37cdbe',

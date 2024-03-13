@@ -47,7 +47,7 @@ export default function CreateEventContainer() {
             <p className='font-semibold pl-2 pb-2 text-[1rem]'>Description</p>
             <textarea
               placeholder='Description'
-              className='textarea textarea-bordered textarea-md w-full'
+              className='textarea textarea-bordered leading-6 textarea-md w-full h-[8rem] text-[0.9rem]'
               name='description'
               value={input?.description}
               onChange={handleChange}

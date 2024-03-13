@@ -37,18 +37,21 @@ export default function EventModalImage() {
 
       const formData = new FormData();
       if (image) {
-        image.forEach((value, index) => {
+        image.forEach((value) => {
           formData.append('image', value);
         });
       }
 
       toast.success('create successfully');
+      document.getElementById('my_modal_1').close();
 
       setImage({});
     } catch (err) {
       console.log(err);
     }
   };
+
+  console.log(image);
 
   return (
     <div className='flex justify-end gap-4 pr-4'>
@@ -61,7 +64,10 @@ export default function EventModalImage() {
       </button>
       <dialog id='my_modal_1' className='modal'>
         <div className='modal-box'>
-          <div className='flex flex-col  gap-[1rem] w-full max-h-[70%]'>
+          <form
+            onSubmit={handleformSubmit}
+            className='flex flex-col  gap-[1rem] w-full max-h-[70%]'
+          >
             <span className='text-[1.2rem] font-medium '>Image</span>
             {image[0] ? (
               <div className=' flex flex-col gap-2 justify-center'>
@@ -102,9 +108,11 @@ export default function EventModalImage() {
                 />
               </div>
 
-              <Button onClick={() => fileEl2.current.click()}>Upload </Button>
+              <Button onClick={() => fileEl2.current.click()}>
+                add Image{' '}
+              </Button>
               <div className='modal-action '>
-                <form method='dialog flex '>
+                <div method='dialog flex '>
                   <button
                     type='button'
                     className='bg-gray-400 rounded-btn px-[0.5rem] py-[0.2rem] h-fit text-white font-semibold'
@@ -112,10 +120,11 @@ export default function EventModalImage() {
                   >
                     Close
                   </button>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
+            <Button type='submit'>Upload</Button>
+          </form>
         </div>
       </dialog>
 

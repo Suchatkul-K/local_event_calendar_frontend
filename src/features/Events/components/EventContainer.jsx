@@ -1,7 +1,7 @@
 import { useState, useEffect, Children } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'rsuite';
+import { Carousel, Dropdown } from 'rsuite';
 import Skeleton from 'react-loading-skeleton';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
@@ -36,22 +36,15 @@ export default function EventContainer() {
   const allAuthObj = useAuth();
   const { authUser } = allAuthObj;
 
-  console.log(
-    eventObj?.event?.organizerInformationId,
-    'akdsjflajlsdfjlasdjflasjdflds'
-  );
-  console.log(authUser?.id);
+  console.log(event);
 
   const navigate = useNavigate();
 
   const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { eventId } = useParams();
-  const { loading } = useEventContext();
-  // const eventLatLng = [
-  //   eventObj?.EventAddress?.lat,
-  //   eventObj?.EventAddress?.long,
-  // ];
+
   const nevigate = useNavigate();
   const checkReminded = authEvents?.Reminder.filter(
     (el) => el.eventId === event?.id
@@ -59,10 +52,13 @@ export default function EventContainer() {
 
   const fetchAuthEvent = async () => {
     try {
+      setLoading(true);
       const authEvent = await authMe();
       setAuthEvents(authEvent.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
   const handleReminderClick = async () => {
@@ -220,28 +216,28 @@ export default function EventContainer() {
     );
   }
 
+  if (loading) {
+    return (
+      <div className='h-dvh mx-auto flex justify-center items-center loading loading-spinner loading-lg'>
+        loading...
+      </div>
+    );
+  }
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 '>
       {/* cover picture */}
-      <div className='w-full relative'>
+      <div className='w-full flex justify-center h-[36vh] mx-auto'>
         <img
-          className='object-contain'
+          className='object-cover w-[100%]'
           src={eventObj.event?.coverImage}
           alt=''
         />
-        {/* {authUser?.id === event?.organizerInformationId ? (
-          <button
-            type='button'
-            className='absolute focus:scale-90 hover:scale-95 top-4 right-4 px-3 py-1  shadow-lg text-white font-semibold bg-primary rounded-btn'
-            onClick={() => nevigate(`/editevent/${eventId}`)}
-          >
-            Edit Event
-          </button>
-        ) : null} */}
       </div>
       {/* header description */}
       <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
-        <h1 className='text-[1.5rem]'>{eventObj?.event?.title}</h1>
+        <h1 className='text-[1.5rem] font-semibold'>
+          {eventObj?.event?.title}
+        </h1>
         <div className='flex justify-between'>
           <div className='flex items-center gap-2'>
             <ClockIcon />
@@ -286,22 +282,24 @@ export default function EventContainer() {
           </p>
         </div>
 
-        <div className=''>
-          <Dropdown icon={<DotIcon />} size='xs' placement='bottomEnd'>
-            <button
-              type='button'
-              onClick={() => nevigate(`/editevent/${eventId}`)}
-            >
-              <Dropdown.Item>Edit Event</Dropdown.Item>
-            </button>
-            <Dropdown.Item>Delete Event</Dropdown.Item>
-          </Dropdown>
-        </div>
+        {authUser?.id === event?.organizerInformationId && (
+          <div className=''>
+            <Dropdown icon={<DotIcon />} size='xs' placement='bottomEnd'>
+              <button
+                type='button'
+                onClick={() => nevigate(`/editevent/${eventId}`)}
+              >
+                <Dropdown.Item>Edit Event</Dropdown.Item>
+              </button>
+              <Dropdown.Item>Delete Event</Dropdown.Item>
+            </Dropdown>
+          </div>
+        )}
       </div>
       {/* Description */}
-      <div className='flex flex-col px-4'>
+      <div className='flex flex-col px-4 '>
         <p className='text-[1.5rem] font-bold'>Description</p>
-        <p>{eventObj?.event?.description}</p>
+        <span className='break-all'>{eventObj?.event?.description}</span>
         <div className='flex justify-end py-4'>
           <div className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full'>
             {authUser ? (
@@ -352,7 +350,7 @@ export default function EventContainer() {
               <CarParkIcon /> Park
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility?.meditationRoom ? (
+          {eventObj?.event?.EventFacility?.prayerRoom ? (
             <div className='flex gap-2 items-center'>
               <PrayIcon /> Pray room
             </div>
@@ -380,7 +378,19 @@ export default function EventContainer() {
         </div>
       </div>
       {/* Carousel Preview */}
-      {eventObj?.event?.image && <CarouselHero />}
+      {event?.EventImage.length > 0 && (
+        <Carousel autoplay>
+          {event.EventImage.map((el) => (
+            <img
+              key={el.id}
+              src={el.image}
+              height='100'
+              alt=''
+              className='object-cover'
+            />
+          ))}
+        </Carousel>
+      )}
       {authUser?.id === event?.organizerInformationId ? (
         <EventModalImage />
       ) : null}
