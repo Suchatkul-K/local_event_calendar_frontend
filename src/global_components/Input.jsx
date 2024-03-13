@@ -11,6 +11,7 @@ export default function Input({
   onChange,
   onClick,
   border,
+  onClickButton,
 }) {
   const finalValue = (value ? value[name] : '') || '';
 
@@ -31,7 +32,11 @@ export default function Input({
           className=' outline-none w-full bg-inherit '
           onClick={onClick}
         />
-        {type === 'password' && <EyeIcon />}
+        {(type === 'password' || onClickButton) && (
+          <button type='button' aria-label='Save' onClick={onClickButton}>
+            <EyeIcon />
+          </button>
+        )}
       </div>
       {errorMessage && (
         <small className='text-red-500 pl-[0.5rem]'>{errorMessage}</small>

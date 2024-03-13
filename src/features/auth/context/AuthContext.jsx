@@ -18,9 +18,11 @@ export default function AuthContextProvider({ children }) {
     [authUser, loading]
   );
   const fetchAuth = async () => {
-    const storeToken = getToken();
-    const authResult = await authMe(storeToken);
-    setAuthUser(authResult.data);
+    const token = getToken();
+    if (token) {
+      const authResult = await authMe(token);
+      setAuthUser(authResult.data);
+    }
   };
 
   console.log(authUser);
