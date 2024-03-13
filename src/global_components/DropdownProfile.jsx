@@ -1,15 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dropdown, IconButton } from 'rsuite';
-import { LogOutIcon, ProfileIcon, SettingIcon } from '../icons';
+import {
+  CreateEventIcon,
+  LogOutIcon,
+  ProfileIcon,
+  SettingIcon,
+} from '../icons';
 import 'rsuite/Dropdown/styles/index.css';
 
-import useProfileContext from '../features/profile/hook/useProfileContext';
+import useAuth from '../features/auth/hooks/auth';
 
 export default function DropdownProfile({ logout }) {
-  const allAuthObj = useProfileContext();
+  const allAuthObj = useAuth();
 
-  console.log(allAuthObj);
+  const {
+    authUser: { role },
+  } = allAuthObj;
+
+  console.log(allAuthObj, ';;;;;;;;;;;;;');
   const navigate = useNavigate();
   return (
     // <div className='dropdown dropdown-bottom dropdown-end'>
@@ -37,27 +46,44 @@ export default function DropdownProfile({ logout }) {
       // title={allAuthObj?.userName}
       placement='bottomEnd'
     >
-      <Dropdown.Item
-        style={{ display: 'flex', gap: '8px' }}
-        icon={<ProfileIcon />}
-        onClick={() => navigate('/profile')}
-      >
-        Profile
-      </Dropdown.Item>
-      <Dropdown.Item
-        style={{ display: 'flex', gap: '8px' }}
-        icon={<SettingIcon />}
-        onClick={() => navigate('/profile/edit')}
-      >
-        Setting{' '}
-      </Dropdown.Item>
-      <Dropdown.Item
-        style={{ display: 'flex', gap: '8px' }}
-        icon={<LogOutIcon />}
-        onClick={logout}
-      >
-        Logout{' '}
-      </Dropdown.Item>
+      <div className='p-1 border-b'>
+        <Dropdown.Item
+          style={{ display: 'flex', gap: '8px' }}
+          icon={<ProfileIcon />}
+          onClick={() => navigate('/profile')}
+        >
+          Profile
+        </Dropdown.Item>
+      </div>
+      {role === 'ORGANIZER' ? (
+        <div className='p-1 border-b'>
+          <Dropdown.Item
+            style={{ display: 'flex', gap: '8px' }}
+            icon={<CreateEventIcon />}
+            onClick={() => navigate('/create-event')}
+          >
+            Create Event
+          </Dropdown.Item>
+        </div>
+      ) : null}
+      <div className='p-1 border-b'>
+        <Dropdown.Item
+          style={{ display: 'flex', gap: '8px' }}
+          icon={<SettingIcon />}
+          onClick={() => navigate('/profile/edit')}
+        >
+          Setting{' '}
+        </Dropdown.Item>
+      </div>
+      <div className='p-1 border-b'>
+        <Dropdown.Item
+          style={{ display: 'flex', gap: '8px' }}
+          icon={<LogOutIcon />}
+          onClick={logout}
+        >
+          Logout{' '}
+        </Dropdown.Item>
+      </div>
     </Dropdown>
     // </div>
   );
