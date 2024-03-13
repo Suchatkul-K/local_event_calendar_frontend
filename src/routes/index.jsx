@@ -20,6 +20,7 @@ import AuthContextProvider from '../features/auth/context/AuthContext';
 
 import EditProfilePage from '../pages/EditProfilePage';
 import CalendarPage from '../pages/CalendarPage';
+import ProtectProfile from '../features/profile/components/ProtectProfile';
 
 const router = createBrowserRouter([
   {
@@ -44,25 +45,47 @@ const router = createBrowserRouter([
       },
       {
         path: '/create-event',
-        element: <CreateEventPage />,
+        element: (
+          <ProtectProfile>
+            <CreateEventPage />
+          </ProtectProfile>
+        ),
       },
       {
         path: '/editevent/:eventId',
-        element: <EditEventPage />,
+        element: (
+          <ProtectProfile>
+            <EditEventPage />
+          </ProtectProfile>
+        ),
       },
 
       {
         path: '/explore',
         element: <ExplorePage />,
       },
-      { path: '/profile', element: <ProfilePage /> },
+      {
+        path: '/profile',
+        element: (
+          <ProtectProfile>
+            <ProfilePage />
+          </ProtectProfile>
+        ),
+      },
       { path: '/map', element: <MapPage /> },
 
       {
         path: '/event/:eventId',
         element: <EventPage />,
       },
-      { path: '/profile/edit', element: <EditProfilePage /> },
+      {
+        path: '/profile/edit',
+        element: (
+          <ProtectProfile>
+            <EditProfilePage />
+          </ProtectProfile>
+        ),
+      },
       { path: '/calendar', element: <CalendarPage /> },
       { path: '/calendar/:seasonId', element: <CalendarPage /> },
       {
