@@ -9,8 +9,8 @@ function CreateEventDateTime() {
   return (
     <div className='flex flex-col  gap-[1rem] w-full'>
       {/* Date Input */}
-      <div className='flex flex-row justify-between w-fit '>
-        <div className='flex flex-col'>
+      <div className='flex flex-row justify-between  '>
+        <div className='flex flex-col font-medium'>
           <InputDate
             name='startDate'
             title='Start Date'
@@ -22,7 +22,7 @@ function CreateEventDateTime() {
             </small>
           )}
         </div>
-        <div className='text-end flex flex-col items-end'>
+        <div className='text-end flex flex-col items-end font-medium'>
           <InputDate name='endDate' title='End Date' onChange={handleDate} />
           {error?.endDate && (
             <small className='text-red-500 ps-[1.5rem] flex  w-full'>
@@ -34,7 +34,7 @@ function CreateEventDateTime() {
 
       {/* Time input */}
       <div className='flex flex-row justify-between'>
-        <div className='font-semibold w-full'>
+        <div className='font-medium min-w-[9rem]'>
           <InputDate
             name='startTime'
             title='Start Time'
@@ -43,7 +43,7 @@ function CreateEventDateTime() {
           />
         </div>
 
-        <div className='font-semibold w-full text-end'>
+        <div className='font-medium min-w-[9rem] text-end'>
           <InputDate
             name='endTime'
             title='End Time'
