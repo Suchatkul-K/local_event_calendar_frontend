@@ -56,9 +56,9 @@ function EventCardGanX({ event }) {
             <p className='font-semibold text-[0.75rem]'>
               Entrance :{' '}
               {event?.EventFacility?.entranceFee ? (
-                <span className='text-green-500'>Free</span>
-              ) : (
                 <span className='text-amber-500'>Paid</span>
+              ) : (
+                <span className='text-green-500'>Free</span>
               )}
             </p>
             <p className='font-semibold text-[0.75rem]'>
