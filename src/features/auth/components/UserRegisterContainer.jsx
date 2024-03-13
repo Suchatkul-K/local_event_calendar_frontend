@@ -44,10 +44,7 @@ export default function UserRegisterContainer() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validateResult = validateUserRegister(input);
-      console.log('Validate Result is here');
-      console.log(validateResult);
 
       if (Object.keys(validateResult).length > 0 || !profileImage) {
         setError(validateResult);
@@ -58,7 +55,6 @@ export default function UserRegisterContainer() {
           }));
         }
       } else {
-        console.log('no error validation');
         const formData = new FormData();
         formData.append('profileImage', profileImage);
         formData.append('email', input.email);
@@ -67,16 +63,17 @@ export default function UserRegisterContainer() {
         formData.append('role', input.role);
         formData.append('gender', input.gender);
         const registerResult = await apiRegister(formData);
-        console.log(registerResult);
         storeToken(registerResult.data.accessToken);
         const authResult = await authMe(registerResult.data.accessToken);
-        console.log(authResult);
         setAuthUser(authResult.data);
         setError(null);
         navigate('/home');
       }
     } catch (err) {
-      setError({ email: 'Email already in use' });
+      console.log(err);
+      if (err.response.data.message === 'this email has aleady been used') {
+        setError({ ...error, email: 'This email has already been used' });
+      }
     }
   };
 

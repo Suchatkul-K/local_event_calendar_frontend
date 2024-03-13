@@ -60,10 +60,13 @@ export default function OrganizerRegisterContainer() {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      console.log(input);
       const validateResult = validateOrganizerRegister(input);
 
-      if (Object.keys(validateResult).length > 0 || !profileImage) {
+      if (
+        Object.keys(validateResult).length > 0 ||
+        !profileImage ||
+        !identityCopyImage
+      ) {
         setError(validateResult);
         if (!profileImage) {
           setError((prev) => ({
