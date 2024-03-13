@@ -19,31 +19,27 @@ export function CreateEventContextProvider({ children }) {
   const [image, setImage] = useState([]);
   const [coverImage, setCoverImage] = useState(null);
   const [time, setTime] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-
+  console.log(input);
   // ------------------------fetch-----------------
-  const fetchProvince = async () => {
+  const fetchOptionSelect = async () => {
     try {
+      setLoading(true);
       const provinces = await getProvince();
-      setProvince(provinces.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchCategory = async () => {
-    try {
       const categories = await getCategory();
+      setProvince(provinces.data);
       setCategory(categories.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchProvince();
-    fetchCategory();
+    fetchOptionSelect();
   }, []);
 
   /// ///--------------------Handle--------------------------- ///
@@ -87,7 +83,7 @@ export function CreateEventContextProvider({ children }) {
     console.log(input.image);
     const tempImage = image?.filter((file) => file.name !== el.name);
 
-    setInput({ ...input, image: tempImage });
+    // setInput({ ...input, image: tempImage });
     setImage(tempImage);
   };
 
@@ -113,6 +109,7 @@ export function CreateEventContextProvider({ children }) {
   const handleformSubmit = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
       const token = getToken();
       if (!token) {
         toast.error('Please log in before creating an event');
@@ -126,7 +123,7 @@ export function CreateEventContextProvider({ children }) {
       }
 
       const formData = new FormData();
-      if (image) {
+      if (image.length > 0) {
         image.forEach((value, index) => {
           formData.append('image', value);
         });
@@ -141,6 +138,8 @@ export function CreateEventContextProvider({ children }) {
       navigate(`/event/${eventId.data}`);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -195,6 +194,7 @@ export function CreateEventContextProvider({ children }) {
       handleSelectPicker,
       handleformSubmit,
       handleTime,
+      loading,
     }),
     [
       input,
@@ -206,6 +206,7 @@ export function CreateEventContextProvider({ children }) {
       image,
       coverImage,
       time,
+      loading,
     ]
   );
 

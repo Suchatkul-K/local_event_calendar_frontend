@@ -7,7 +7,7 @@ function EventCardGanX({ event }) {
     <Link to={`/event/${event?.id}`}>
       <div className='flex rounded-lg overflow-hidden h-[10rem] gap-2 shadow-lg border w-full'>
         {/* image */}
-        <div className=' w-3/6 '>
+        <div className=' w-3/6 min-w-[32%]'>
           <img
             src={event?.coverImage}
             alt=''
