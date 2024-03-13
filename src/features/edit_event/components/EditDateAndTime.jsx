@@ -15,14 +15,16 @@ export default function EditDateAndTime({
           name='startDate'
           title='Start Date'
           onChange={handleChange}
-          value={input?.startDate || initData.startDate.substring(0, 10)}
+          // value={input?.startDate || }
+          initData={initData.startDate.substring(0, 10)}
         />
         <div className='text-end '>
           <InputDate
             name='endDate'
             title='End Date'
             onChange={handleChange}
-            value={input?.endDate || initData.endDate.substring(0, 10)}
+            // value={input?.endDate }
+            initData={initData.endDate.substring(0, 10)}
           />
         </div>
       </div>

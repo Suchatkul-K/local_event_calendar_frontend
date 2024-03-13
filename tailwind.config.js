@@ -2,10 +2,13 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    fontFamily: {
+      Jua: ['Jua', 'sans-serif'],
+    },
     extend: {
       colors: {
         //set custom color here
-        primary: '#43B97F',
+        primary: '#00103c',
         Line: '#00B900',
       },
     },
@@ -15,6 +18,7 @@ export default {
     themes: [
       {
         mytheme: {
+          // primary: '#a991f7',
           primary: '#a991f7',
           secondary: '#f6d860',
           accent: '#37cdbe',

@@ -4,6 +4,7 @@ export default function InputDate({
   name,
   type = 'date',
   value,
+  initData,
 }) {
   return (
     <div>
@@ -14,6 +15,7 @@ export default function InputDate({
         name={name}
         onChange={onChange}
         value={value}
+        defaultValue={initData}
       />
     </div>
   );

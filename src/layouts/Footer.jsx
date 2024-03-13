@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   FacebookIcon,
   InstagramIcon,
@@ -5,11 +6,22 @@ import {
   TwitterIcon,
   YoutubeIcon,
 } from '../icons';
+import logo from '../asset/pic/OurLogo.png';
 
 export default function Footer() {
+  const navigate = useNavigate();
   return (
-    <div className='text-center flex flex-col gap-2 pb-6 pt-2 '>
-      <span className='font-bold text-[1.5rem]'>LOGO</span>
+    <div className='text-center flex flex-col gap-2 pb-6 pt-2 justify-center items-center bg-primary text-white'>
+      <div className='flex justify-center  w-[5.5rem]'>
+        <button
+          onClick={() => navigate('/home')}
+          type='button'
+          className='font-bold text-xl'
+        >
+          {' '}
+          <img src={logo} alt='' />
+        </button>
+      </div>
       <div>
         <span>Copyright 2024 </span>
         <span>All Rights © | Reserved</span>

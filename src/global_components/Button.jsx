@@ -1,4 +1,4 @@
-const primary = 'bg-[#43B97F]';
+const primary = 'bg-[#00103c]';
 
 export default function Button({ children, secondary, type, onClick }) {
   return (

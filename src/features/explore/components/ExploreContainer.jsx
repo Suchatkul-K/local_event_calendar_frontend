@@ -21,6 +21,7 @@ export default function ExploreContainer() {
     handleOnChange,
     handleOnSubmit,
     events,
+    loading,
   } = useExploreContext();
 
   const categoryData = category?.map((el, index) => ({
@@ -46,10 +47,16 @@ export default function ExploreContainer() {
   const [selectCategory, setSelectCategory] = useState();
   const [selectProvince, setSelectProvince] = useState();
 
-  console.log(input);
+  if (loading) {
+    return (
+      <div className='h-dvh mx-auto flex justify-center items-center loading loading-spinner loading-lg'>
+        loading...
+      </div>
+    );
+  }
 
   return (
-    <div className='p-[2rem] flex flex-col gap-2'>
+    <div className='p-[1rem] flex flex-col gap-2'>
       {open && (
         <button
           type='button'

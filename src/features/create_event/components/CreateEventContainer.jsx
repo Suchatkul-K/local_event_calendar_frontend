@@ -17,15 +17,23 @@ export default function CreateEventContainer() {
     handleCheckbox,
     handleformSubmit,
     error,
+    loading,
   } = CreateEventContextObject;
   const { tempImage } = CreateEventImageObject;
 
   const BkkLatLon = [13.756329334391024, 100.50176927408629];
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        loading...
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleformSubmit}>
       <div>
-        <div className=' mx-auto flex flex-col  gap-[1rem] w-full py-[2rem] px-[3rem]'>
+        <div className=' mx-auto flex flex-col  gap-[1rem] w-full py-[2rem] px-[2rem]'>
           <div className='text-[1.75rem] font-semibold text-center pb-3'>
             Create An Event
           </div>
@@ -47,7 +55,7 @@ export default function CreateEventContainer() {
             <p className='font-semibold pl-2 pb-2 text-[1rem]'>Description</p>
             <textarea
               placeholder='Description'
-              className='textarea textarea-bordered textarea-md w-full'
+              className='textarea textarea-bordered leading-6 textarea-md w-full h-[8rem] text-[0.9rem]'
               name='description'
               value={input?.description}
               onChange={handleChange}

@@ -17,8 +17,10 @@ function SeasonContainer() {
 
   return (
     <div className='w-full'>
-      <div className='font-bold text-[1.5rem] py-2'>SEASONING</div>
-      <div className='flex justify-center items-center'>
+      <div className='font-bold text-[1.5rem]   font-Jua  border-b border-primary w-fit'>
+        SEASONING
+      </div>
+      <div className='flex justify-center items-center pt-4'>
         {/* summer */}
         <button
           className={

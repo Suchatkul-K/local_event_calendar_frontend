@@ -7,7 +7,7 @@ function EventCardGanX({ event }) {
     <Link to={`/event/${event?.id}`}>
       <div className='flex rounded-lg overflow-hidden h-[10rem] gap-2 shadow-lg border w-full'>
         {/* image */}
-        <div className=' w-3/6 '>
+        <div className=' w-3/6 min-w-[32%]'>
           <img
             src={event?.coverImage}
             alt=''
@@ -56,9 +56,9 @@ function EventCardGanX({ event }) {
             <p className='font-semibold text-[0.75rem]'>
               Entrance :{' '}
               {event?.EventFacility?.entranceFee ? (
-                <span className='text-green-500'>Free</span>
-              ) : (
                 <span className='text-amber-500'>Paid</span>
+              ) : (
+                <span className='text-green-500'>Free</span>
               )}
             </p>
             <p className='font-semibold text-[0.75rem]'>
