@@ -11,6 +11,7 @@ import useAuth from '../hooks/auth';
 export default function LoginContainer() {
   const [input, setInput] = useState({ email: '', password: '' });
   const [error, setError] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const { setAuthUser } = useAuth();
   const navigate = useNavigate();
@@ -56,17 +57,34 @@ export default function LoginContainer() {
             <EmailIcon />
           </Input>
 
-          <Input
-            name='password'
-            placeholder='password'
-            value={input}
-            onChange={handleChange}
-            title='Password'
-            type='password'
-            errorMessage={error?.password}
-          >
-            <LockerIcon />
-          </Input>
+          {/* password */}
+          {showPassword ? (
+            <Input
+              name='password'
+              placeholder='Password'
+              value={input}
+              onChange={handleChange}
+              title='Password'
+              errorMessage={error?.password}
+              type='text'
+              onClickButton={() => setShowPassword(false)}
+            >
+              <LockerIcon />
+            </Input>
+          ) : (
+            <Input
+              name='password'
+              placeholder='Password'
+              value={input}
+              onChange={handleChange}
+              title='Password'
+              errorMessage={error?.password}
+              type='password'
+              onClickButton={() => setShowPassword(true)}
+            >
+              <LockerIcon />
+            </Input>
+          )}
 
           <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-full'>
             <button
@@ -76,14 +94,6 @@ export default function LoginContainer() {
               Login
             </button>
 
-            <hr className='my-2 border border-gray-300' />
-
-            <button
-              type='button'
-              className='btn bg-Line h-12 text-white text-[1rem]'
-            >
-              Login with Line
-            </button>
             <div className='text-[1rem]'>
               <span>{`Don't have an account ? `}</span>
               <Link to='/register'>
