@@ -31,7 +31,9 @@ function ProfileDrawer({ children, props }) {
       <Animation.Slide in={show} placement={placement}>
         <Drawer size='22rem' open={open} onClose={() => setOpen(false)}>
           <Drawer.Header>
-            <Drawer.Title>Your Event</Drawer.Title>
+            <Drawer.Title>
+              <div className='font-bold'>Reminded Events</div>
+            </Drawer.Title>
           </Drawer.Header>
           <Drawer.Body>
             <div className='flex flex-col gap-3'>{props}</div>

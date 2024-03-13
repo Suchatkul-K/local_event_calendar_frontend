@@ -1,6 +1,7 @@
 import { useState, useEffect, Children } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Dropdown } from 'rsuite';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
 import {
@@ -16,17 +17,30 @@ import {
   WifiIcon,
   MedicalIcon,
   HearthIconOutline,
+  DotIcon,
 } from '../../../icons';
 import formatDate from '../../../utils/formatDate';
 import useEventContext from '../hook/useEventContext';
 import EventMapLocation from './EventMapLocation';
 import EventModalImage from './EventModalImage';
 import { authMe } from '../../../api/auth';
-import { createReminder } from '../../../api/user';
-import Button from '../../../global_components/Button';
+import { createReminder, deleteReminder } from '../../../api/user';
+import useAuth from '../../auth/hooks/auth';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
+  const { event } = eventObj;
+
+  const allAuthObj = useAuth();
+  const { authUser } = allAuthObj;
+
+  console.log(
+    eventObj?.event?.organizerInformationId,
+    'akdsjflajlsdfjlasdjflasjdflds'
+  );
+  console.log(authUser?.id);
+
+  const navigate = useNavigate();
 
   const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
@@ -37,7 +51,7 @@ export default function EventContainer() {
   // ];
   const nevigate = useNavigate();
   const checkReminded = authEvents?.Reminder.filter(
-    (el) => el.eventId === eventObj?.event?.id
+    (el) => el.eventId === event?.id
   );
 
   const fetchAuthEvent = async () => {
@@ -49,8 +63,20 @@ export default function EventContainer() {
     }
   };
   const handleReminderClick = async () => {
+    if (!authUser) {
+      navigate('/login');
+    }
     await createReminder(+eventId);
     toast.success('keep to reminded');
+    fetchAuthEvent();
+  };
+
+  const handleDelReminderClick = async () => {
+    if (!authUser) {
+      navigate('/login');
+    }
+    await deleteReminder(+eventId);
+    toast.success('remove to your reminder');
     fetchAuthEvent();
   };
 
@@ -67,13 +93,15 @@ export default function EventContainer() {
           src={eventObj.event?.coverImage}
           alt=''
         />
-        <button
-          type='button'
-          className='absolute focus:scale-90 hover:scale-95 top-4 right-4 px-3 py-1  shadow-lg text-white font-semibold bg-primary rounded-btn'
-          onClick={() => nevigate(`/editevent/${eventId}`)}
-        >
-          edit profile
-        </button>
+        {/* {authUser?.id === event?.organizerInformationId ? (
+          <button
+            type='button'
+            className='absolute focus:scale-90 hover:scale-95 top-4 right-4 px-3 py-1  shadow-lg text-white font-semibold bg-primary rounded-btn'
+            onClick={() => nevigate(`/editevent/${eventId}`)}
+          >
+            Edit Event
+          </button>
+        ) : null} */}
       </div>
       {/* header description */}
       <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
@@ -112,11 +140,27 @@ export default function EventContainer() {
         <div />
       </div>
       {/* Host */}
-      <div className='flex gap-3 items-center px-4'>
-        <Avatar
-          src={eventObj?.event?.organizerInformation?.user?.profileImage}
-        />
-        <p>Hosted By : {eventObj?.event?.organizerInformation?.officialName}</p>
+      <div className='flex justify-between items-center  px-4'>
+        <div className='flex items-center justify-center gap-3'>
+          <Avatar
+            src={eventObj?.event?.organizerInformation?.user?.profileImage}
+          />
+          <p>
+            Hosted By : {eventObj?.event?.organizerInformation?.officialName}
+          </p>
+        </div>
+
+        <div className=''>
+          <Dropdown icon={<DotIcon />} size='xs' placement='bottomEnd'>
+            <button
+              type='button'
+              onClick={() => nevigate(`/editevent/${eventId}`)}
+            >
+              <Dropdown.Item>Edit Event</Dropdown.Item>
+            </button>
+            <Dropdown.Item>Delete Event</Dropdown.Item>
+          </Dropdown>
+        </div>
       </div>
       {/* Description */}
       <div className='flex flex-col px-4'>
@@ -124,19 +168,36 @@ export default function EventContainer() {
         <p>{eventObj?.event?.description}</p>
         <div className='flex justify-end py-4'>
           <div className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full'>
-            {checkReminded?.length === 0 ? (
+            {authUser ? (
+              <div>
+                {checkReminded?.length === 0 ? (
+                  <button
+                    type='button'
+                    onClick={handleReminderClick}
+                    aria-label='Save'
+                  >
+                    <HearthIconOutline />
+                  </button>
+                ) : (
+                  <button
+                    type='button'
+                    aria-label='Save'
+                    onClick={handleDelReminderClick}
+                  >
+                    <HearthIconOutline className='fill-red-500' />
+                  </button>
+                )}
+              </div>
+            ) : (
               <button
                 type='button'
-                onClick={handleReminderClick}
                 aria-label='Save'
+                onClick={handleDelReminderClick}
               >
                 <HearthIconOutline />
               </button>
-            ) : (
-              <button type='button' aria-label='Save'>
-                <HearthIconOutline className='fill-red-500' />
-              </button>
             )}
+
             <div className='text-red-400 text-[0.75rem]'>Remind Me</div>
           </div>
         </div>
@@ -184,7 +245,9 @@ export default function EventContainer() {
       </div>
       {/* Carousel Preview */}
       {eventObj?.event?.image && <CarouselHero />}
-      <EventModalImage />
+      {authUser?.id === event?.organizerInformationId ? (
+        <EventModalImage />
+      ) : null}
 
       {eventObj?.event && <EventMapLocation />}
     </div>
