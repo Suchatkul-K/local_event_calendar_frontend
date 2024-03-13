@@ -13,6 +13,7 @@ import useAuth from '../features/auth/hooks/auth';
 import DropdownProfile from '../global_components/DropdownProfile';
 import { clearToken } from '../utils/local-storage';
 import DrawerForNav from '../global_components/Drawer';
+import logo from '../asset/pic/OurLogo.png';
 
 function NavBar() {
   const navigate = useNavigate();
@@ -33,13 +34,14 @@ function NavBar() {
         </DrawerForNav>
       </div>
 
-      <div className='flex justify-center   text-white'>
+      <div className='flex justify-center w-[5.5rem]  text-white'>
         <button
           onClick={() => navigate('/home')}
           type='button'
           className='font-bold text-xl'
         >
-          LOGO
+          {' '}
+          <img src={logo} alt='' />
         </button>
       </div>
 

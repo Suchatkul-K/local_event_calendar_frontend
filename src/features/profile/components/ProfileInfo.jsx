@@ -1,5 +1,6 @@
 import Avatar from '../../../global_components/Avatar';
 import useProfileContext from '../hook/useProfileContext';
+import bgProfile from '../../../asset/pic/peak_background.png';
 
 function ProfileInfo() {
   const ProfileContextObject = useProfileContext();
@@ -8,10 +9,10 @@ function ProfileInfo() {
   return (
     <div>
       {/* PROFILE */}
-      <div className='relative rounded-lg overflow-hidden'>
+      <div className='relative rounded-lg overflow-hidden h-[16rem]'>
         {/* background */}
         <img
-          src='https://img.freepik.com/free-photo/wat-arun-temple-twilight-bangkok-thailand_335224-772.jpg?w=1380&t=st=1709804450~exp=1709805050~hmac=4c85aca3c616ca98340e0830af1ee007637ad316e33a824cde3d9d9b15a159c4'
+          src={bgProfile}
           alt=''
           className='w-full h-full inset-0 opacity-85'
         />

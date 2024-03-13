@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { SelectPicker } from 'rsuite';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import Avatar from '../../../global_components/Avatar';
 import useProfileContext from '../hook/useProfileContext';
 import getProvince from '../../../api/province';
@@ -22,6 +22,7 @@ function EditProfileForm() {
   const [oldData, setOldData] = useState(null);
   const [loading, setLoading] = useState(true);
   const allAuthObj = useAuth();
+  const navigate = useNavigate();
   // =============================== Line api ===========================//
   const [linecode, setLinecode] = useState();
   const [code] = useSearchParams();
@@ -32,7 +33,7 @@ function EditProfileForm() {
   }
   //= ===================================== Line ===================================//
   const lineAccess =
-    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=http://localhost:5173/profile/edit&state=12345abcde&scope=profile%20openid';
+    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=http://localhost:5173/profile/edit&state=12345abcde&scope=profile%20openid&bot_prompt=aggressive';
   const url = 'https://api.line.me/oauth2/v2.1/token';
 
   const data = {
@@ -58,6 +59,7 @@ function EditProfileForm() {
       console.log(error);
     } finally {
       setLoading(false);
+      navigate('/profile');
     }
   };
 
@@ -197,7 +199,7 @@ function EditProfileForm() {
     );
   }
   return (
-    <div className='w-full flex flex-col gap-4 justify-center items-center'>
+    <div className='w-full flex flex-col gap-4 justify-start items-center h-full'>
       <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-4'>
         <div className='p-3 border-b-2 w-full'>Edit your profile</div>
         <input

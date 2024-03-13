@@ -11,8 +11,9 @@ import useAuth from '../hooks/auth';
 export default function LoginContainer() {
   const [input, setInput] = useState({ email: '', password: '' });
   const [error, setError] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
-  const { setAuthUser } = useAuth();
+  const { setAuthUser, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -26,6 +27,7 @@ export default function LoginContainer() {
       if (Object.keys(validateResult).length > 0) {
         setError(validateResult);
       } else {
+        setLoading(true);
         const loginResult = await apiLogin(input);
         storeToken(loginResult.data.accessToken);
         const authResult = await authMe(loginResult.data.accessToken);
@@ -36,9 +38,20 @@ export default function LoginContainer() {
     } catch (err) {
       console.log(err);
       toast.error('Invalid email or password');
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => window.scrollTo(0, 0), []);
+
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -56,17 +69,34 @@ export default function LoginContainer() {
             <EmailIcon />
           </Input>
 
-          <Input
-            name='password'
-            placeholder='password'
-            value={input}
-            onChange={handleChange}
-            title='Password'
-            type='password'
-            errorMessage={error?.password}
-          >
-            <LockerIcon />
-          </Input>
+          {/* password */}
+          {showPassword ? (
+            <Input
+              name='password'
+              placeholder='Password'
+              value={input}
+              onChange={handleChange}
+              title='Password'
+              errorMessage={error?.password}
+              type='text'
+              onClickButton={() => setShowPassword(false)}
+            >
+              <LockerIcon />
+            </Input>
+          ) : (
+            <Input
+              name='password'
+              placeholder='Password'
+              value={input}
+              onChange={handleChange}
+              title='Password'
+              errorMessage={error?.password}
+              type='password'
+              onClickButton={() => setShowPassword(true)}
+            >
+              <LockerIcon />
+            </Input>
+          )}
 
           <div className=' mx-auto flex flex-col justify-center text-center gap-[1.5rem] space-between w-full'>
             <button
@@ -76,14 +106,6 @@ export default function LoginContainer() {
               Login
             </button>
 
-            <hr className='my-2 border border-gray-300' />
-
-            <button
-              type='button'
-              className='btn bg-Line h-12 text-white text-[1rem]'
-            >
-              Login with Line
-            </button>
             <div className='text-[1rem]'>
               <span>{`Don't have an account ? `}</span>
               <Link to='/register'>
