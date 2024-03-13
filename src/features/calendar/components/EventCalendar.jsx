@@ -2,13 +2,8 @@ import 'rsuite/Calendar/styles/index.css';
 import 'rsuite/Badge/styles/index.css';
 import 'rsuite/Popover/styles/index.css';
 import { Calendar, Whisper, Popover, Badge } from 'rsuite';
-import { useState } from 'react';
-import { getDate } from 'rsuite/esm/utils/dateUtils';
-import EventCard from '../../../global_components/EventCard';
 
-function EventCalendar({ data, setSearch, season, handle }) {
-  //   const [dateForSearch, setDateForSearch] = useState(null);
-
+function EventCalendar({ data, setSearch, focusDate, setFocusDate }) {
   const handleCellClick = (day) => {
     const newDate = new Date(day);
     newDate.setUTCHours(0, 0, 0, 0);
@@ -29,10 +24,6 @@ function EventCalendar({ data, setSearch, season, handle }) {
 
   const renderCell = (date) => {
     const list = getEventList(date);
-    // if (list.length) {
-    //   const event = list.map((item) => (
-    //     <EventCard key={item.id} event={item.event} />
-    //   ));
 
     return (
       <button
@@ -67,24 +58,17 @@ function EventCalendar({ data, setSearch, season, handle }) {
       </button>
     );
   };
-  // return (
-  //   <button
-  //     className='w-full h-full'
-  //     type='button'
-  //     aria-label='Save'
-  //     onClick={() => handleCellClick(date)}
-  //   >
-  //     {' '}
-  //   </button>
-  // );
-  //   };
-  console.log('calen season', season);
+
+  // console.log(focusDate);
   return (
-    <Calendar
-      defaultValue={new Date(season)}
-      bordered
-      renderCell={renderCell}
-    />
+    <div>
+      <Calendar
+        bordered
+        renderCell={renderCell}
+        value={focusDate}
+        onChange={setFocusDate}
+      />
+    </div>
   );
 }
 

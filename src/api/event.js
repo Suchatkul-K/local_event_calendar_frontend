@@ -12,3 +12,4 @@ export const deleteEvent = (eventId) => axios.delete(`/event/${eventId}`);
 
 export const getAllEventInScope = (data) => axios.post('/event/scope/', data);
 export const getFilteredEvent = (data) => axios.post('/event/filter/', data);
+export const getCalendarEvent = (data) => axios.post('/event/inRange/', data);
