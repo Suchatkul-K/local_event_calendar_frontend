@@ -9,9 +9,11 @@ export default function EventContextProvider({ children }) {
   const navigate = useNavigate();
   const { eventId } = useParams();
   const [event, setEvent] = useState();
+  const [loading, setLoading] = useState(true);
 
   const getEventByEventId = async () => {
     try {
+      setLoading(true);
       const response = await getEvent(eventId);
       console.log(response.data);
       setEvent(response.data);
@@ -20,6 +22,8 @@ export default function EventContextProvider({ children }) {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,6 +34,8 @@ export default function EventContextProvider({ children }) {
   const eventObj = useMemo(
     () => ({
       event,
+      setLoading,
+      loading,
     }),
     [event]
   );

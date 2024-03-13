@@ -4,6 +4,7 @@ import { SelectPicker } from 'rsuite';
 export default function EditOption({ data, onSelect, input }) {
   const { provinceData, districtData, subDistrictData, categoryData, event } =
     data;
+
   return (
     <>
       <div className='w-full '>
@@ -13,7 +14,7 @@ export default function EditOption({ data, onSelect, input }) {
           placeholder='Select Province'
           data={provinceData}
           onSelect={onSelect}
-          value={event.EventAddress.provinceId}
+          value={input?.provinceId || event.EventAddress.provinceId}
         />
       </div>
 
@@ -23,7 +24,7 @@ export default function EditOption({ data, onSelect, input }) {
           block
           data={districtData}
           onSelect={onSelect}
-          value={event.EventAddress.districtId}
+          value={input?.districtId || event.EventAddress.districtId}
         />
       </div>
 
@@ -33,7 +34,7 @@ export default function EditOption({ data, onSelect, input }) {
           block
           data={subDistrictData}
           onSelect={onSelect}
-          value={event.EventAddress.subDistrictId}
+          value={input?.subDistrictId || event.EventAddress.subDistrictId}
         />
       </div>
 
@@ -43,7 +44,7 @@ export default function EditOption({ data, onSelect, input }) {
           block
           data={categoryData}
           onSelect={onSelect}
-          value={event.categoryId}
+          value={input?.categoryId || event.categoryId}
           // onChange={setSelectCategory}
         />
       </div>

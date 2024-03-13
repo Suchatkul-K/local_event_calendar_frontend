@@ -64,6 +64,7 @@ const router = createBrowserRouter([
       },
       { path: '/profile/edit', element: <EditProfilePage /> },
       { path: '/calendar', element: <CalendarPage /> },
+      { path: '/calendar/:seasonId', element: <CalendarPage /> },
       {
         path: '',
         element: <Navigate to='/home' />,
