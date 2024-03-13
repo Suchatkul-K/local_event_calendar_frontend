@@ -87,7 +87,7 @@ export function CreateEventContextProvider({ children }) {
     console.log(input.image);
     const tempImage = image?.filter((file) => file.name !== el.name);
 
-    setInput({ ...input, image: tempImage });
+    // setInput({ ...input, image: tempImage });
     setImage(tempImage);
   };
 
@@ -133,7 +133,7 @@ export function CreateEventContextProvider({ children }) {
       }
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
-      // console.log(...formData);
+      console.log(...formData);
       const eventId = await createEvent(formData);
       toast.success('create successfully');
       setError({});

@@ -6,7 +6,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='website'
         placeholder='Web Site'
-        value={input || initData}
+        value={input?.website ? input : initData}
         onChange={onChange}
         title='Web Site'
       />
@@ -14,7 +14,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='email'
         placeholder='Email'
-        value={input || initData}
+        value={input?.email ? input : initData}
         onChange={onChange}
         title='Email'
       />
@@ -22,7 +22,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='facebook'
         placeholder='Facebook'
-        value={input || initData}
+        value={input?.facebook ? input : initData}
         onChange={onChange}
         title='Facebook'
       />
@@ -30,7 +30,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='telNumber'
         placeholder='Telephone'
-        value={input || initData}
+        value={input?.telNumber ? input : initData}
         onChange={onChange}
         title='Telephone'
       />
@@ -38,7 +38,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='address'
         placeholder='Address'
-        value={input || initData.EventAddress}
+        value={input?.EventAddress?.address ? input : initData.EventAddress}
         onChange={onChange}
         title='Address'
       />
@@ -46,7 +46,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='address2'
         placeholder='Address(optional)'
-        value={input || initData.EventAddress}
+        value={input?.EventAddress?.address2 ? input : initData.EventAddress}
         onChange={onChange}
         title='Address(optional)'
       />

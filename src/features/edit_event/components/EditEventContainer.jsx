@@ -90,6 +90,7 @@ export default function EditEventContainer() {
       ...input,
       [e.target.name]: new Date(e.target.value).toISOString(),
     });
+    console.log(new Date(e.target.value).toISOString());
   };
 
   const handleSelectPicker = (value, item) => {
@@ -223,6 +224,7 @@ export default function EditEventContainer() {
             onChange={handleChange}
             title='Title'
           />
+          {/* ================================ description ======================= */}
           <div>
             <p className='font-semibold pl-2 pb-2 text-[1rem]'>Description</p>
             <textarea
@@ -232,7 +234,7 @@ export default function EditEventContainer() {
               value={
                 input?.description !== undefined
                   ? input?.description
-                  : event.description
+                  : event?.description
               }
               onChange={handleChange}
             />
@@ -246,6 +248,7 @@ export default function EditEventContainer() {
             tempPeriodTime={tempPeriodTime}
             time={time}
           />
+          {/* ============================== Yearly ============================== */}
           <div className='flex gap-[0.5rem] p-2 border rounded-lg'>
             <span className='font-medium'>Yearly</span>
             <input
@@ -255,7 +258,9 @@ export default function EditEventContainer() {
               onChange={handleCheckbox}
             />
           </div>
+          {/* ============================== info contact ============================ */}
           <EditInput onChange={handleChange} input={input} initData={event} />
+          {/* ============================== province district subdistrict =========================  */}
           <EditOption
             data={{
               provinceData,
@@ -285,7 +290,7 @@ export default function EditEventContainer() {
             input={input}
             event={event}
           />
-          {/* <EventMap /> */}
+          {/* =========================== <EventMap /> ====================================== */}
         </MapContainer>
         {error?.lat && (
           <small className='text-red-500 pl-[0.5rem] flex  w-full'>

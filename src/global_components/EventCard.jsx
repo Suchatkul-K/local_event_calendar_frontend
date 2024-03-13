@@ -62,12 +62,12 @@ function EventCard({ event, loading }) {
             <div className='text-sm font-bold'>
               Entrance{' '}
               {event?.EventFacility?.entranceFee === true ? (
-                <span className='text-green-400 text-[0.75rem]'>
-                  Free Access
-                </span>
-              ) : (
                 <span className='text-amber-500 text-[0.75rem]'>
                   Paid Access{' '}
+                </span>
+              ) : (
+                <span className='text-green-400 text-[0.75rem]'>
+                  Free Access
                 </span>
               )}
             </div>
