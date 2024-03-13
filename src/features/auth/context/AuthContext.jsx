@@ -13,6 +13,7 @@ export default function AuthContextProvider({ children }) {
       setAuthUser,
       authUser,
       loading,
+      setLoading,
     }),
     [authUser, loading]
   );
