@@ -13,7 +13,7 @@ function ProtectProfile({ children }) {
         children
       ) : (
         // Redirect to home page if not authenticated
-        <Navigate to='/home' />
+        <Navigate to='/' />
       )}
     </div>
   );

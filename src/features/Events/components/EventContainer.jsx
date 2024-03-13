@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Carousel, Dropdown } from 'rsuite';
 import Skeleton from 'react-loading-skeleton';
 import Avatar from '../../../global_components/Avatar';
-import CarouselHero from '../../../global_components/CarouselHero';
+import GlobalModal from '../../../global_components/Modal';
 
 import {
   ClockIcon,
@@ -28,6 +28,7 @@ import EventModalImage from './EventModalImage';
 import { authMe } from '../../../api/auth';
 import { createReminder, deleteReminder } from '../../../api/user';
 import useAuth from '../../auth/hooks/auth';
+import { deleteEvent } from '../../../api/event';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
@@ -63,7 +64,9 @@ export default function EventContainer() {
   };
   const handleReminderClick = async () => {
     if (!authUser) {
-      navigate('/login');
+      toast.info('Please Login to use this feature');
+      // navigate('/login');
+      return;
     }
     await createReminder(+eventId);
     toast.success('keep to reminded');
@@ -72,11 +75,24 @@ export default function EventContainer() {
 
   const handleDelReminderClick = async () => {
     if (!authUser) {
-      navigate('/login');
+      toast.info('Please Login to use this feature');
+      // navigate('/login');
+      return;
     }
     await deleteReminder(+eventId);
     toast.success('remove to your reminder');
     fetchAuthEvent();
+  };
+
+  const handleDeleteEvent = async () => {
+    try {
+      setLoading(true);
+      await deleteEvent(+eventId);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -185,12 +201,12 @@ export default function EventContainer() {
                 <CarParkIcon /> Park
               </div>
             ) : null}
-            {eventObj?.event?.EventFacility?.meditationRoom ? (
+            {eventObj?.event?.EventFacility?.prayerRoom ? (
               <div className='flex gap-2 items-center'>
                 <PrayIcon /> Pray room
               </div>
             ) : null}
-            {eventObj?.event?.EventFacility?.petFriend ? (
+            {eventObj?.event?.EventFacility?.petFriendly ? (
               <div className='flex gap-2 items-center'>
                 <DogIcon /> Pet
               </div>
@@ -247,9 +263,9 @@ export default function EventContainer() {
             <CouponIcon />
             Entrance:
             {eventObj?.event?.EventFacility?.entranceFee ? (
-              <span className='text-green-500'>Free </span>
-            ) : (
               <span className='text-amber-500'>Paid </span>
+            ) : (
+              <span className='text-green-500'>Free </span>
             )}
           </div>
         </div>
@@ -291,7 +307,9 @@ export default function EventContainer() {
               >
                 <Dropdown.Item>Edit Event</Dropdown.Item>
               </button>
-              <Dropdown.Item>Delete Event</Dropdown.Item>
+              <GlobalModal title='Are you sure baby' onDel={handleDeleteEvent}>
+                <Dropdown.Item>Delete Event</Dropdown.Item>
+              </GlobalModal>
             </Dropdown>
           </div>
         )}
@@ -355,9 +373,9 @@ export default function EventContainer() {
               <PrayIcon /> Pray room
             </div>
           ) : null}
-          {eventObj?.event?.EventFacility?.petFriend ? (
+          {eventObj?.event?.EventFacility?.petFriendly ? (
             <div className='flex gap-2 items-center'>
-              <DogIcon /> Pet
+              <DogIcon /> Pet Friendly
             </div>
           ) : null}
           {eventObj?.event?.EventFacility?.food ? (
