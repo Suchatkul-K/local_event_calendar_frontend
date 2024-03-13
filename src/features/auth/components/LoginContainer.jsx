@@ -13,7 +13,7 @@ export default function LoginContainer() {
   const [error, setError] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
-  const { setAuthUser } = useAuth();
+  const { setAuthUser, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,6 +27,7 @@ export default function LoginContainer() {
       if (Object.keys(validateResult).length > 0) {
         setError(validateResult);
       } else {
+        setLoading(true);
         const loginResult = await apiLogin(input);
         storeToken(loginResult.data.accessToken);
         const authResult = await authMe(loginResult.data.accessToken);
@@ -37,9 +38,20 @@ export default function LoginContainer() {
     } catch (err) {
       console.log(err);
       toast.error('Invalid email or password');
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => window.scrollTo(0, 0), []);
+
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit}>
