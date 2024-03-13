@@ -2,8 +2,10 @@ import { useState, useEffect, Children } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Dropdown } from 'rsuite';
+import Skeleton from 'react-loading-skeleton';
 import Avatar from '../../../global_components/Avatar';
 import CarouselHero from '../../../global_components/CarouselHero';
+
 import {
   ClockIcon,
   CalendarIconGray,
@@ -45,6 +47,7 @@ export default function EventContainer() {
   const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
   const { eventId } = useParams();
+  const { loading } = useEventContext();
   // const eventLatLng = [
   //   eventObj?.EventAddress?.lat,
   //   eventObj?.EventAddress?.long,
@@ -83,6 +86,139 @@ export default function EventContainer() {
   useEffect(() => {
     fetchAuthEvent();
   }, []);
+
+  // ================= loading Spinner ====================//
+  if (loading) {
+    return (
+      <div className='flex flex-col gap-4'>
+        {/* cover picture */}
+        <div className='w-full'>
+          {loading ? (
+            <Skeleton height='400px' />
+          ) : (
+            <img className='object-contain ' src='' alt='' />
+          )}
+        </div>
+        {/* header description */}
+        <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
+          <h1 className='text-[1.5rem]'>{eventObj?.event?.title}</h1>
+          <div className='flex justify-between'>
+            <div className='flex items-center gap-2'>
+              <ClockIcon />
+              <span>
+                {loading ? (
+                  <Skeleton count='1.5' width='3rem' />
+                ) : (
+                  'Time Period'
+                )}
+              </span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <CouponIcon />
+              <span>
+                {loading ? <Skeleton count='1.5' width='3rem' /> : 'Entrance'}{' '}
+              </span>
+            </div>
+          </div>
+          <div className='flex items-center gap-2'>
+            <CalendarIconGray />
+            <span>
+              {loading ? <Skeleton count='1.5' width='3rem' /> : 'Date'}
+            </span>
+          </div>
+          <div className='flex justify-between'>
+            <div className='border-2 p-2 rounded-xl'>
+              <span>
+                Start :&nbsp;
+                {loading ? <Skeleton count='1' width='2rem' /> : 'start'}
+              </span>
+              <span>
+                End : &nbsp;
+                {loading ? <Skeleton count='1' width='2rem' /> : 'ending'}
+              </span>
+            </div>
+            <div className='flex gap-2 items-baseline max-w-[10rem] '>
+              <PinIcon className='w-[1rem] h-[1rem]' />
+              <span>
+                {loading ? <Skeleton count='1.5' width='3rem' /> : 'PinIcon'}
+              </span>
+              <p>{eventObj?.event?.EventAddress?.address}</p>
+            </div>
+          </div>
+          <div />
+        </div>
+        {/* Host */}
+        <div className='flex gap-3 items-center px-4'>
+          {/* <Avatar size='w-[3rem]' /> */}
+          <div>
+            {loading ? (
+              <Skeleton circle='true' width='3rem' height='3rem' />
+            ) : (
+              'Avatar'
+            )}
+          </div>
+          <p>
+            Hosted By :&nbsp;&nbsp;
+            <span>{loading ? <Skeleton width='3rem' /> : 'Hosted by'}</span>
+          </p>
+        </div>
+        {/* Description */}
+        <div className='flex flex-col px-4'>
+          <p className='text-[1.5rem] font-bold'>Description</p>
+          <span>{loading ? <Skeleton count='3.5' /> : 'Descrption'}</span>
+          <span>{loading ? <Skeleton count='3.5' /> : 'Descrption'}</span>
+
+          <div className='flex justify-end py-4'>
+            <div className='border flex items-center gap-2 p-2 rounded-full'>
+              <HearthIconOutline />
+              <div>Remind Me</div>
+            </div>
+          </div>
+        </div>
+        {/* Facility */}
+        <div className='flex flex-col px-4 '>
+          <p className='text-[1.5rem] font-bold'>Facility</p>
+          <div className='flex gap-2 flex-wrap py-2'>
+            {eventObj?.event?.EventFacility?.toilet ? (
+              <div className='flex gap-3 items-center'>
+                <ToiletIcon /> Toilet
+              </div>
+            ) : null}
+            {eventObj?.event?.EventFacility?.parking ? (
+              <div className='flex gap-2 items-center'>
+                <CarParkIcon /> Park
+              </div>
+            ) : null}
+            {eventObj?.event?.EventFacility?.meditationRoom ? (
+              <div className='flex gap-2 items-center'>
+                <PrayIcon /> Pray room
+              </div>
+            ) : null}
+            {eventObj?.event?.EventFacility?.petFriend ? (
+              <div className='flex gap-2 items-center'>
+                <DogIcon /> Pet
+              </div>
+            ) : null}
+            {eventObj?.event?.EventFacility?.food ? (
+              <div className='flex gap-2 items-center'>
+                <FoodIcon /> Food Store
+              </div>
+            ) : null}
+            {eventObj?.event?.EventFacility?.wifi ? (
+              <div className='flex gap-2 items-center'>
+                <WifiIcon /> Free Wi-fi
+              </div>
+            ) : null}
+            {eventObj?.event?.EventFacility?.medicalService ? (
+              <div className='flex gap-2 items-center'>
+                <MedicalIcon /> Medical Store
+              </div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='flex flex-col gap-4'>

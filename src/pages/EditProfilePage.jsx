@@ -4,7 +4,7 @@ import EditProfile from '../features/profile/components/EditProfileContainer';
 export default function EditProfilePage() {
   return (
     <ProfileContextProvider>
-      <EditProfile />;
+      <EditProfile />
     </ProfileContextProvider>
   );
 }
