@@ -362,7 +362,7 @@ export function RainIcon({ className }) {
 export function FacebookIcon() {
   return (
     <svg
-      fill='#4e4e4e'
+      fill='#ffffff'
       height='1.3rem'
       width='1.3rem'
       version='1.1'
@@ -384,7 +384,7 @@ export function FacebookIcon() {
 export function LinkedinIcon() {
   return (
     <svg
-      fill='#4e4e4e'
+      fill='#ffffff'
       height='1.3rem'
       width='1.3rem'
       version='1.1'
@@ -407,7 +407,7 @@ export function LinkedinIcon() {
 export function YoutubeIcon() {
   return (
     <svg
-      fill='#4e4e4e'
+      fill='#ffffff'
       height='1.3rem'
       width='1.3rem'
       version='1.1'
@@ -447,7 +447,7 @@ export function WinterIcon({ className }) {
 export function TwitterIcon() {
   return (
     <svg
-      fill='#4e4e4e'
+      fill='#ffffff'
       height='1.3rem'
       width='1.3rem'
       version='1.1'
@@ -471,7 +471,7 @@ export function TwitterIcon() {
 export function InstagramIcon() {
   return (
     <svg
-      fill='#4e4e4e'
+      fill='#ffffff'
       height='1.3rem'
       width='1.3rem'
       version='1.1'
@@ -1172,7 +1172,7 @@ export function HearthIconOutline({ className }) {
 export function MenuIcon({ className }) {
   return (
     <svg
-      fill='#000000'
+      fill='#ffffff'
       width='2rem'
       height='2rem'
       viewBox='0 0 100 100'

@@ -26,14 +26,14 @@ function NavBar() {
   };
 
   return (
-    <div className='flex items-center justify-between w-full text-base font-semibold bg-[#ffffff] px-4 py-2'>
-      <div className=' '>
+    <div className='flex items-center justify-between w-full text-base font-semibold bg-primary px-4 py-2'>
+      <div className='flex-1 '>
         <DrawerForNav>
           <MenuIcon />
         </DrawerForNav>
       </div>
 
-      <div className='flex justify-center  translate-x-1/2'>
+      <div className='flex justify-center   text-white'>
         <button
           onClick={() => navigate('/home')}
           type='button'
@@ -56,7 +56,7 @@ function NavBar() {
           </div>
         </div>
       </div> */}
-      <div className='flex  justify-end'>
+      <div className='flex flex-1  justify-end pr-3'>
         {authUser ? (
           <DropdownProfile logout={logout} />
         ) : (

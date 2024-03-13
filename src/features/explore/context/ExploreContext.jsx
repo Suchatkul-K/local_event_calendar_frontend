@@ -11,6 +11,7 @@ export function ExploreContextProvider({ children }) {
   const [category, setCategory] = useState([]);
   const [province, setProvince] = useState([]);
   const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const fetchCategory = async () => {
     try {
@@ -32,9 +33,15 @@ export function ExploreContextProvider({ children }) {
   };
 
   const fetchEvents = async () => {
-    const response = await getFilteredEvent(input);
-    // console.log(response.data);
-    setEvents(response.data);
+    try {
+      setLoading(true);
+      const response = await getFilteredEvent(input);
+      setEvents(response.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -81,8 +88,9 @@ export function ExploreContextProvider({ children }) {
       handleOnChange,
       handleOnSubmit,
       events,
+      loading,
     }),
-    [category, province, input, open, events]
+    [category, province, input, open, events, loading]
   );
 
   return (

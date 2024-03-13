@@ -191,7 +191,7 @@ function EditProfileForm() {
   console.log(input);
   if (loading) {
     return (
-      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+      <div className='h-dvh mx-auto flex justify-center items-center loading loading-spinner loading-lg'>
         loading...
       </div>
     );
