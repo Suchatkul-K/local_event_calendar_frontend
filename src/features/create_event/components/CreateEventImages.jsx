@@ -78,7 +78,7 @@ const CreateEventImages = memo(({ tempImage }) => {
                 <button
                   type='button'
                   className='absolute top-0 right-0 m-3 bg-white w-[1.5rem] font-bold h-[1.5rem] text-center rounded-[100%]'
-                  onClick={() => handleDeleteImage(el)}
+                  onClick={() => handleDeleteImage(el, fileEl2)}
                 >
                   X
                 </button>
