@@ -29,7 +29,7 @@ function ProfileDrawer({ children, props }) {
         <Button onClick={() => setOpen(true)}>{children}</Button>
       </ButtonToolbar>
       <Animation.Slide in={show} placement={placement}>
-        <Drawer size='22rem' open={open} onClose={() => setOpen(false)}>
+        <Drawer size='20rem' open={open} onClose={() => setOpen(false)}>
           <Drawer.Header>
             <Drawer.Title>
               <div className='font-bold'>Reminded Events</div>

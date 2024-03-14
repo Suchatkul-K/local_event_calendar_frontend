@@ -11,7 +11,11 @@ function Map() {
 
   return (
     <div>
-      <MapContainer center={BkkLatLon} zoom={13} style={{ height: '400px' }}>
+      <MapContainer
+        center={BkkLatLon}
+        zoom={13}
+        style={{ height: '400px', zIndex: '0' }}
+      >
         <MapComponent events={events} setEvents={setEvents} />
       </MapContainer>
       {events?.length > 0 && (

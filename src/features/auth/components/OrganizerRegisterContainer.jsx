@@ -26,7 +26,7 @@ export default function OrganizerRegisterContainer() {
   const [identityCopyImage, setIdentityCopyImage] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConformPassword, setShowConfirmPassword] = useState(false);
-  const { setAuthUser } = useAuth();
+  const { setAuthUser, loading, setLoading } = useAuth();
 
   const fileEl = useRef(null);
   const fileEl2 = useRef(null);
@@ -68,6 +68,7 @@ export default function OrganizerRegisterContainer() {
       if (Object.keys(validateResult).length > 0) {
         setError(validateResult);
       } else {
+        setLoading(true);
         const formData = new FormData();
 
         Object.entries(input).map((el) => {
@@ -90,10 +91,22 @@ export default function OrganizerRegisterContainer() {
       if (err.response.data.message === 'this email has aleady been used') {
         setError({ ...error, email: 'This email has already been used' });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => window.scrollTo(0, 0), []);
+
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <div className=' mx-auto flex flex-col  gap-[2rem] w-full p-[3rem]'>

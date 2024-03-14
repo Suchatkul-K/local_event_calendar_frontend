@@ -120,6 +120,7 @@ function CalendarContainer() {
       <div className='flex flex-col'>
         {/* search from province */}
         <div className='flex flex-col gap-3 py-4'>
+          <span className='font-semibold '>Select province</span>
           <SelectPicker
             value={currentProvince}
             onChange={setCurrentProvince}

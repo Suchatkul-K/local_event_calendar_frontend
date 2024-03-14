@@ -49,6 +49,12 @@ export function CreateEventContextProvider({ children }) {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
+  const handleResetInput = (fileEl2) => {
+    if (fileEl2.current) {
+      fileEl2.current.value = null;
+    }
+  };
+
   const handleDate = (e) => {
     delete error[e.target.name];
     setInput({
@@ -78,13 +84,14 @@ export function CreateEventContextProvider({ children }) {
     setImage([...image, filesImage]);
   };
 
-  const handleDeleteImage = (el) => {
+  const handleDeleteImage = (el, fileEl2) => {
     console.log(el);
     console.log(input.image);
     const tempImage = image?.filter((file) => file.name !== el.name);
 
     // setInput({ ...input, image: tempImage });
     setImage(tempImage);
+    handleResetInput(fileEl2);
   };
 
   const handleSelectPicker = (value, item, event) => {

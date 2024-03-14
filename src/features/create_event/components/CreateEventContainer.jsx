@@ -1,4 +1,5 @@
 import { MapContainer } from 'react-leaflet';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../../global_components/Input';
 import { FACILITY_LIST } from '../../../constance/index';
 import EventMap from './EventMap';
@@ -7,8 +8,10 @@ import CreateEventDropdown from './CreateEventDropdown';
 import CreateEventTextInput from './CreateEventTextInput';
 import CreateEventDateTime from './CreateEventDateTime';
 import CreateEventImages from './CreateEventImages';
+import Button from '../../../global_components/Button';
 
 export default function CreateEventContainer() {
+  const nevigate = useNavigate();
   const { CreateEventContextObject, CreateEventImageObject } = useCreateEvent();
   const {
     input,
@@ -29,6 +32,10 @@ export default function CreateEventContainer() {
       </div>
     );
   }
+
+  const handleCancelEdit = () => {
+    nevigate(-1);
+  };
 
   return (
     <form onSubmit={handleformSubmit}>
@@ -119,6 +126,7 @@ export default function CreateEventContainer() {
         >
           Create Event
         </button>
+        <Button onClick={handleCancelEdit}>cancel</Button>
       </div>
     </form>
   );

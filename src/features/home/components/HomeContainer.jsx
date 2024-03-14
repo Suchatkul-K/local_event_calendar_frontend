@@ -13,7 +13,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 function HomeContainer() {
   const allEventsObj = useHomeContext();
-  const { loading } = useHomeContext();
+  const { loading } = allEventsObj;
 
   const highlightEvent = allEventsObj.event?.filter(
     (event) => event.HighlightEvent != null
