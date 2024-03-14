@@ -11,7 +11,7 @@ function App() {
         <Router />
       </AuthContextProvider>
       <ToastContainer
-        position='bottom-left'
+        position='top-left'
         autoClose={5000}
         // theme="light"
         transition={Slide}

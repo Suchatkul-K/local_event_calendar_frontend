@@ -22,7 +22,7 @@ export default function Footer() {
           <img src={logo} alt='' />
         </button>
       </div>
-      <div>
+      <div className='text-[0.7rem]'>
         <span>Copyright 2024 </span>
         <span>All Rights © | Reserved</span>
       </div>
