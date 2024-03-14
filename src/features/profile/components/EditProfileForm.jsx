@@ -9,7 +9,7 @@ import getProvince from '../../../api/province';
 import { authMe } from '../../../api/auth';
 import Input from '../../../global_components/Input';
 import useAuth from '../../auth/hooks/auth';
-import { LineIcon } from '../../../icons';
+import { LineIcon, LinkedIcon } from '../../../icons';
 import configaxios from '../../../configs/axios';
 
 function EditProfileForm() {
@@ -201,7 +201,9 @@ function EditProfileForm() {
   return (
     <div className='w-full flex flex-col gap-4 justify-start items-center h-full'>
       <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-4'>
-        <div className='p-3 border-b-2 w-full'>Edit your profile</div>
+        <div className='p-3 border-b-2 w-full font-semibold'>
+          Edit your profile
+        </div>
         <input
           type='file'
           ref={profileImageEl}
@@ -294,27 +296,45 @@ function EditProfileForm() {
         ) : null}
 
         <div className='flex gap-3 justify-end'>
-          <button type='button' className='btn '>
+          <button
+            type='button'
+            className='btn '
+            onClick={() => navigate('/profile')}
+          >
             cancel
           </button>
-          <button type='submit' className='btn '>
+          <button
+            type='submit'
+            className='btn text-white bg-primary hover:bg-blue-900'
+          >
             save
           </button>
         </div>
       </form>
       <div className='p-3 w-full '>
-        <a href={lineAccess}>
-          <button
-            className='flex justify-center items-center gap-3 border p-4 rounded-lg w-full bg-[#00B900] font-bold text-white'
-            type='button'
-            aria-label='Save'
-          >
-            Blinding Line{' '}
-            <span>
-              <LineIcon />
-            </span>
-          </button>
-        </a>
+        {authUser.lineToken ? (
+          <div className='flex w-full justify-center'>
+            <div className='flex items-center gap-2 text-[0.8rem] font-semibold text-green-500 border border-green-500 p-2 rounded-full'>
+              Account Line Linked{' '}
+              <span>
+                <LinkedIcon />
+              </span>
+            </div>
+          </div>
+        ) : (
+          <a href={lineAccess}>
+            <button
+              className='flex justify-center items-center gap-3 border p-3 rounded-lg w-full bg-[#00B900] font-bold text-white'
+              type='button'
+              aria-label='Save'
+            >
+              Binding Line{' '}
+              <span>
+                <LineIcon />
+              </span>
+            </button>
+          </a>
+        )}
       </div>
     </div>
   );

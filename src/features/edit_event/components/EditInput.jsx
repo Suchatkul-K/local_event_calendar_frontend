@@ -1,6 +1,8 @@
 import Input from '../../../global_components/Input';
 
 export default function EditInput({ input, onChange, initData }) {
+  console.log(initData);
+  console.log(input);
   return (
     <div>
       <Input
@@ -38,7 +40,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='address'
         placeholder='Address'
-        value={input?.EventAddress?.address ? input : initData.EventAddress}
+        value={input?.address ? input : initData?.EventAddress}
         onChange={onChange}
         title='Address'
       />
@@ -46,7 +48,7 @@ export default function EditInput({ input, onChange, initData }) {
       <Input
         name='address2'
         placeholder='Address(optional)'
-        value={input?.EventAddress?.address2 ? input : initData.EventAddress}
+        value={input?.address2 ? input : initData}
         onChange={onChange}
         title='Address(optional)'
       />

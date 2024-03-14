@@ -186,13 +186,6 @@ export default function EventContainer() {
     );
   }
 
-  if (loading) {
-    return (
-      <div className='h-dvh mx-auto flex justify-center items-center loading loading-spinner loading-lg'>
-        loading...
-      </div>
-    );
-  }
   return (
     <div className='flex flex-col gap-4 '>
       {/* cover picture */}
@@ -209,11 +202,11 @@ export default function EventContainer() {
           {eventObj?.event?.title}
         </h1>
         <div className='flex justify-between'>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2 text-[0.8rem]'>
             <ClockIcon />
             {eventObj.event?.timePeriod}
           </div>
-          <div className='flex items-center gap-2'>
+          <div className='flex items-center gap-2 text-[0.8rem]'>
             <CouponIcon />
             Entrance:
             {eventObj?.event?.EventFacility?.entranceFee ? (
@@ -227,12 +220,18 @@ export default function EventContainer() {
           <CalendarIconGray />
           Date
         </div>
-        <div className='flex justify-between'>
+        <div className='flex justify-between text-[0.8rem]'>
           <div className='border-2 p-2 rounded-xl'>
-            <p>Start : {formatDate(eventObj.event?.startDate)}</p>
-            <p>End : {formatDate(eventObj.event?.endDate)}</p>
+            <p>
+              Start : <br />
+              <span>{formatDate(eventObj.event?.startDate, true)}</span>
+            </p>
+            <p>
+              End : <br />{' '}
+              <span>{formatDate(eventObj.event?.endDate, true)}</span>
+            </p>
           </div>
-          <div className='flex gap-2 items-baseline max-w-[10rem] '>
+          <div className='flex gap-2 items-baseline max-w-[8rem] '>
             <div>
               <PinIcon className='w-[1rem] h-[1rem]' />
             </div>

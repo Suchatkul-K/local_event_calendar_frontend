@@ -27,7 +27,7 @@ function NavBar() {
   };
 
   return (
-    <div className='flex items-center justify-between w-full text-base font-semibold bg-primary px-4 py-2'>
+    <div className='flex items-center justify-between w-full text-base font-semibold bg-primary px-3 py-2'>
       <div className='flex-1 '>
         <DrawerForNav>
           <MenuIcon />
@@ -44,20 +44,6 @@ function NavBar() {
           <img src={logo} alt='' />
         </button>
       </div>
-
-      {/* <div className='flex gap-2'>
-        <div className='hidden xl:flex gap-2'>
-          <div className=''>
-            <MapIcon className='rounded-full bg-primary p-[0.35rem] w-[2.2rem] h-[2.2rem]' />
-          </div>
-          <div className='flex flex-row'>
-            <CalendarIcon className='rounded-full bg-primary p-[0.35rem] w-[2.2rem] h-[2.2rem]' />
-          </div>
-          <div className='flex flex-row'>
-            <ExploreIcon className='rounded-full bg-primary p-[0.35rem] w-[2.2rem] h-[2.2rem]' />
-          </div>
-        </div>
-      </div> */}
       <div className='flex flex-1  justify-end pr-3'>
         {authUser ? (
           <DropdownProfile logout={logout} />

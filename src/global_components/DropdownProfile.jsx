@@ -45,6 +45,7 @@ export default function DropdownProfile({ logout }) {
       icon={<ProfileIcon />}
       // title={allAuthObj?.userName}
       placement='bottomEnd'
+      size='s'
     >
       <div className='p-1 border-b'>
         <Dropdown.Item
