@@ -1,6 +1,6 @@
 import Avatar from '../../../global_components/Avatar';
 import useProfileContext from '../hook/useProfileContext';
-import bgProfile from '../../../asset/pic/peak_background.png';
+import bg from '../../../asset/pic/peak_background.png';
 
 function ProfileInfo() {
   const ProfileContextObject = useProfileContext();
@@ -11,11 +11,7 @@ function ProfileInfo() {
       {/* PROFILE */}
       <div className='relative rounded-lg overflow-hidden h-[16rem]'>
         {/* background */}
-        <img
-          src={bgProfile}
-          alt=''
-          className='w-full h-full inset-0 opacity-85'
-        />
+        <img src={bg} alt='' className='w-full h-full inset-0 opacity-85' />
         {/* profile information */}
         <div className='absolute flex flex-col gap-1 justify-center items-center text-white top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 '>
           <Avatar size='w-[5rem]' src={authEvents?.profileImage} />

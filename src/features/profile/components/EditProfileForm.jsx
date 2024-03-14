@@ -23,6 +23,7 @@ function EditProfileForm() {
   const [loading, setLoading] = useState(true);
   const allAuthObj = useAuth();
   const navigate = useNavigate();
+  const { authUser, setAuthUser } = allAuthObj;
   // =============================== Line api ===========================//
   const [linecode, setLinecode] = useState();
   const [code] = useSearchParams();
@@ -59,12 +60,12 @@ function EditProfileForm() {
       console.log(error);
     } finally {
       setLoading(false);
-      navigate('/profile');
+      navigate('/profile/edit');
+      window.location.reload();
     }
   };
 
   //= ============================================= line api ===============================//
-  const { authUser } = allAuthObj;
 
   const fetchProvince = async () => {
     try {
@@ -312,7 +313,7 @@ function EditProfileForm() {
         </div>
       </form>
       <div className='p-3 w-full '>
-        {authUser.lineToken ? (
+        {authUser?.lineToken ? (
           <div className='flex w-full justify-center'>
             <div className='flex items-center gap-2 text-[0.8rem] font-semibold text-green-500 border border-green-500 p-2 rounded-full'>
               Account Line Linked{' '}
