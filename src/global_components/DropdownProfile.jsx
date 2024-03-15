@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Dropdown } from 'rsuite';
 import {
+  AdminIcon,
   CreateEventIcon,
   LogOutIcon,
   ProfileIcon,
@@ -54,6 +55,15 @@ export default function DropdownProfile({ logout }) {
           onClick={() => navigate('/profile/edit')}
         >
           Setting{' '}
+        </Dropdown.Item>
+      </div>
+      <div className='p-1 border-b'>
+        <Dropdown.Item
+          style={{ display: 'flex', gap: '8px' }}
+          icon={<AdminIcon />}
+          onClick={() => navigate('/admin')}
+        >
+          Admin{' '}
         </Dropdown.Item>
       </div>
       <div className='p-1 border-b'>
