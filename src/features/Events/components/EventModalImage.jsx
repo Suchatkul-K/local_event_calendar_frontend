@@ -51,8 +51,6 @@ export default function EventModalImage() {
     }
   };
 
-  console.log(image);
-
   return (
     <div className='flex justify-end gap-4 pr-4'>
       <button

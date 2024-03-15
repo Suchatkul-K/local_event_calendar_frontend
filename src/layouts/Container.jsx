@@ -5,7 +5,7 @@ import AuthContextProvider from '../features/auth/context/AuthContext';
 
 function Container() {
   return (
-    <div>
+    <div className='min-h-dvh flex flex-col'>
       <NavBar />
       <Outlet />
       <Footer />

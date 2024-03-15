@@ -48,6 +48,8 @@ export function ExploreContextProvider({ children }) {
     fetchCategory();
     fetchProvince();
     fetchEvents();
+
+    window.scrollTo(0, 0);
   }, []);
 
   const handleCheckbox = (e) => {

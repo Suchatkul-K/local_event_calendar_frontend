@@ -49,8 +49,9 @@ export default function ExploreContainer() {
 
   if (loading) {
     return (
-      <div className='h-dvh mx-auto flex justify-center items-center loading loading-spinner loading-lg'>
-        loading...
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
       </div>
     );
   }
