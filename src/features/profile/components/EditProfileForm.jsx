@@ -53,7 +53,7 @@ function EditProfileForm() {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-      console.log(lineLogin);
+      console.log(lineLogin.data);
       const res = await configaxios.post('/line/binding', lineLogin.data);
       console.log(res);
     } catch (error) {
