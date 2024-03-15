@@ -1,64 +1,49 @@
-import {
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-  useMap,
-  useMapEvent,
-  MapContainer,
-} from 'react-leaflet';
+import { TileLayer, Marker, Popup, useMapEvents, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { getAllEventInScope } from '../../../api/event';
 import { MarkerIcon } from '../../../icons';
 import formatDate from '../../../utils/formatDate';
+import useMapContext from '../hooks/useMapContext';
 
-// const BkkLatLon = [13.756329334391024, 100.50176927408629];
-
-function MapComponent({ events, setEvents }) {
-  const [user, setUser] = useState(null);
+function MapComponent() {
+  const { events, setEvents, fetchData, user, setUser } = useMapContext();
   const map = useMap();
 
-  // Fetch data based on the specified bounds
-  const fetchData = (bounds) => getAllEventInScope(bounds);
+  // console.log('Map center :', map.getCenter());
+  // console.log('Map zoom: ', map.getZoom());
+
   const handleMapChange = async () => {
-    // const centerMap = map.getCenter();
-    // console.log('Map center :', centerMap);
-
-    console.log('Map zoom: ', map.getZoom());
-
     // Check if the zoom level is 10 or above
     if (map.getZoom() >= 10) {
-      // Fetch data based on the bounds of the visible area
       const bounds = map.getBounds();
-      const result = await fetchData(bounds); // context
-      console.log(result.data);
-      setEvents(result.data); // context
+      const result = await fetchData(bounds);
+      setEvents(result.data);
     } else {
-      setEvents(null); // context
+      setEvents(null);
     }
   };
 
-  // Attach zoom change event listener to the map
+  // Attach event listener to the map
   useMapEvents({
     zoomend: handleMapChange,
     moveend: handleMapChange,
-    click: () => {
-      map.locate();
-    },
-    locationfound: (location) => {
-      console.log('My location found:', location);
-    },
+    // click: () => {
+    //   map.locate();
+    // },
+    // locationfound: (location) => {
+    //   console.log('My location found:', location);
+    // },
   });
 
   useEffect(() => {
     map.on('locationfound', (e) => {
       setUser(e.latlng);
-      // console.log(e.latlng);
+      map.flyTo(e.latlng);
     });
 
     map.locate();
+    handleMapChange();
 
     return () => {
       map.off('locationfound', (e) => {
@@ -72,7 +57,7 @@ function MapComponent({ events, setEvents }) {
       className: 'custom-div-icon',
       html: ReactDOMServer.renderToString(
         <MarkerIcon className={className} fill={fill} />
-      ), // Render the SVG marker component with the specified color
+      ),
       iconSize: [25, 41],
     });
 
