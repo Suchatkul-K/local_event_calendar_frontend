@@ -10,12 +10,9 @@ function MapComponent() {
   const { events, setEvents, fetchData, user, setUser } = useMapContext();
   const map = useMap();
 
-  // console.log('Map center :', map.getCenter());
-  // console.log('Map zoom: ', map.getZoom());
-
   const handleMapChange = async () => {
-    // Check if the zoom level is 10 or above
-    if (map.getZoom() >= 10) {
+    // Check if the zoom level is 9 or above
+    if (map.getZoom() >= 9) {
       const bounds = map.getBounds();
       const result = await fetchData(bounds);
       setEvents(result.data);
@@ -28,12 +25,6 @@ function MapComponent() {
   useMapEvents({
     zoomend: handleMapChange,
     moveend: handleMapChange,
-    // click: () => {
-    //   map.locate();
-    // },
-    // locationfound: (location) => {
-    //   console.log('My location found:', location);
-    // },
   });
 
   useEffect(() => {
@@ -44,6 +35,8 @@ function MapComponent() {
 
     map.locate();
     handleMapChange();
+
+    window.scrollTo(0, 0);
 
     return () => {
       map.off('locationfound', (e) => {
@@ -83,7 +76,7 @@ function MapComponent() {
           <Marker
             position={[event.EventAddress.lat, event.EventAddress.long]}
             key={event.id}
-            icon={customIcon('size-10', 'green')}
+            icon={customIcon('size-10 border', 'green')}
           >
             <Popup>
               <div className='p-3'>

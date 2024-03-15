@@ -19,6 +19,9 @@ function EditProfileForm() {
   const [province, setProvince] = useState(null);
   const [district, setDistrict] = useState(null);
   const [subDistrict, setSubDistrict] = useState(null);
+  const [selectPickerProvince, setSelectPickerProvince] = useState(null);
+  const [selectPickerDistrict, setSelectPickerDistrict] = useState(null);
+  const [selectPickerSubDistrict, setSelectPickerSubDistrict] = useState(null);
   const [oldData, setOldData] = useState(null);
   const [loading, setLoading] = useState(true);
   const allAuthObj = useAuth();
@@ -27,14 +30,14 @@ function EditProfileForm() {
   // =============================== Line api ===========================//
   const [linecode, setLinecode] = useState();
   const [code] = useSearchParams();
-  console.log(code.size > 2);
+  // console.log(code.size > 2);
   if (code.size > 0 && !linecode) {
     console.log('codesss');
     setLinecode(code.get('code'));
   }
   //= ===================================== Line ===================================//
   const lineAccess =
-    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=http://localhost:5173/profile/edit&state=12345abcde&scope=profile%20openid&bot_prompt=aggressive';
+    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=https://local-event-calendar-frontend.vercel.app/profile/edit&state=12345abcde&scope=profile%20openid&bot_prompt=aggressive';
   const url = 'https://api.line.me/oauth2/v2.1/token';
 
   const data = {
@@ -42,7 +45,8 @@ function EditProfileForm() {
     client_id: '2003956202',
     client_secret: '8db90c43497495d698fc5cf607ef80c2',
     code: linecode,
-    redirect_uri: 'http://localhost:5173/profile/edit',
+    redirect_uri:
+      'https://local-event-calendar-frontend.vercel.app/profile/edit',
   };
 
   const oAuthLine = async () => {
@@ -72,15 +76,21 @@ function EditProfileForm() {
       setLoading(true);
       const responseProvince = await getProvince();
       setProvince(responseProvince?.data);
-      console.log(responseProvince?.data);
+      // console.log(responseProvince?.data);
       const responseUserInfo = await authMe();
-      setOldData(responseUserInfo?.data);
+      // console.log(responseUserInfo?.data);
+      // setOldData(responseUserInfo?.data);
       setInput({
         ...input,
-        // userName: responseUserInfo?.data?.userName,
+        userName: responseUserInfo?.data?.userName,
         profileImage: responseUserInfo?.data?.profileImage,
         address: responseUserInfo?.data?.UserAddress?.address,
       });
+      setSelectPickerProvince(responseUserInfo?.data?.UserAddress?.provinceId);
+      setSelectPickerDistrict(responseUserInfo?.data?.UserAddress?.districtId);
+      setSelectPickerSubDistrict(
+        responseUserInfo?.data?.UserAddress?.subDistrictId
+      );
     } catch (err) {
       console.log(err);
     } finally {
@@ -88,19 +98,17 @@ function EditProfileForm() {
     }
   };
 
-  if (!district && province && oldData) {
+  if (!district && province && selectPickerProvince) {
     setDistrict(
-      province?.find((value) => value.id === oldData?.UserAddress?.provinceId)
-        .Districts
+      province?.find((value) => value.id === selectPickerProvince).Districts
     );
   }
 
-  if (!subDistrict && district && oldData) {
+  if (!subDistrict && district && selectPickerDistrict) {
     setSubDistrict([]);
 
     setSubDistrict(
-      district?.find((value) => value.id === oldData?.UserAddress?.districtId)
-        .SubDistricts
+      district?.find((value) => value.id === selectPickerDistrict).SubDistricts
     );
   }
 
@@ -122,6 +130,8 @@ function EditProfileForm() {
     setInput({ ...input, [item.name]: value });
     if (item.name === 'provinceId') {
       setDistrict(province[item.index].Districts);
+      setSelectPickerDistrict([]);
+      setSelectPickerSubDistrict([]);
       setSubDistrict([]);
       setInput((prev) => {
         delete prev.districtId;
@@ -132,6 +142,7 @@ function EditProfileForm() {
 
     if (item.name === 'districtId') {
       setSubDistrict(district[item.index].SubDistricts);
+      setSelectPickerSubDistrict([]);
     }
   };
 
@@ -191,11 +202,12 @@ function EditProfileForm() {
   //     console.log(err);
   //   }
   // };
-  console.log(input);
+  // console.log(input);
   if (loading) {
     return (
-      <div className='h-dvh mx-auto flex justify-center items-center loading loading-spinner loading-lg'>
-        loading...
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
       </div>
     );
   }
@@ -234,7 +246,7 @@ function EditProfileForm() {
           <Input
             title='Username'
             name='userName'
-            value={input?.userName !== undefined ? input : oldData}
+            value={input}
             onChange={handleChangeInput}
           />
         </div>
@@ -247,11 +259,8 @@ function EditProfileForm() {
                 block
                 placeholder='province'
                 data={provinceData}
-                value={
-                  input?.provinceId
-                    ? input?.provinceId
-                    : oldData?.UserAddress?.provinceId
-                }
+                value={selectPickerProvince}
+                onChange={setSelectPickerProvince}
                 onSelect={handleSelectPicker}
               />
             </div>
@@ -261,12 +270,9 @@ function EditProfileForm() {
                 block
                 placeholder='district'
                 data={districtData}
+                value={selectPickerDistrict}
+                onChange={setSelectPickerDistrict}
                 onSelect={handleSelectPicker}
-                value={
-                  input?.districtId
-                    ? input?.districtId
-                    : oldData?.UserAddress?.districtId
-                }
               />
             </div>
             <div className='w-full'>
@@ -275,12 +281,9 @@ function EditProfileForm() {
                 block
                 placeholder='sub-district'
                 data={subDistrictData}
+                value={selectPickerSubDistrict}
+                onChange={setSelectPickerSubDistrict}
                 onSelect={handleSelectPicker}
-                value={
-                  input?.subDistrictId
-                    ? input?.subDistrictId
-                    : oldData?.UserAddress?.subDistrictId
-                }
               />
             </div>
             <div className='flex flex-col'>

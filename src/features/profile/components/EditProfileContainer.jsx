@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import EditProfileForm from './EditProfileForm';
 import EditPasswordForm from './EditPasswordForm';
