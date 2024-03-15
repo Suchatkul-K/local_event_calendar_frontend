@@ -29,6 +29,7 @@ import { authMe } from '../../../api/auth';
 import { createReminder, deleteReminder } from '../../../api/user';
 import useAuth from '../../auth/hooks/auth';
 import { deleteEvent } from '../../../api/event';
+import EventModalFeedback from './EventModalFeedback';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
@@ -362,10 +363,11 @@ export default function EventContainer() {
           ))}
         </Carousel>
       )}
-      {authUser?.id === event?.organizerInformationId ? (
-        <EventModalImage />
-      ) : null}
-
+      {authUser?.id === event?.organizerInformationId && <EventModalImage />}
+      {
+        // authUser?.id !== event?.organizerInformationId &&
+        <EventModalFeedback />
+      }
       {eventObj?.event && <EventMapLocation />}
     </div>
   );
