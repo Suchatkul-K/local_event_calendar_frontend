@@ -8,6 +8,12 @@ export const updateEvent = (eventId, data) =>
   axios.put(`/event/${eventId}`, data);
 export const deleteEvent = (eventId) => axios.delete(`/event/${eventId}`);
 
+
+// ========================== upComing ==================================//
+
+export const getUpcoming = () => axios.get('/event/upcoming');
+
+
 // ========================== map ==================================//
 
 export const getAllEventInScope = (data) => axios.post('/event/scope/', data);

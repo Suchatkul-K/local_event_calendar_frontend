@@ -5,10 +5,11 @@ import useAuth from '../../auth/hooks/auth';
 function ProtectProfile({ children }) {
   const allAuthObj = useAuth();
   const { authUser } = allAuthObj;
+  const accessToken = localStorage.getItem('accessToken');
 
   return (
     <div>
-      {authUser ? (
+      {accessToken ? (
         // Redirect to profile page if authenticated
         children
       ) : (
