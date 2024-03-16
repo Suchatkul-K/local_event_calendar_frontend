@@ -6,10 +6,7 @@ import useMapContext from '../hooks/useMapContext';
 const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
 function Map() {
-  const { events, user } = useMapContext();
-
-  // const finalCenter = user ? [user.lat, user.lng] : BkkLatLon;
-  // console.log(finalCenter);
+  const { events } = useMapContext();
 
   return (
     <div>

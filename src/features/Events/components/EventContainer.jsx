@@ -33,18 +33,12 @@ import EventModalFeedback from './EventModalFeedback';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
-  const { event } = eventObj;
+  const { event, loading, setLoading } = eventObj;
 
   const allAuthObj = useAuth();
   const { authUser } = allAuthObj;
 
-  console.log(event);
-
-  const navigate = useNavigate();
-
-  const [isReminder, setIsReminder] = useState(false);
   const [authEvents, setAuthEvents] = useState(null);
-  const [loading, setLoading] = useState(true);
   const { eventId } = useParams();
 
   const nevigate = useNavigate();
@@ -66,7 +60,6 @@ export default function EventContainer() {
   const handleReminderClick = async () => {
     if (!authUser) {
       toast.info('Please Login to use this feature');
-      // navigate('/login');
       return;
     }
     await createReminder(+eventId);
@@ -77,7 +70,6 @@ export default function EventContainer() {
   const handleDelReminderClick = async () => {
     if (!authUser) {
       toast.info('Please Login to use this feature');
-      // navigate('/login');
       return;
     }
     await deleteReminder(+eventId);
@@ -98,6 +90,7 @@ export default function EventContainer() {
 
   useEffect(() => {
     fetchAuthEvent();
+    window.scrollTo(0, 0);
   }, []);
 
   // ================= loading Spinner ====================//
@@ -273,39 +266,41 @@ export default function EventContainer() {
         <p className='text-[1.5rem] font-bold'>Description</p>
         <span className='break-all'>{eventObj?.event?.description}</span>
         <div className='flex justify-end py-4'>
-          <div className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full'>
-            {authUser ? (
-              <div>
-                {checkReminded?.length === 0 ? (
-                  <button
-                    type='button'
-                    onClick={handleReminderClick}
-                    aria-label='Save'
-                  >
-                    <HearthIconOutline />
-                  </button>
-                ) : (
-                  <button
-                    type='button'
-                    aria-label='Save'
-                    onClick={handleDelReminderClick}
-                  >
-                    <HearthIconOutline className='fill-red-500' />
-                  </button>
-                )}
-              </div>
-            ) : (
-              <button
-                type='button'
-                aria-label='Save'
-                onClick={handleDelReminderClick}
-              >
-                <HearthIconOutline />
-              </button>
-            )}
-
-            <div className='text-red-400 text-[0.75rem]'>Remind Me</div>
-          </div>
+          {authUser ? (
+            <div>
+              {checkReminded?.length === 0 ? (
+                <button
+                  type='button'
+                  onClick={handleReminderClick}
+                  aria-label='Save'
+                  className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full font-semibold text-sm'
+                >
+                  <HearthIconOutline />
+                  <div className='text-red-400'>Remind Me</div>
+                </button>
+              ) : (
+                <button
+                  type='button'
+                  aria-label='Save'
+                  onClick={handleDelReminderClick}
+                  className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full font-semibold text-sm'
+                >
+                  <HearthIconOutline className='fill-red-500' />
+                  <div className='text-red-400'>Remind Me</div>
+                </button>
+              )}
+            </div>
+          ) : (
+            <button
+              type='button'
+              aria-label='Save'
+              onClick={handleDelReminderClick}
+              className='border-2 border-red-400 flex items-center justify-center gap-2 p-2 rounded-full font-semibold text-sm'
+            >
+              <HearthIconOutline />
+              <div className='text-red-400'>Remind Me</div>
+            </button>
+          )}
         </div>
       </div>
       {/* Facility */}

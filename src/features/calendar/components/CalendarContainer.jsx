@@ -8,6 +8,7 @@ import EventList from './EventList';
 
 function CalendarContainer() {
   const [events, setEvents] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [province, setProvince] = useState([]);
   const [search, setSearch] = useState(null);
   const [tempEvents, setTempEvents] = useState(null);
@@ -56,10 +57,13 @@ function CalendarContainer() {
 
   const fetchCalendarEvent = async (input) => {
     try {
+      setLoading(true);
       const getEvent = await getCalendarEvent(input);
       setEvents(getEvent.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
   // calendar handling state
@@ -113,6 +117,15 @@ function CalendarContainer() {
 
     window.scrollTo(0, 0);
   }, [focusDate]);
+
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
+      </div>
+    );
+  }
 
   return (
     <div className='p-4'>
