@@ -10,6 +10,7 @@ export default function EventModalFeedback() {
   const [dislike, setDislike] = useState();
   const [input, setInput] = useState({});
   const [error, setError] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const { eventId } = useParams();
 
@@ -42,6 +43,7 @@ export default function EventModalFeedback() {
   const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
+      setLoading(true);
       const validateError = validateFeedback(input);
       if (Object.keys(validateError).length > 0) {
         setError(validateError);
@@ -52,8 +54,18 @@ export default function EventModalFeedback() {
       document.getElementById('my_modal_2').close();
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
+  if (loading) {
+    return (
+      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+        <span className='loading loading-spinner loading-lg' />
+        &nbsp; Loading... &nbsp; <span />
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleOnSubmit} className='flex justify-end gap-4 pr-4'>

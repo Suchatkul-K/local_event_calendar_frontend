@@ -24,6 +24,7 @@ function NavBar() {
     setAuthUser(null);
     clearToken();
     toast.success('Logout');
+    navigate('/home');
   };
 
   return (
