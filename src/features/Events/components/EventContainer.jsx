@@ -364,10 +364,7 @@ export default function EventContainer() {
         </Carousel>
       )}
       {authUser?.id === event?.organizerInformationId && <EventModalImage />}
-      {
-        // authUser?.id !== event?.organizerInformationId &&
-        <EventModalFeedback />
-      }
+      {authUser?.id !== event?.organizerInformationId && <EventModalFeedback />}
       {eventObj?.event && <EventMapLocation />}
     </div>
   );
