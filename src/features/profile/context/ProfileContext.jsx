@@ -10,7 +10,7 @@ export default function ProfileContextProvider({ children }) {
     try {
       const authEvent = await authMe();
       setAuthEvents(authEvent.data);
-      console.log(authEvent.data);
+      // console.log(authEvent.data);
     } catch (error) {
       console.log(error);
     }
