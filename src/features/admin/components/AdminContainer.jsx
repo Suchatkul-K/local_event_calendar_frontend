@@ -1,16 +1,25 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import useAdmin from '../hooks/useAdmin';
 import EventCardGanX from '../../../global_components/EventCardGanX';
 import Button from '../../../global_components/Button';
 import { ArrowIcon } from '../../../icons';
+import { createHighlight } from '../../../api/highlight';
 
 function AdminContainer() {
   const adminObj = useAdmin();
   const navigate = useNavigate();
   const { events, loading } = adminObj;
 
-  const handleAddHightLight = () => {}; // standby
+  const handleAddHightLight = async (eventId) => {
+    try {
+      await createHighlight(eventId);
+      toast.success('Add success highlight');
+    } catch (err) {
+      console.log(err);
+    }
+  }; // standby
 
   if (loading) {
     return (
@@ -41,10 +50,14 @@ function AdminContainer() {
         {/* event list */}
 
         {events?.map((event) => (
-          <div className='border rounded-lg p-4 flex flex-col '>
+          <div className='border rounded-lg p-4 flex flex-col ' key={event.id}>
             <EventCardGanX event={event} />
             <div className='self-end pt-4'>
-              <Button>Add highlight</Button>
+              <Button
+                onClick={() => handleAddHightLight({ eventId: event.id })}
+              >
+                Add highlight
+              </Button>
             </div>
           </div>
         ))}
