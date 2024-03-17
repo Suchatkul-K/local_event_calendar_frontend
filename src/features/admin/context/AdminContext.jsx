@@ -32,6 +32,7 @@ export default function AdminContextProvider({ children }) {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchEvents();
     fetchStatisticUser();
@@ -43,6 +44,7 @@ export default function AdminContextProvider({ children }) {
       loading,
       setLoading,
       statisticUser,
+      fetchEvents,
     }),
     [events, loading, statisticUser]
   );
