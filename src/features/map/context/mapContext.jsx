@@ -7,6 +7,7 @@ export const MapContext = createContext();
 function MapContextProvider({ children }) {
   const [events, setEvents] = useState([]);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Fetch data based on the specified bounds
   const fetchData = (bounds) => getAllEventInScope(bounds);
@@ -18,8 +19,10 @@ function MapContextProvider({ children }) {
       fetchData,
       user,
       setUser,
+      loading,
+      setLoading,
     }),
-    [events, user]
+    [events, user, loading]
   );
 
   return (
