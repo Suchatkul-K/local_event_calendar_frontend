@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 import Input from '../../../global_components/Input';
 import useProfileContext from '../hook/useProfileContext';
 import validateChangePassword from '../validation/validate-change-password';
@@ -6,12 +7,16 @@ import { updateUser } from '../../../api/user';
 
 function EditPasswordForm() {
   const ProfileContextObject = useProfileContext();
-  const [input, setInput] = useState(null);
-  const [error, setError] = useState();
+  const [input, setInput] = useState({});
+  const [error, setError] = useState({});
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  console.log(error);
 
   const handleChangePassword = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
+    setError({});
   };
 
   const handleSubmitChangePassword = async (e) => {
@@ -27,6 +32,8 @@ function EditPasswordForm() {
         oldPassword: input.oldPassword,
         password: input.password,
       });
+      toast.success('Change Password Success');
+      setInput(null);
     } catch (err) {
       console.log(err);
     } finally {
@@ -44,37 +51,85 @@ function EditPasswordForm() {
   }
 
   return (
-    <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-3'>
+    <form
+      className='border-2 rounded-lg w-full flex flex-col p-3 gap-3'
+      onSubmit={handleSubmitChangePassword}
+    >
       <div className='p-3 border-b-2 w-full'>Change Password</div>
 
       <div className='w-full border-b-2 pb-4'>
-        <Input
-          title='Old Password'
-          placeholder='password'
-          onChange={handleChangePassword}
-          name='oldPassword'
-          value={input}
-          errorMessage={error}
-        />
+        {showPassword ? (
+          <Input
+            title='Old Password'
+            placeholder='password'
+            onChange={handleChangePassword}
+            name='oldPassword'
+            value={input}
+            errorMessage={error?.oldPassword}
+            type='text'
+            onClickButton={() => setShowPassword(false)}
+          />
+        ) : (
+          <Input
+            title='Old Password'
+            placeholder='password'
+            onChange={handleChangePassword}
+            name='oldPassword'
+            value={input}
+            errorMessage={error?.oldPassword}
+            type='password'
+            onClickButton={() => setShowPassword(true)}
+          />
+        )}
       </div>
       <div className='w-full'>
         <div className='w-full flex flex-col gap-2'>
-          <Input
-            title='New Password'
-            placeholder='password'
-            name='password'
-            onChange={handleChangePassword}
-            value={input}
-            errorMessage={error}
-          />
-          <Input
-            title='Confirm New Password'
-            placeholder='confirm password'
-            onChange={handleChangePassword}
-            name='confirmPassword'
-            value={input}
-            errorMessage={error}
-          />
+          {showPassword ? (
+            <Input
+              title='New Password'
+              placeholder='password'
+              name='password'
+              onChange={handleChangePassword}
+              value={input}
+              errorMessage={error?.password}
+              type='text'
+              onClickButton={() => setShowPassword(false)}
+            />
+          ) : (
+            <Input
+              title='New Password'
+              placeholder='password'
+              name='password'
+              onChange={handleChangePassword}
+              value={input}
+              errorMessage={error?.password}
+              type='password'
+              onClickButton={() => setShowPassword(true)}
+            />
+          )}
+          {showPassword ? (
+            <Input
+              title='Confirm New Password'
+              placeholder='confirm password'
+              onChange={handleChangePassword}
+              name='confirmPassword'
+              value={input}
+              errorMessage={error?.confirmPassword}
+              type='text'
+              onClickButton={() => setShowPassword(false)}
+            />
+          ) : (
+            <Input
+              title='Confirm New Password'
+              placeholder='confirm password'
+              onChange={handleChangePassword}
+              name='confirmPassword'
+              value={input}
+              errorMessage={error?.confirmPassword}
+              type='password'
+              onClickButton={() => setShowPassword(true)}
+            />
+          )}
         </div>
       </div>
 
