@@ -1059,7 +1059,7 @@ export function MedicalIcon({ className }) {
   );
 }
 
-export function MarkerIcon({ className, fill = 'none' }) {
+export function MarkerIcon({ className, fill = '#000000' }) {
   return (
     <svg
       width='800px'
@@ -1073,7 +1073,7 @@ export function MarkerIcon({ className, fill = 'none' }) {
       <defs />
       <g
         id='Page-1'
-        stroke='none'
+        stroke='#000000'
         strokeWidth='1'
         fill='none'
         fillRule='evenodd'

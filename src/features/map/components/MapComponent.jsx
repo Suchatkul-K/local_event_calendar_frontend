@@ -7,17 +7,25 @@ import formatDate from '../../../utils/formatDate';
 import useMapContext from '../hooks/useMapContext';
 
 function MapComponent() {
-  const { events, setEvents, fetchData, user, setUser } = useMapContext();
+  const { events, setEvents, fetchData, user, setUser, setLoading } =
+    useMapContext();
   const map = useMap();
 
   const handleMapChange = async () => {
-    // Check if the zoom level is 9 or above
-    if (map.getZoom() >= 9) {
-      const bounds = map.getBounds();
-      const result = await fetchData(bounds);
-      setEvents(result.data);
-    } else {
-      setEvents(null);
+    try {
+      setLoading(true);
+      // Check if the zoom level is 9 or above
+      if (map.getZoom() >= 9) {
+        const bounds = map.getBounds();
+        const result = await fetchData(bounds);
+        setEvents(result.data);
+      } else {
+        setEvents(null);
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,7 +71,7 @@ function MapComponent() {
       {user && (
         <Marker
           position={[user.lat, user.lng]}
-          icon={customIcon('size-10', 'red')}
+          icon={customIcon('size-10', '#ff0000')}
         >
           <Popup>
             <MarkerIcon className='w-[1rem] h-[1rem]' />
@@ -76,15 +84,21 @@ function MapComponent() {
           <Marker
             position={[event.EventAddress.lat, event.EventAddress.long]}
             key={event.id}
-            icon={customIcon('size-10 border', 'green')}
+            icon={customIcon('size-10 border', '#007467')}
           >
             <Popup>
               <div className='p-3'>
-                <div className='pb-2'>
-                  <img src={event?.coverImage} alt='' />
+                <div className='pb-2 '>
+                  <img
+                    src={event?.coverImage}
+                    alt=''
+                    className='object-cover w-full'
+                  />
                 </div>
                 <div className='w-full text-center font-bold text-[1rem]'>
-                  {event?.title}
+                  {event.title.length > 20
+                    ? `${event.title.slice(0, 20)}...`
+                    : event.title}
                 </div>
                 <p className='m-0'>
                   <span className='font-bold'>Start at : </span>

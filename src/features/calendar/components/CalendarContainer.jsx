@@ -113,19 +113,12 @@ function CalendarContainer() {
 
   useEffect(() => {
     fetchProvinceData();
-    generateCalendarDates(focusDate.getFullYear(), focusDate.getMonth());
-
     window.scrollTo(0, 0);
-  }, [focusDate]);
+  }, []);
 
-  if (loading) {
-    return (
-      <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
-        <span className='loading loading-spinner loading-lg' />
-        &nbsp; Loading... &nbsp; <span />
-      </div>
-    );
-  }
+  useEffect(() => {
+    generateCalendarDates(focusDate.getFullYear(), focusDate.getMonth());
+  }, [focusDate]);
 
   return (
     <div className='p-4'>
@@ -160,9 +153,16 @@ function CalendarContainer() {
         </div>
       </div>
       {/* data */}
-      <div className='flex flex-col gap-3 py-4'>
-        <EventList currentEvents={events} />
-      </div>
+      {loading ? (
+        <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
+          <span className='loading loading-spinner loading-lg' />
+          &nbsp; Loading... &nbsp; <span />
+        </div>
+      ) : (
+        <div className='flex flex-col gap-3 py-4'>
+          <EventList currentEvents={events} />
+        </div>
+      )}
     </div>
   );
 }
