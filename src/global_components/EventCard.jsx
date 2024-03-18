@@ -48,7 +48,11 @@ function EventCard({ event, loading }) {
     <Link to={`/event/${event?.id}`}>
       <div className='card max-w-[16rem] h-[26rem] bg-base-100 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
         <figure>
-          <img src={event?.coverImage} alt='' />
+          <img
+            className='h-[10rem] object-cover w-full'
+            src={event?.coverImage}
+            alt=''
+          />
         </figure>
         <div className='card-body p-[10%] '>
           <h2 className='card-title'>{event?.title}</h2>
