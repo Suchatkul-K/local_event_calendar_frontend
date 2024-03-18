@@ -218,14 +218,12 @@ export default function EventContainer() {
           Date
         </div>
         <div className='flex justify-between text-[0.8rem]'>
-          <div className='border-2 p-2 rounded-xl'>
+          <div className='border-2 p-2 rounded-xl w-[10rem]'>
             <p>
-              Start : <br />
-              <span>{formatDate(eventObj.event?.startDate, true)}</span>
+              Start : <span>{formatDate(eventObj.event?.startDate, true)}</span>
             </p>
             <p>
-              End : <br />{' '}
-              <span>{formatDate(eventObj.event?.endDate, true)}</span>
+              End : <span>{formatDate(eventObj.event?.endDate, true)}</span>
             </p>
           </div>
           <div className='flex gap-2 items-baseline max-w-[8rem] '>
