@@ -16,7 +16,6 @@ export function ExploreContextProvider({ children }) {
   const fetchCategory = async () => {
     try {
       const categories = await getCategory();
-      //   console.log(categories.data);
       setCategory(categories.data);
     } catch (error) {
       console.log(error);
@@ -67,12 +66,9 @@ export function ExploreContextProvider({ children }) {
   };
 
   const handleOnSubmit = async (e) => {
-    console.log('onSubmit');
     e.preventDefault();
 
-    console.log(input);
-
-    // fetch event by input
+    // fetch event
     fetchEvents();
   };
 

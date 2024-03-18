@@ -11,7 +11,6 @@ function HomeContextProvider({ children }) {
     try {
       setLoading(true);
       const response = await getAllEvent();
-      console.log(response.data);
       setEvent(response.data);
     } catch (err) {
       console.log(err);

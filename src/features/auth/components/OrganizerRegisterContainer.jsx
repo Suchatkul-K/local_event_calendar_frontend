@@ -83,7 +83,7 @@ export default function OrganizerRegisterContainer() {
         const authResult = await authMe(registerResult.data.accessToken);
         setAuthUser(authResult.data);
         setError(null);
-        console.log('Organizer register success');
+        // console.log('Organizer register success');
         navigate('/home');
       }
     } catch (err) {

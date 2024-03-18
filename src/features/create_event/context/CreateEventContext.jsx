@@ -22,7 +22,6 @@ export function CreateEventContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  console.log(input);
   // ------------------------fetch-----------------
   const fetchOptionSelect = async () => {
     try {
@@ -85,8 +84,6 @@ export function CreateEventContextProvider({ children }) {
   };
 
   const handleDeleteImage = (el, fileEl2) => {
-    console.log(el);
-    console.log(input.image);
     const tempImage = image?.filter((file) => file.name !== el.name);
 
     // setInput({ ...input, image: tempImage });
@@ -95,7 +92,6 @@ export function CreateEventContextProvider({ children }) {
   };
 
   const handleSelectPicker = (value, item, event) => {
-    // console.log(typeof value);
     delete error[item.name];
     setInput({ ...input, [item.name]: value });
     if (item.name === 'provinceId') {
@@ -137,7 +133,7 @@ export function CreateEventContextProvider({ children }) {
       }
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
 
-      console.log(...formData);
+      // console.log(...formData);
       const eventId = await createEvent(formData);
       toast.success('create successfully');
       setError({});

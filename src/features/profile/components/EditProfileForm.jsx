@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import Avatar from '../../../global_components/Avatar';
-import useProfileContext from '../hook/useProfileContext';
 import getProvince from '../../../api/province';
 import { authMe } from '../../../api/auth';
 import Input from '../../../global_components/Input';
@@ -23,17 +22,14 @@ function EditProfileForm() {
   const [selectPickerProvince, setSelectPickerProvince] = useState(null);
   const [selectPickerDistrict, setSelectPickerDistrict] = useState(null);
   const [selectPickerSubDistrict, setSelectPickerSubDistrict] = useState(null);
-  const [oldData, setOldData] = useState(null);
   const [loading, setLoading] = useState(true);
   const allAuthObj = useAuth();
   const navigate = useNavigate();
-  const { authUser, setAuthUser } = allAuthObj;
+  const { authUser } = allAuthObj;
   // =============================== Line api ===========================//
   const [linecode, setLinecode] = useState();
   const [code] = useSearchParams();
-  // console.log(code.size > 2);
   if (code.size > 0 && !linecode) {
-    console.log('codesss');
     setLinecode(code.get('code'));
   }
   //= ===================================== Line ===================================//
@@ -57,9 +53,7 @@ function EditProfileForm() {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
       });
-      console.log(lineLogin.data);
       const res = await configaxios.post('/line/binding', lineLogin.data);
-      console.log(res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,10 +70,7 @@ function EditProfileForm() {
       setLoading(true);
       const responseProvince = await getProvince();
       setProvince(responseProvince?.data);
-      // console.log(responseProvince?.data);
       const responseUserInfo = await authMe();
-      // console.log(responseUserInfo?.data);
-      // setOldData(responseUserInfo?.data);
       setInput({
         ...input,
         userName: responseUserInfo?.data?.userName,
@@ -210,7 +201,7 @@ function EditProfileForm() {
       setLoading(false);
     }
   };
-  console.log(input);
+
   if (loading) {
     return (
       <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
@@ -219,6 +210,7 @@ function EditProfileForm() {
       </div>
     );
   }
+  
   return (
     <div className='w-full flex flex-col gap-4 justify-start items-center h-full'>
       <form

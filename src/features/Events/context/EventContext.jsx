@@ -15,7 +15,6 @@ export default function EventContextProvider({ children }) {
     try {
       setLoading(true);
       const response = await getEvent(eventId);
-      console.log(response.data);
       setEvent(response.data);
       if (response.data === null) {
         navigate('/home');

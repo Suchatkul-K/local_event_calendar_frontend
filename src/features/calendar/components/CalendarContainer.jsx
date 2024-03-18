@@ -102,9 +102,6 @@ function CalendarContainer() {
       calendarDates.push(nextMonthDate);
     }
 
-    // console.log('firstDay', calendarDates[0].toISOString());
-    // console.log('lastDay', calendarDates[41].toISOString());
-
     fetchCalendarEvent({
       firstDay: calendarDates[0].toISOString(),
       lastDay: calendarDates[41].toISOString(),

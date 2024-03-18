@@ -15,8 +15,6 @@ function HomeContainer() {
   const allEventsObj = useHomeContext();
   const { loading } = allEventsObj;
 
-  console.log(allEventsObj);
-
   const highlightEvent = allEventsObj.event?.filter(
     (event) => event.HighlightEvent != null
   );

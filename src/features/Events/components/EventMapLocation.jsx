@@ -17,7 +17,6 @@ function EventMapLocation() {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpen = () => {
-    console.log('click');
     setShowModal(true);
   };
 

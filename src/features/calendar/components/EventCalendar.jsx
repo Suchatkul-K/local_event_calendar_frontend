@@ -91,7 +91,6 @@ function EventCalendar({ data, setSearch, focusDate, setFocusDate }) {
     );
   };
 
-  // console.log(focusDate);
   return (
     <div>
       <Calendar
