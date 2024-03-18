@@ -18,7 +18,7 @@ const changePasswordSchema = Joi.object({
 
 const validateChangePassword = (input) => {
   const { error } = changePasswordSchema.validate(input, { abortEarly: false });
-  // console.dir(error);
+  console.dir(error);
 
   const errorObject = {};
   error?.details.map((el) => {
