@@ -11,6 +11,7 @@ import Input from '../../../global_components/Input';
 import useAuth from '../../auth/hooks/auth';
 import { LineIcon, LinkedIcon } from '../../../icons';
 import configaxios from '../../../configs/axios';
+import { updateUser } from '../../../api/user';
 
 function EditProfileForm() {
   const profileImageEl = useRef(null);
@@ -37,7 +38,7 @@ function EditProfileForm() {
   }
   //= ===================================== Line ===================================//
   const lineAccess =
-    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=https://local-event-calendar-frontend.vercel.app/profile/edit&state=12345abcde&scope=profile%20openid&bot_prompt=aggressive';
+    'https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=2003956202&redirect_uri=https://happeningthailand.vercel.app/profile/edit&state=12345abcde&scope=profile%20openid&bot_prompt=aggressive';
   const url = 'https://api.line.me/oauth2/v2.1/token';
 
   const data = {
@@ -45,8 +46,7 @@ function EditProfileForm() {
     client_id: '2003956202',
     client_secret: '8db90c43497495d698fc5cf607ef80c2',
     code: linecode,
-    redirect_uri:
-      'https://local-event-calendar-frontend.vercel.app/profile/edit',
+    redirect_uri: 'https://happeningthailand.vercel.app/profile/edit',
   };
 
   const oAuthLine = async () => {
@@ -173,36 +173,44 @@ function EditProfileForm() {
     }));
   }
 
-  // const handleSubmitEdit = (e) => {
-  //   try {
-  //     e.preventDefault();
+  const handleSubmitEdit = async (e) => {
+    try {
+      e.preventDefault();
+      setLoading(true);
+      delete input.profileImage;
 
-  //     if (!input.userName || input.userName.trim() === '') {
-  //       return toast.error('please fill your username');
-  //     }
-  //     const formData = new FormData();
-  //     const propertiesToAppend = [
-  //       'userName',
-  //       'provinceId',
-  //       'districtId',
-  //       'subDistrictId',
-  //         'address',
-  //     ];
+      if (!input.userName || input.userName.trim() === '') {
+        toast.error('please fill your username');
+        return;
+      }
+      const formData = new FormData();
+      const propertiesToAppend = [
+        'userName',
+        'provinceId',
+        'districtId',
+        'subDistrictId',
+        'address',
+      ];
 
-  //     propertiesToAppend.forEach((property) => {
-  //       if (input?.[property]) {
-  //         formData.append(property, input[property]);
-  //       }
-  //     });
+      propertiesToAppend.forEach((property) => {
+        if (input?.[property]) {
+          formData.append(property, input[property]);
+        }
+      });
 
-  //     if (profileImage) {
-  //       formData.append('profileImage', profileImage);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  // console.log(input);
+      if (profileImage) {
+        formData.append('profileImage', profileImage);
+      }
+      console.log(...formData);
+      await updateUser(formData);
+      toast.success('edit success');
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  console.log(input);
   if (loading) {
     return (
       <div className='h-dvh w-dvw flex justify-center items-center animate-pulse'>
@@ -213,7 +221,10 @@ function EditProfileForm() {
   }
   return (
     <div className='w-full flex flex-col gap-4 justify-start items-center h-full'>
-      <form className='border-2 rounded-lg w-full flex flex-col p-3 gap-4'>
+      <form
+        onSubmit={handleSubmitEdit}
+        className='border-2 rounded-lg w-full flex flex-col p-3 gap-4'
+      >
         <div className='p-3 border-b-2 w-full font-semibold'>
           Edit your profile
         </div>
