@@ -26,7 +26,7 @@ export default function MenuBar() {
     toast.success('Logout');
   };
   return (
-    <div className='flex items-center justify-around w-full text-base font-semibold bg-primary px-3 py-4 fixed bottom-0 z-10'>
+    <div className='flex items-center justify-around w-full text-base font-semibold bg-primary px-3 py-4 fixed bottom-0 z-10 md:hidden'>
       <div className='flex'>
         <Link to='/home'>
           <HomeIcon className='w-[2rem] h-[2rem]' />
