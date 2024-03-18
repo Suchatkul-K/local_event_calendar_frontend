@@ -29,7 +29,7 @@ function ProfileNav() {
           >
             Calendar
           </button>
-          {role === 'ORGANIZER' ? (
+          {role === 'ORGANIZER' || role === 'ADMIN' ? (
             <button
               className={
                 toggleCtoE === 'event'

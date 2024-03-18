@@ -1,39 +1,43 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 import Button from '../global_components/Button';
-import {
-  MapIcon,
-  CalendarIcon,
-  ExploreIcon,
-  ProfileIcon,
-  MenuIcon,
-} from '../icons';
+import { BackIcon, RightArrowIcon } from '../icons';
 import useAuth from '../features/auth/hooks/auth';
 import DropdownProfile from '../global_components/DropdownProfile';
 import { clearToken } from '../utils/local-storage';
 import DrawerForNav from '../global_components/Drawer';
 import logo from '../asset/pic/OurLogo.png';
 
-function NavBar() {
+function HeaderMobile() {
   const navigate = useNavigate();
   const allAuthObj = useAuth();
   const { authUser, setAuthUser } = allAuthObj;
+
+  const location = useLocation();
+
+  const { pathname } = location;
 
   const logout = () => {
     setAuthUser(null);
     clearToken();
     toast.success('Logout');
-    navigate('/home');
   };
 
   return (
-    <div className='flex items-center justify-between w-full text-base font-semibold bg-primary px-3 py-2'>
-      <div className='flex-1 '>
-        <DrawerForNav>
-          <MenuIcon />
-        </DrawerForNav>
-      </div>
+    <div className='flex items-center justify-between w-full text-base font-semibold px-4 pt-2  '>
+      {pathname !== '/home' ? (
+        <button
+          type='button'
+          aria-label='Save'
+          className='flex-1 '
+          onClick={() => navigate(-1)}
+        >
+          {/* <DrawerForNav> */}
+          <BackIcon className='w-[2rem] h-[2rem] fill-white' />
+          {/* </DrawerForNav> */}
+        </button>
+      ) : null}
 
       <div className='flex justify-center w-[5.5rem]  text-white'>
         <button
@@ -56,4 +60,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default HeaderMobile;

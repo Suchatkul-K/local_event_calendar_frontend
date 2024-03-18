@@ -29,6 +29,8 @@ import { authMe } from '../../../api/auth';
 import { createReminder, deleteReminder } from '../../../api/user';
 import useAuth from '../../auth/hooks/auth';
 import { deleteEvent } from '../../../api/event';
+import EventModalFeedback from './EventModalFeedback';
+import EventFeedbackContainer from './EventFeedbackContainer';
 
 export default function EventContainer() {
   const eventObj = useEventContext();
@@ -44,6 +46,8 @@ export default function EventContainer() {
   const checkReminded = authEvents?.Reminder.filter(
     (el) => el.eventId === event?.id
   );
+
+  console.log(event);
 
   const fetchAuthEvent = async () => {
     try {
@@ -214,14 +218,12 @@ export default function EventContainer() {
           Date
         </div>
         <div className='flex justify-between text-[0.8rem]'>
-          <div className='border-2 p-2 rounded-xl'>
+          <div className='border-2 p-2 rounded-xl w-[10rem]'>
             <p>
-              Start : <br />
-              <span>{formatDate(eventObj.event?.startDate, true)}</span>
+              Start : <span>{formatDate(eventObj.event?.startDate, true)}</span>
             </p>
             <p>
-              End : <br />{' '}
-              <span>{formatDate(eventObj.event?.endDate, true)}</span>
+              End : <span>{formatDate(eventObj.event?.endDate, true)}</span>
             </p>
           </div>
           <div className='flex gap-2 items-baseline max-w-[8rem] '>
@@ -357,11 +359,14 @@ export default function EventContainer() {
           ))}
         </Carousel>
       )}
-      {authUser?.id === event?.organizerInformationId ? (
-        <EventModalImage />
-      ) : null}
+      {authUser?.id === event?.organizerInformationId && <EventModalImage />}
+      {authUser?.id !== event?.organizerInformationId && <EventModalFeedback />}
 
       {eventObj?.event && <EventMapLocation />}
+
+      {authUser?.id === event?.organizerInformationId && (
+        <EventFeedbackContainer event={event} />
+      )}
     </div>
   );
 }

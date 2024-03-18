@@ -36,8 +36,6 @@ const editEvenntSchema = Joi.object({
 
 export const validateEditEvent = (input) => {
   const { error } = editEvenntSchema.validate(input, { abortEarly: false });
-  // console.dir(error);
-
   const errorObject = {};
   error?.details.map((el) => {
     errorObject[el.path[0]] = el.message;

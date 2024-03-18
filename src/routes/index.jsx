@@ -21,6 +21,8 @@ import AuthContextProvider from '../features/auth/context/AuthContext';
 import EditProfilePage from '../pages/EditProfilePage';
 import CalendarPage from '../pages/CalendarPage';
 import ProtectProfile from '../features/profile/components/ProtectProfile';
+import AdminPage from '../pages/AdminPage';
+import DashBoard from '../pages/DashBoardPage';
 
 const router = createBrowserRouter([
   {
@@ -88,6 +90,8 @@ const router = createBrowserRouter([
       },
       { path: '/calendar', element: <CalendarPage /> },
       { path: '/calendar/:seasonId', element: <CalendarPage /> },
+      { path: '/admin', element: <AdminPage /> },
+      { path: '/dashboard', element: <DashBoard /> },
       {
         path: '',
         element: <Navigate to='/home' />,
