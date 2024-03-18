@@ -25,7 +25,7 @@ function HeaderMobile() {
   };
 
   return (
-    <div className='flex items-center justify-between w-full text-base font-semibold px-4 pt-2  '>
+    <div className='flex items-center justify-between w-full text-base font-semibold px-4 pt-2 sticky top-0 '>
       {pathname !== '/home' ? (
         <button
           type='button'

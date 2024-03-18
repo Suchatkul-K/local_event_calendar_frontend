@@ -1,32 +1,23 @@
 import { useNavigate, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import {
   AddIcon,
   CalendarIcon,
-  HearthIconOutline,
   HomeIcon,
   MapIcon,
-  SearchIcon,
   SearchIconForMenuBar,
-  SettingIcon,
 } from '../icons';
 
-import { clearToken } from '../utils/local-storage';
 import useAuth from '../features/auth/hooks/auth';
 
 export default function MenuBar() {
-  const navigate = useNavigate();
-
   const allAuthObj = useAuth();
   const { authUser, setAuthUser } = allAuthObj;
 
-  const logout = () => {
-    setAuthUser(null);
-    clearToken();
-    toast.success('Logout');
-  };
   return (
-    <div className='flex items-center justify-around w-full text-base font-semibold bg-primary px-3 py-4 fixed bottom-0 z-10 md:hidden'>
+    <div
+      className='flex items-center justify-around w-full text-base font-semibold bg-primary px-3 py-[1rem] fixed bottom-0 z-10 md:hidden'
+      id='header'
+    >
       <div className='flex'>
         <Link to='/home'>
           <HomeIcon className='w-[2rem] h-[2rem]' />
