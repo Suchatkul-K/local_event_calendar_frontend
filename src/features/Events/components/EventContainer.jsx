@@ -184,19 +184,33 @@ export default function EventContainer() {
   return (
     <div className='flex flex-col gap-4 '>
       {/* cover picture */}
-      <div className='w-full flex justify-center h-[36vh] mx-auto'>
+      <div className='static hidden md:flex justify-center w-full h-full'>
         <img
-          className='object-cover w-[100%]'
+          className='object-fit md:h-[35vh] md:w-[150vh] lg:h-[65vh] lg:w-[300vh] xl:h-[70vh] xl:w-[400vh] opacity-90 blur-sm brightness-50'
+          src={eventObj.event?.coverImage}
+          alt=''
+        />
+      </div>
+      <div className='hidden md:flex absolute justify-center w-full h-full'>
+        <img
+          className='object-fit md:h-[35vh] lg:h-[65vh] xl:h-[70vh]'
+          src={eventObj.event?.coverImage}
+          alt=''
+        />
+      </div>
+      <div className='block md:hidden flex justify-center w-full h-full'>
+        <img
+          className='object-fit lg:h-[36rem] xl:h-[44.5rem]'
           src={eventObj.event?.coverImage}
           alt=''
         />
       </div>
       {/* header description */}
-      <div className='border-2 rounded-xl px-4 py-2 flex flex-col gap-2 '>
-        <h1 className='text-[1.5rem] font-semibold'>
+      <div className='border-2 rounded-xl px-4 py-2 flex flex-col mx-auto gap-2 w-full md:w-fit  md:px-[5rem]'>
+        <h1 className='text-[1.5rem] font-semibold md:text-center md:tex'>
           {eventObj?.event?.title}
         </h1>
-        <div className='flex justify-between'>
+        <div className='flex justify-between md:justify-center md:pr-[5rem] md:gap-[20vh] lg:gap-[45vh] xl:gap-[50vh]'>
           <div className='flex items-center gap-2 text-[0.8rem]'>
             <ClockIcon />
             {eventObj.event?.timePeriod}
@@ -211,20 +225,23 @@ export default function EventContainer() {
             )}
           </div>
         </div>
-        <div className='flex items-center gap-2'>
-          <CalendarIconGray />
-          Date
-        </div>
-        <div className='flex justify-between text-[0.8rem]'>
-          <div className='border-2 p-2 rounded-xl w-[10rem]'>
-            <p>
-              Start : <span>{formatDate(eventObj.event?.startDate, true)}</span>
-            </p>
-            <p>
-              End : <span>{formatDate(eventObj.event?.endDate, true)}</span>
-            </p>
+        <div className='flex justify-between md:justify-center md:gap-[16vh] lg:gap-[37vh] xl:gap-[44vh] text-[0.8rem]'>
+          <div className='flex flex-col'>
+            <div className='flex flex-row gap-2 py-2'>
+              <CalendarIconGray />
+              Date
+            </div>
+            <div className='border-2 p-2 rounded-xl w-[10rem]'>
+              <p>
+                Start :{' '}
+                <span>{formatDate(eventObj.event?.startDate, true)}</span>
+              </p>
+              <p>
+                End : <span>{formatDate(eventObj.event?.endDate, true)}</span>
+              </p>
+            </div>
           </div>
-          <div className='flex gap-2 items-baseline max-w-[8rem] '>
+          <div className='flex gap-2 items-baseline md:max-w-[12rem] max-w-[8rem] '>
             <div>
               <PinIcon className='w-[1rem] h-[1rem]' />
             </div>

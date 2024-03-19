@@ -109,7 +109,7 @@ export default function OrganizerRegisterContainer() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className=' mx-auto flex flex-col  gap-[2rem] w-full p-[3rem]'>
+      <div className=' mx-auto flex flex-col  gap-[2rem] w-full px- md:px-[8vh] lg:px-[18vh] xl:px-[30vh]'>
         <div className='text-[1.75rem] font-semibold text-center'>
           Create An Account
         </div>
@@ -249,13 +249,13 @@ export default function OrganizerRegisterContainer() {
             <div>Gender</div>
             <select
               name='gender'
-              className='h-10  rounded-lg'
+              className='h-10  rounded-lg bg-white border-2 bg-border-[#e5e7eb]'
               onChange={handleChange}
               value={input.gender}
             >
-              <option value='MALE'>MALE</option>
-              <option value='FEMALE'>FEMALE</option>
-              <option value='OTHER'>OTHER</option>
+              <option value='MALE'>Male</option>
+              <option value='FEMALE'>Female</option>
+              <option value='OTHER'>Other</option>
             </select>
           </div>
         </div>
@@ -318,7 +318,7 @@ export default function OrganizerRegisterContainer() {
           <div>Please select your entity type:</div>
           <select
             name='corporation'
-            className='h-10  rounded-lg'
+            className='h-10  rounded-lg bg-white border-2 bg-border-[#e5e7eb]'
             onChange={handleChange}
             value={input.corporation}
           >

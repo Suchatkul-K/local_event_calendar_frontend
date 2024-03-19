@@ -88,7 +88,7 @@ export default function UserRegisterContainer() {
   }
   return (
     <form onSubmit={handleSubmit}>
-      <div className=' mx-auto flex flex-col  gap-[2rem] w-full p-[3rem]'>
+      <div className=' mx-auto flex flex-col  gap-[2rem] w-full px-8 md:px-[8vh] lg:px-[18vh] xl:px-[30vh]'>
         <div className='text-[1.75rem] font-semibold text-center'>
           Create An Account
         </div>
@@ -118,7 +118,7 @@ export default function UserRegisterContainer() {
         {/* upload profile */}
         <div className='flex flex-row justify-end '>
           <div className='flex flex-col items-end '>
-            <div className='md:w-[70%] sm:[30%] flex flex-col '>
+            <div className='md:w-[100%] flex flex-col '>
               <input
                 type='file'
                 ref={fileEl}
@@ -228,13 +228,13 @@ export default function UserRegisterContainer() {
             <div>Gender</div>
             <select
               name='gender'
-              className='h-10  rounded-lg'
+              className='h-10  rounded-lg bg-white border-2 bg-border-[#e5e7eb]'
               onChange={handleChange}
               value={input.gender}
             >
-              <option value='MALE'>MALE</option>
-              <option value='FEMALE'>FEMALE</option>
-              <option value='OTHER'>OTHER</option>
+              <option value='MALE'>Male</option>
+              <option value='FEMALE'>Female</option>
+              <option value='OTHER'>Other</option>
             </select>
           </div>
         </div>

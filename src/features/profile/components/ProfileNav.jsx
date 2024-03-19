@@ -14,13 +14,13 @@ function ProfileNav() {
     } = allAuthObj;
 
     return (
-      <>
+      <div className='md:px-2'>
         <div className='flex justify-between py-4'>
           <button
             className={
               toggleCtoE === 'calendar'
-                ? 'text-center  text-[0.75rem] w-full border-b-2 p-2'
-                : 'text-center text-[0.75rem] w-full p-2'
+                ? 'text-center  text-[0.75rem] md:text-[1rem] lg:text-[1.25rem] w-full border-b-2 p-2'
+                : 'text-center text-[0.75rem] md:text-[1rem] lg:text-[1.25rem]  w-full p-2'
             }
             onClick={() => setToggleCtoE('calendar')}
             type='button'
@@ -31,8 +31,8 @@ function ProfileNav() {
             <button
               className={
                 toggleCtoE === 'event'
-                  ? 'text-center text-[0.75rem] w-full border-b-2 p-2'
-                  : 'text-center text-[0.75rem] w-full p-2'
+                  ? 'text-center text-[0.75rem] md:text-[1rem] lg:text-[1.25rem]w-full border-b-2 p-2'
+                  : 'text-center text-[0.75rem] md:text-[1rem] lg:text-[1.25rem] w-full p-2'
               }
               onClick={() => setToggleCtoE('event')}
               type='button'
@@ -56,7 +56,7 @@ function ProfileNav() {
         ) : (
           <OrganizerEventCreated />
         )}
-      </>
+      </div>
     );
   }
 }

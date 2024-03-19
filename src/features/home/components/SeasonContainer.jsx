@@ -16,7 +16,7 @@ function SeasonContainer() {
   }
 
   return (
-    <div className='w-full'>
+    <div className='w-full pb-[3rem]'>
       <div className='font-bold text-[1.5rem]   font-Jua  border-b border-primary w-fit'>
         SEASONING
       </div>

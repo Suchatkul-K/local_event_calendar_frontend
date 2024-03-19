@@ -118,7 +118,7 @@ function CalendarContainer() {
   }, [focusDate]);
 
   return (
-    <div className='p-4'>
+    <div className='p-4 md:px-12 lg:px-20'>
       {/* search form */}
       <div className='flex flex-col'>
         {/* search from province */}

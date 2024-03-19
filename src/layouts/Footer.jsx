@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <div className='flex flex-col grow'>
       <div className='grow' />
-      <div className='text-center flex flex-col gap-2 pb-6 pt-2 justify-center items-center bg-primary text-white'>
+      <div className='text-center flex flex-col gap-2 pb-6 pt-2 justify-center items-center bg-primary text-white '>
         <div className='flex justify-center  w-[5.5rem]'>
           <button
             onClick={() => navigate('/home')}

@@ -39,7 +39,7 @@ export default function CreateEventContainer() {
 
   return (
     <form onSubmit={handleformSubmit}>
-      <div>
+      <div className='px-2 md:px-[8vh] lg:px-[18vh] xl:px-[30vh]'>
         <div className=' mx-auto flex flex-col  gap-[1rem] w-full py-[2rem] px-[2rem]'>
           <div className='text-[1.75rem] font-semibold text-center pb-3'>
             Create An Event
@@ -68,9 +68,9 @@ export default function CreateEventContainer() {
               onChange={handleChange}
             />
           </div>
-
-          <CreateEventDateTime />
-
+          <div className=''>
+            <CreateEventDateTime />
+          </div>
           {/* Yearly checkbox */}
           <div className='flex flex-row gap-[0.5rem]'>
             <Input
