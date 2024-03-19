@@ -27,56 +27,57 @@ export default function DropdownProfile({ logout }) {
       // title={allAuthObj?.userName}
       placement='bottomEnd'
     >
-      <div className='p-1 border-b'>
-        <Dropdown.Item
-          style={{ display: 'flex', gap: '8px' }}
-          icon={<ProfileIcon />}
-          onClick={() => navigate('/profile')}
-        >
-          Profile
-        </Dropdown.Item>
-      </div>
-      {role === 'ORGANIZER' ? (
+      <div className='z-10'>
         <div className='p-1 border-b'>
           <Dropdown.Item
             style={{ display: 'flex', gap: '8px' }}
-            icon={<CreateEventIcon />}
-            onClick={() => navigate('/create-event')}
+            icon={<ProfileIcon />}
+            onClick={() => navigate('/profile')}
           >
-            Create Event
+            Profile
           </Dropdown.Item>
         </div>
-      ) : null}
-      <div className='p-1 border-b'>
-        <Dropdown.Item
-          style={{ display: 'flex', gap: '8px' }}
-          icon={<SettingIcon />}
-          onClick={() => navigate('/profile/edit')}
-        >
-          Setting{' '}
-        </Dropdown.Item>
-      </div>
-      {role === 'ADMIN' ? (
+        {role === 'ORGANIZER' ? (
+          <div className='p-1 border-b'>
+            <Dropdown.Item
+              style={{ display: 'flex', gap: '8px' }}
+              icon={<CreateEventIcon />}
+              onClick={() => navigate('/create-event')}
+            >
+              Create Event
+            </Dropdown.Item>
+          </div>
+        ) : null}
         <div className='p-1 border-b'>
           <Dropdown.Item
             style={{ display: 'flex', gap: '8px' }}
-            icon={<AdminIcon />}
-            onClick={() => navigate('/admin')}
+            icon={<SettingIcon />}
+            onClick={() => navigate('/profile/edit')}
           >
-            Admin{' '}
+            Setting{' '}
           </Dropdown.Item>
         </div>
-      ) : null}
-      <div className='p-1 border-b'>
-        <Dropdown.Item
-          style={{ display: 'flex', gap: '8px' }}
-          icon={<LogOutIcon />}
-          onClick={logout}
-        >
-          Logout{' '}
-        </Dropdown.Item>
+        {role === 'ADMIN' ? (
+          <div className='p-1 border-b'>
+            <Dropdown.Item
+              style={{ display: 'flex', gap: '8px' }}
+              icon={<AdminIcon />}
+              onClick={() => navigate('/admin')}
+            >
+              Admin{' '}
+            </Dropdown.Item>
+          </div>
+        ) : null}
+        <div className='p-1 border-b'>
+          <Dropdown.Item
+            style={{ display: 'flex', gap: '8px' }}
+            icon={<LogOutIcon />}
+            onClick={logout}
+          >
+            Logout{' '}
+          </Dropdown.Item>
+        </div>
       </div>
     </Dropdown>
-    // </div>
   );
 }

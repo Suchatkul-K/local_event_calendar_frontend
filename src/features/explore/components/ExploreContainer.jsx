@@ -57,7 +57,7 @@ export default function ExploreContainer() {
   }
 
   return (
-    <div className='p-[1rem] flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 p-4 md:px-12 lg:px-20'>
       {open && (
         <button
           type='button'
@@ -74,7 +74,7 @@ export default function ExploreContainer() {
       {/* search event form */}
       <form onSubmit={handleOnSubmit}>
         <Input
-          border='border-b-2'
+          className='flex flex-col gap-3 py-4 border-b-2'
           title='Search here'
           onClick={() => setOpen(true)}
           onChange={handleOnChange}
@@ -147,7 +147,7 @@ export default function ExploreContainer() {
       </form>
 
       {/* render searched event */}
-      <div className='flex flex-col gap-2 py-[1rem]'>
+      <div className='flex flex-col gap-2 py-[1rem] pr-4 md:pr-0'>
         {events?.map((event) => (
           <EventCardGanX event={event} key={event.id} />
         ))}

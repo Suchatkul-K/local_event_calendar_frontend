@@ -1516,8 +1516,8 @@ export function DislikeIcon({ className, fill = '#8a8a8a' }) {
 export function SearchIconForMenuBar({ className = null }) {
   return (
     <svg
-      width='2rem'
-      height='2rem'
+      width='1.5rem'
+      height='1.5rem'
       viewBox='0 0 24 24'
       fill='none'
       xmlns='http://www.w3.org/2000/svg'

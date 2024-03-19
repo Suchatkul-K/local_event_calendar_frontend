@@ -46,7 +46,7 @@ function EventCard({ event, loading }) {
 
   return (
     <Link to={`/event/${event?.id}`}>
-      <div className='card max-w-[16rem] h-[26rem] bg-base-100 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)]'>
+      <div className='card max-w-[16rem] h-[26rem] bg-base-100 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] transition-all duration-300 hover:scale-110'>
         <figure>
           <img
             className='h-[10rem] object-cover w-full'

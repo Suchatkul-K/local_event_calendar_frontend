@@ -55,7 +55,7 @@ export default function LoginContainer() {
 
   return (
     <form className='min-h-dhv' onSubmit={handleSubmit}>
-      <div className='py-12 '>
+      <div className='px-2 md:px-[8vh] lg:px-[18vh] xl:px-[30vh]'>
         <div className=' flex flex-col  gap-[2rem] w-full p-[3rem]'>
           <div className='text-[1.75rem] font-semibold'>Login</div>
           <Input
