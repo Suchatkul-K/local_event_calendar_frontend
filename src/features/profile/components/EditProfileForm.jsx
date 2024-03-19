@@ -210,7 +210,7 @@ function EditProfileForm() {
       </div>
     );
   }
-  
+
   return (
     <div className='w-full flex flex-col gap-4 justify-start items-center h-full'>
       <form

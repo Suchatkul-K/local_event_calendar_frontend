@@ -26,9 +26,9 @@ function ProfileCalendar() {
     const list = getEventList(date);
 
     if (list.length) {
-      const event = list.map((item) => {
-        return <EventCard key={item.event.id} event={item.event} />;
-      });
+      const event = list.map((item) => (
+        <EventCard key={item.event.id} event={item.event} />
+      ));
 
       return (
         <ProfileDrawer props={event}>

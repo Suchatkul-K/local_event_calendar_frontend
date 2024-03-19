@@ -1,7 +1,6 @@
 import Input from '../../../global_components/Input';
 
 export default function EditInput({ input, onChange, initData }) {
-
   return (
     <div>
       <Input

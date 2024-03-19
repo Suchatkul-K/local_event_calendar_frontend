@@ -5,7 +5,7 @@ import bg from '../../../asset/pic/peak_background.png';
 function ProfileInfo() {
   const ProfileContextObject = useProfileContext();
   const { authEvents } = ProfileContextObject;
-  
+
   return (
     <div>
       {/* PROFILE */}

@@ -7,14 +7,12 @@ function OrganizerEventCreated() {
   const { authEvents } = ProfileContextObject;
 
   return (
-    <>
-      <div className='p-3 gap-3 flex flex-col'>
-        <div>Your Event created</div>
-        {authEvents?.OrganizerInformation?.Event?.map((event) => (
-          <EventCardGanX event={event} key={event.id} />
-        ))}
-      </div>
-    </>
+    <div className='p-3 gap-3 flex flex-col'>
+      <div>Your Event created</div>
+      {authEvents?.OrganizerInformation?.Event?.map((event) => (
+        <EventCardGanX event={event} key={event.id} />
+      ))}
+    </div>
   );
 }
 

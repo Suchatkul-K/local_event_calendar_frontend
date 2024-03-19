@@ -2,12 +2,7 @@ import { useState } from 'react';
 import 'rsuite/Drawer/styles/index.css';
 import 'rsuite/Animation/styles/index.css';
 
-import {
-  Drawer,
-  ButtonToolbar,
-  Button,
-  Animation,
-} from 'rsuite';
+import { Drawer, ButtonToolbar, Button, Animation } from 'rsuite';
 
 function ProfileDrawer({ children, props }) {
   const [open, setOpen] = useState(false);
