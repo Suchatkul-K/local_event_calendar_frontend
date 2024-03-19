@@ -2,13 +2,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { toast } from 'react-toastify';
 import Button from '../global_components/Button';
-import {
-  MapIcon,
-  CalendarIcon,
-  ExploreIcon,
-  ProfileIcon,
-  MenuIcon,
-} from '../icons';
+import { MenuIcon } from '../icons';
 import useAuth from '../features/auth/hooks/auth';
 import DropdownProfile from '../global_components/DropdownProfile';
 import { clearToken } from '../utils/local-storage';

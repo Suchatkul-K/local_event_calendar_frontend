@@ -186,9 +186,23 @@ export default function EventContainer() {
   return (
     <div className='flex flex-col gap-4 '>
       {/* cover picture */}
-      <div className='w-full flex justify-center h-[36vh] mx-auto lg:h-[60vh]'>
+      <div className='static hidden md:flex justify-center w-full h-full'>
         <img
-          className='object-cover w-[100%]'
+          className='object-fit md:h-[35vh] md:w-[150vh] lg:h-[65vh] lg:w-[300vh] xl:h-[70vh] xl:w-[400vh] opacity-90 blur-sm brightness-50'
+          src={eventObj.event?.coverImage}
+          alt=''
+        />
+      </div>
+      <div className='hidden md:flex absolute justify-center w-full h-full'>
+        <img
+          className='object-fit md:h-[35vh] lg:h-[65vh] xl:h-[70vh]'
+          src={eventObj.event?.coverImage}
+          alt=''
+        />
+      </div>
+      <div className='block md:hidden flex justify-center w-full h-full'>
+        <img
+          className='object-fit lg:h-[36rem] xl:h-[44.5rem]'
           src={eventObj.event?.coverImage}
           alt=''
         />
