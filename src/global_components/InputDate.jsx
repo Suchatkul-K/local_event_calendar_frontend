@@ -10,7 +10,7 @@ export default function InputDate({
     <div>
       <div className='font-semibold '>{title}</div>
       <input
-        className='bg-inherit border border-gray-300 rounded-btn  py-1 w-[90%] text-center'
+        className='bg-inherit border border-gray-300 rounded-btn  py-1 w-[90%] text-center h-[2rem]'
         type={type}
         name={name}
         onChange={onChange}

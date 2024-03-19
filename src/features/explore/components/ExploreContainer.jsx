@@ -147,10 +147,15 @@ export default function ExploreContainer() {
       </form>
 
       {/* render searched event */}
+
       <div className='flex flex-col gap-2 py-[1rem] pr-4 md:pr-0'>
-        {events?.map((event) => (
-          <EventCardGanX event={event} key={event.id} />
-        ))}
+        {events.length < 1 ? (
+          <div className='flex justify-center items-center font-semibold text-gray-400 py-[5rem]'>
+            Event not founded
+          </div>
+        ) : (
+          events?.map((event) => <EventCardGanX event={event} key={event.id} />)
+        )}
       </div>
     </div>
   );
