@@ -15,7 +15,7 @@ function Container() {
       <div className='md:hidden'>
         <HeaderMobile />
       </div>
-      <div className='bg-white m-[0.1rem] rounded-2xl h-[calc(100vh-127px)] overflow-scroll no-scrollbar md:hidden'>
+      <div className='bg-white m-[0.1rem] rounded-2xl h-[calc(100vh-127px)] overflow-scroll no-scrollbar md:hidden pb-[6rem]'>
         <Outlet />
       </div>
       <div className='hidden md:block'>
