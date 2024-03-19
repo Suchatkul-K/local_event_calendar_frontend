@@ -26,14 +26,10 @@ export const validateLogin = (input) => {
   const { error } = loginSchema.validate(input, { abortEarly: false });
 
   const errorObject = {};
-  const temp = error?.details.map((el) => {
+  error?.details.map((el) => {
     errorObject[el.path[0]] = el.message;
     return null;
   });
-  console.log('error object is here!!!!');
-  console.log(temp);
 
   return errorObject;
 };
-
-export const temp = () => {};

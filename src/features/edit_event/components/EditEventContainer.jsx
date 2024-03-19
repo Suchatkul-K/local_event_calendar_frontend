@@ -26,8 +26,6 @@ export default function EditEventContainer() {
   const navigate = useNavigate();
   const fileEl = useRef();
 
-  // console.log(event);
-  // console.log(subDistrict);
   const BkkLatLon = [13.756329334391024, 100.50176927408629];
   // ========================= map value ========================= //
 
@@ -90,7 +88,6 @@ export default function EditEventContainer() {
       ...input,
       [e.target.name]: new Date(e.target.value).toISOString(),
     });
-    console.log(new Date(e.target.value).toISOString());
   };
 
   const handleSelectPicker = (value, item) => {
@@ -161,7 +158,7 @@ export default function EditEventContainer() {
       }
       const formData = new FormData();
       Object.keys(input).forEach((key) => formData.append(key, input[key]));
-      console.log(...formData);
+      // console.log(...formData);
       await updateEvent(eventId, formData);
       toast.success('edit successfully');
       navigate(`/event/${eventId}`);

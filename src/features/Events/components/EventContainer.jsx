@@ -47,8 +47,6 @@ export default function EventContainer() {
     (el) => el.eventId === event?.id
   );
 
-  console.log(event);
-
   const fetchAuthEvent = async () => {
     try {
       setLoading(true);

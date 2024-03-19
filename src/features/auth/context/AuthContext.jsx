@@ -25,8 +25,6 @@ export default function AuthContextProvider({ children }) {
     }
   };
 
-  console.log(authUser);
-
   useEffect(() => {
     try {
       setLoading(true);

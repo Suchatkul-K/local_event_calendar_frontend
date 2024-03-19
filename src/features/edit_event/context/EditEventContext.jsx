@@ -21,7 +21,6 @@ export default function EditEventContextProvider({ children }) {
 
       // FETCH events
       const events = await eventApi.getEvent(eventId);
-      console.log(events.data);
       setEvent(events.data);
 
       // FETCH province

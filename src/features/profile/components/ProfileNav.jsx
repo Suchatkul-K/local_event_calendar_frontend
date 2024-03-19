@@ -13,8 +13,6 @@ function ProfileNav() {
       authUser: { role, Reminder },
     } = allAuthObj;
 
-    console.log(allAuthObj);
-
     return (
       <div className='md:px-2'>
         <div className='flex justify-between py-4'>

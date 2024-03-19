@@ -14,8 +14,6 @@ export default function EventModalFeedback() {
 
   const { eventId } = useParams();
 
-  console.log('input', input);
-
   const handleClickLike = (e) => {
     setLike(true);
     setDislike(false);

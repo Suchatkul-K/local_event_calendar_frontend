@@ -1,27 +1,13 @@
-import { useState, useMemo } from 'react';
-// import { Drawer, ButtonToolbar, Button, Placeholder } from 'rsuite';
+import { useState } from 'react';
 import 'rsuite/Drawer/styles/index.css';
 import 'rsuite/Animation/styles/index.css';
 
-import {
-  Drawer,
-  RadioGroup,
-  Radio,
-  ButtonToolbar,
-  Button,
-  IconButton,
-  Placeholder,
-  Animation,
-} from 'rsuite';
-import useProfileContext from '../hook/useProfileContext';
+import { Drawer, ButtonToolbar, Button, Animation } from 'rsuite';
 
 function ProfileDrawer({ children, props }) {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(true);
   const [placement, setPlacement] = useState('right');
-
-  // const ProfileContextObject = useProfileContext();
-  console.log(props, '++++++++++++++++++++');
 
   return (
     <>

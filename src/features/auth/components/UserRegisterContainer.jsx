@@ -64,7 +64,7 @@ export default function UserRegisterContainer() {
         const authResult = await authMe(registerResult.data.accessToken);
         setAuthUser(authResult.data);
         setError(null);
-        console.log('User register success');
+        // console.log('User register success');
         navigate('/home');
       }
     } catch (err) {
