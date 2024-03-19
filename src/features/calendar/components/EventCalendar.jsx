@@ -24,6 +24,7 @@ function EventCalendar({ data, setSearch, focusDate, setFocusDate }) {
 
   const renderCell = (date) => {
     const list = getEventList(date);
+    const dayOnWeek = new Date(date).getDay();
 
     return (
       <button
@@ -32,29 +33,60 @@ function EventCalendar({ data, setSearch, focusDate, setFocusDate }) {
         aria-label='Save'
         onClick={() => handleCellClick(date)}
       >
-        {list.length > 0 && (
-          <Whisper
-            placement='right'
-            trigger='click'
-            speaker={
-              <Popover>
-                {list.map((item) => (
-                  <li className='list-none' key={item.id}>
-                    <div>
-                      <Badge /> {item.title} {item.timePeriod}
-                    </div>
-                  </li>
-                ))}
-              </Popover>
-            }
-          >
-            <ul className='calendar-todo-list h-full'>
-              <div className='w-full h-full flex justify-center items-center'>
-                <Badge />
-              </div>
-            </ul>
-          </Whisper>
-        )}
+        {list.length > 0 &&
+          (dayOnWeek < 4 ? (
+            <Whisper
+              placement='bottomStart'
+              trigger='click'
+              speaker={
+                <Popover>
+                  {list.map((item) => (
+                    <li className='list-none' key={item.id}>
+                      <div>
+                        <Badge />
+                        {item.title.length > 20
+                          ? `${item.title.slice(0, 20)}...`
+                          : item.title}
+                        {item.timePeriod}
+                      </div>
+                    </li>
+                  ))}
+                </Popover>
+              }
+            >
+              <ul className='calendar-todo-list h-full'>
+                <div className='w-full h-full flex justify-center items-center'>
+                  <Badge />
+                </div>
+              </ul>
+            </Whisper>
+          ) : (
+            <Whisper
+              placement='bottomEnd'
+              trigger='click'
+              speaker={
+                <Popover>
+                  {list.map((item) => (
+                    <li className='list-none' key={item.id}>
+                      <div>
+                        <Badge />
+                        {item.title.length > 20
+                          ? `${item.title.slice(0, 20)}...`
+                          : item.title}
+                        {item.timePeriod}
+                      </div>
+                    </li>
+                  ))}
+                </Popover>
+              }
+            >
+              <ul className='calendar-todo-list h-full'>
+                <div className='w-full h-full flex justify-center items-center'>
+                  <Badge />
+                </div>
+              </ul>
+            </Whisper>
+          ))}
       </button>
     );
   };

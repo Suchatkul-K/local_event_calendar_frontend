@@ -1,13 +1,10 @@
 import { MapContainer } from 'react-leaflet';
 import MapComponent from './MapComponent';
-import EventCardGanX from '../../../global_components/EventCardGanX';
-import useMapContext from '../hooks/useMapContext';
+import MapEventSection from './MapEventSection';
 
 const BkkLatLon = [13.756329334391024, 100.50176927408629];
 
 function Map() {
-  const { events } = useMapContext();
-
   return (
     <div className='static'>
       <div className='relative z-10'>
