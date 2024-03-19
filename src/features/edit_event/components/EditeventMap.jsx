@@ -1,12 +1,21 @@
 import { TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import React, { useState, useEffect } from 'react';
-
-import useEditEvent from '../hooks/useEditEvent';
+import ReactDOMServer from 'react-dom/server';
+import { MarkerIcon } from '../../../icons';
 
 export default function EditeventMap({ error, setInput, input, event }) {
   const [marker, setMarker] = useState(null);
   const map = useMap();
+
+  const customIcon = (className, fill) =>
+    L.divIcon({
+      className: 'custom-div-icon',
+      html: ReactDOMServer.renderToString(
+        <MarkerIcon className={className} fill={fill} />
+      ),
+      iconSize: [25, 41],
+    });
 
   useMapEvent('click', (e) => {
     if (marker) {
@@ -34,7 +43,9 @@ export default function EditeventMap({ error, setInput, input, event }) {
       const newMarker = L.marker([
         event.EventAddress.lat,
         event.EventAddress.long,
-      ]).addTo(map);
+      ])
+        .addTo(map)
+        .setIcon(customIcon('size-10 border', '#007467'));
       setMarker(newMarker);
     }
   }, [event, map]);

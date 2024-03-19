@@ -47,7 +47,7 @@ function ProfileNav() {
             <div className='p-[1rem]'>
               <h1 className='font-semibold pb-[1rem]'>Your Event Reminded</h1>
               {Reminder.map((el) => (
-                <div className='pb-2'>
+                <div className='pb-2' key={el.id}>
                   <EventCardGanX event={el.event} />
                 </div>
               ))}
