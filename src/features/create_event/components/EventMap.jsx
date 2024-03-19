@@ -1,7 +1,9 @@
 import { TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import L from 'leaflet';
 import { useState } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import useCreateEvent from '../hook/useCreateEvent';
+import { MarkerIcon } from '../../../icons';
 
 function EventMap() {
   const { CreateEventContextObject } = useCreateEvent();
@@ -9,13 +11,24 @@ function EventMap() {
   const [marker, setMarker] = useState(null);
   const map = useMap();
 
+  const customIcon = (className, fill) =>
+    L.divIcon({
+      className: 'custom-div-icon',
+      html: ReactDOMServer.renderToString(
+        <MarkerIcon className={className} fill={fill} />
+      ),
+      iconSize: [25, 41],
+    });
+
   useMapEvent('click', (e) => {
     if (marker) {
       marker.remove();
     }
 
     // Add a marker at the clicked location
-    const newMarker = L.marker(e.latlng).addTo(map);
+    const newMarker = L.marker(e.latlng)
+      .addTo(map)
+      .setIcon(customIcon('size-10 border', '#007467'));
 
     // Set the new marker && update input
     setMarker(newMarker);

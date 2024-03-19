@@ -7,11 +7,12 @@ const BkkLatLon = [13.756329334391024, 100.50176927408629];
 function Map() {
   return (
     <div className='static'>
-      <div className='relative z-10'>
+      <div className='relative'>
         <MapContainer
           center={BkkLatLon}
           zoom={13}
           className='h-[17.1875rem] md:h-[25rem] lg:h-[100vh] xl:h-[100vh]'
+          style={{ zIndex: '0' }}
         >
           <MapComponent />
         </MapContainer>
