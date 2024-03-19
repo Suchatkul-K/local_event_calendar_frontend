@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import NavBar from './NavBar';
 import Footer from './Footer';
 import AuthContextProvider from '../features/auth/context/AuthContext';
@@ -14,7 +15,7 @@ function Container() {
       <div className='md:hidden'>
         <HeaderMobile />
       </div>
-      <div className='bg-white m-2 rounded-2xl  h-[45rem] overflow-scroll no-scrollbar md:hidden'>
+      <div className='bg-white m-[0.1rem] rounded-2xl h-[calc(100vh-127px)] overflow-scroll no-scrollbar md:hidden'>
         <Outlet />
       </div>
       <div className='hidden md:block'>
@@ -23,6 +24,7 @@ function Container() {
       <div className='hidden md:block'>
         <Footer />
       </div>
+
       <MenuBar />
     </div>
   );
